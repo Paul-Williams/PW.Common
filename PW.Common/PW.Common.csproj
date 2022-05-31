@@ -1,0 +1,46 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net6.0;net48</TargetFrameworks>
+    <LangVersion>preview</LangVersion>
+    <UseWindowsForms>false</UseWindowsForms>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <Version>4.0.4</Version>
+    <RootNamespace>PW</RootNamespace>
+    <AssemblyName>PW.Common</AssemblyName>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Nullable>enable</Nullable>
+    <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
+    <PackageId>PW.Common</PackageId>
+    <Authors>Paul Williams</Authors>
+    <Company>PWDevS</Company>
+    <PackageDescription>Common code library</PackageDescription>
+    <RepositoryUrl>https://github.com/Paul-Williams/PW.Common</RepositoryUrl>
+    <PackageReleaseNotes>Breaking changes from 3.0.5.</PackageReleaseNotes>
+    <PackageProjectUrl>https://github.com/Paul-Williams/PW.Common</PackageProjectUrl>
+    <PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
+    <Description>Common shared library</Description>
+    <Copyright>© Paul Williams 2022</Copyright>
+    <NeutralLanguage>en-GB</NeutralLanguage>
+		<ImplicitUsings>false</ImplicitUsings>
+    <AnalysisLevel>preview-recommended</AnalysisLevel>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DebugType>none</DebugType>
+    <DebugSymbols>false</DebugSymbols>
+    <DocumentationFile>C:\GitHub\Paul-Williams\PW.Common\PW.Common\PW.Common.xml</DocumentationFile>
+    <OutputPath></OutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>C:\GitHub\Paul-Williams\PW.Common\PW.Common\PW.Common.xml</DocumentationFile>
+    <OutputPath></OutputPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CSharpFunctionalExtensions" Version="2.29.1" />
+    <PackageReference Include="Microsoft.VisualBasic" Version="10.3.0" />
+  </ItemGroup>
+
+</Project>
