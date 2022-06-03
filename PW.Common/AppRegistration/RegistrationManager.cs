@@ -26,7 +26,7 @@ public static class RegistrationManager
   }
 
   /// <summary>
-  /// Registers an application with LaunchPad using defaults. 
+  /// Registers the current application with LaunchPad. 
   /// </summary>
   public static void Register() => Register(GetProductName(), Assembly.GetExecutingAssembly().Location);
 
