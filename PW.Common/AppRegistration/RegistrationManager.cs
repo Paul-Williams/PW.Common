@@ -14,7 +14,7 @@ public static class RegistrationManager
   private const string RegPath = @"Software\PW\AppRegistration";
 
   /// <summary>
-  /// Registers an application with LaunchPad.
+  /// Registers an application with LaunchPad using the application's product name.
   /// </summary>
   public static void Register(string title, string path)
   {
@@ -29,6 +29,13 @@ public static class RegistrationManager
   /// Registers the current application with LaunchPad. 
   /// </summary>
   public static void Register() => Register(GetProductName(), Assembly.GetExecutingAssembly().Location);
+
+  /// <summary>
+  /// Registers the current application with LaunchPad using a custom title. 
+  /// </summary>
+  public static void Register(string title) => Register(title, Assembly.GetExecutingAssembly().Location);
+
+
 
 
   /// <summary>
