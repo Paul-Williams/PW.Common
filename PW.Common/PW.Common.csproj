@@ -5,7 +5,7 @@
     <LangVersion>preview</LangVersion>
     <UseWindowsForms>false</UseWindowsForms>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-    <Version>4.0.4</Version>
+    <Version>4.0.5</Version>
     <RootNamespace>PW</RootNamespace>
     <AssemblyName>PW.Common</AssemblyName>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>

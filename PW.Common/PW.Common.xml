@@ -30,6 +30,41 @@
             The current value of the accumulator.
             </summary>
         </member>
+        <member name="T:PW.AppRegistration.RegistrationManager">
+            <summary>
+            Management of application registrations for LaunchPad.
+            </summary>
+        </member>
+        <member name="M:PW.AppRegistration.RegistrationManager.Register(System.String,System.String)">
+            <summary>
+            Registers an application with LaunchPad.
+            </summary>
+        </member>
+        <member name="M:PW.AppRegistration.RegistrationManager.Register">
+            <summary>
+            Registers an application with LaunchPad using defaults. 
+            </summary>
+        </member>
+        <member name="M:PW.AppRegistration.RegistrationManager.UnRegister(System.String)">
+            <summary>
+            Unregisters an application with LaunchPad.
+            </summary>
+        </member>
+        <member name="M:PW.AppRegistration.RegistrationManager.UnRegister">
+            <summary>
+            Unregisters the current application with LaunchPad.
+            </summary>
+        </member>
+        <member name="M:PW.AppRegistration.RegistrationManager.GetRegistrations">
+            <summary>
+            Returns a list of all existing application registrations.
+            </summary>
+        </member>
+        <member name="M:PW.AppRegistration.RegistrationManager.GetAppRegKey">
+            <summary>
+            Opens the registry key used by LaunchPad.
+            </summary>   
+        </member>
         <member name="T:PW.BackingField">
             <summary>
             Helper class for use with backing field assignment.
