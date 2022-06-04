@@ -13,9 +13,8 @@ namespace PW.IO
     /// <summary>
     /// Returns a list of subdirectories to which access is authorized.
     /// </summary>
-    public static List<DirectoryInfo> GetAuthorizedDirectories(this DirectoryInfo directory)
+    public static List<DirectoryInfo> GetAuthorizedDirectories(this DirectoryInfo directory!!)
     {
-      Guard.NotNull(directory, nameof(directory));
 
       // We will not catch UnauthorizedAccessException on the initial directory.
       // The initial directory will not be returned. It is not a subdirectory of itself!

@@ -20,15 +20,7 @@ namespace PW.Helpers
     /// </summary>
     public static void Swap<T>(ref T? x, ref T? y) where T : class => (y, x) = (x, y);
 
-    /// <summary>
-    /// Ensures the directory path string is terminated with a <see cref="Path.DirectorySeparatorChar"/>
-    /// </summary>
-    public static string EnsurePathSeparatorTerminated(string? directoryPath)
-    {
-      return directoryPath is null
-          ? throw new ArgumentNullException(nameof(directoryPath))
-          : directoryPath.EndsWith(Path.DirectorySeparatorChar) ? directoryPath : directoryPath + Path.DirectorySeparatorChar;
-    }
+
 
     /// <summary>
     /// Creates a composite hash code from for multiple objects.

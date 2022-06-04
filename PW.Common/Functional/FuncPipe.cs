@@ -105,20 +105,17 @@ namespace PW.Functional
     /// <param name="seq"></param>
     /// <exception cref="ArgumentNullException"></exception>
     /// <exception cref="ArgumentException">Thrown if there is a null in <paramref name="seq"/></exception>
-    public FunctionPipeline(IEnumerable<Func<T, T>> seq)
+    public FunctionPipeline(IEnumerable<Func<T, T>> seq!!)
     {
-      Guard.NotNull(seq, nameof(seq));
       Funcs = new List<Func<T, T>>(seq);
-      if (Funcs.Any(x => x is null)) throw new ArgumentException("There are null references in the list.", nameof(seq));
+      Guard.NoNulls(Funcs, nameof(seq));
     }
 
     /// <summary>
     /// Static method to link together a series of functions.
     /// </summary>
-    public static Func<T, T> Compose(IList<Func<T, T>> funcs)
+    public static Func<T, T> Compose(IList<Func<T, T>> funcs!!)
     {
-      Guard.NotNull(funcs, nameof(funcs));
-
       // Handle stupid case of single function pipe-line ;)
       if (funcs.Count == 1) return funcs[0];
 

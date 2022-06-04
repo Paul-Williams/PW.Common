@@ -18,9 +18,8 @@ namespace PW.IO
     /// <summary>
     /// Returns the named sub-directory, creates it if it does not exist.
     /// </summary>
-    public static DirectoryInfo GetOrCreateSubdirectory(this DirectoryInfo directory, string subdirectoryName)
+    public static DirectoryInfo GetOrCreateSubdirectory(this DirectoryInfo directory!!, string subdirectoryName)
     {
-      Guard.NotNull(directory, nameof(directory));
       Guard.NotNullOrWhitespace(subdirectoryName, nameof(subdirectoryName));
 
       if (subdirectoryName.ContainsAny(Path.GetInvalidFileNameChars()))
@@ -98,11 +97,8 @@ namespace PW.IO
     /// <summary>
     /// Creates sub-directories within the existing directory. Skips any sub-directory that already exist.
     /// </summary>
-    public static void CreateSubdirectories(this DirectoryInfo directory, IEnumerable<DirectoryName> subDirectories)
+    public static void CreateSubdirectories(this DirectoryInfo directory!!, IEnumerable<DirectoryName> subDirectories!!)
     {
-      Guard.NotNull(directory, nameof(directory));
-      Guard.NotNull(subDirectories, nameof(subDirectories));
-
       subDirectories
         .Distinct()
         .Select(subdirectory => Path.Combine(directory.FullName, subdirectory.Value))
@@ -137,30 +133,11 @@ namespace PW.IO
     /// Creates the directory if it does not already exist. 
     /// </summary>
     /// <param name="directory"></param>
-    /// <returns>The original directory, for fluid-chaining etc.
+    /// <returns>The original directory, for fluent-chaining etc.
     /// An exception will be thrown if the directory cannot be created or is null.</returns>
-    public static DirectoryInfo EnsureExists(this DirectoryInfo directory)
+    public static DirectoryInfo EnsureExists(this DirectoryInfo directory!!)
     {
-      Guard.NotNull(directory, nameof(directory));
-
-      if (directory.Exists) return directory;
-
-      // Handle case of a directory root (e.g. 'X:\' being passed.
-      if (directory.FullName.Equals(directory.Root.FullName, StringComparison.OrdinalIgnoreCase))
-        throw new Exception("Directory is a root and so cannot be created.");
-
-      // Handle case where the parent directory already exists, so we can just create this one.
-      if (directory.Parent!.Exists) directory.Create();
-      else
-      {
-        // Helper function.
-        static void CreateIfNotExists(DirectoryInfo dir) { if (!dir.Exists) dir.Create(); }
-
-        // When the parent does not exist we will attempt to create the entire directory path, as required.
-        // Skips one so we don't attempt to create the root.
-        directory.WalkPathFromRoot().Skip(1).ForEach(CreateIfNotExists);
-      }
-
+      if (!directory.Exists) directory.Create();
       return directory;
     }
 
@@ -172,13 +149,10 @@ namespace PW.IO
     /// <returns>Returns (true, null), if the directory already exists or it is created successfully. 
     /// If an exception occurs creating the directory, returns (false,error) where 'error' is the exception message.</returns>
     /// <exception cref="ArgumentNullException"> If <paramref name="directory"/> is null.</exception>
-    public static Result<DirectoryInfo> TryEnsureExists(this DirectoryInfo directory)
+    public static Result<DirectoryInfo> TryEnsureExists(this DirectoryInfo directory!!)
     {
-      Guard.NotNull(directory, nameof(directory));
-
       try
       {
-        // Delegate to the non-result returning version.
         return Success(directory.EnsureExists());
       }
       catch (Exception ex)
@@ -190,10 +164,8 @@ namespace PW.IO
     /// <summary>
     /// Returns a list of files from the directory which have file extensions as specified by <paramref name="extensions"/>
     /// </summary>
-    public static IEnumerable<FileInfo> GetFiles(this DirectoryInfo directory, IEnumerable<string> extensions, SearchOption searchOption)
+    public static IEnumerable<FileInfo> GetFiles(this DirectoryInfo directory!!, IEnumerable<string> extensions!!, SearchOption searchOption)
     {
-      Guard.NotNull(directory, nameof(directory));
-      Guard.NotNull(extensions, nameof(extensions));
 
       var set = new HashSet<string>(extensions, StringComparer.OrdinalIgnoreCase);
       // TODO: Use - Enumerable.SelectMany(directory.EnumerateAuthorizedDirectories(true), x =>
@@ -206,11 +178,8 @@ namespace PW.IO
     /// <summary>
     /// Enumerates files from the directory which have file extensions as specified by <paramref name="extensions"/>
     /// </summary>
-    public static IEnumerable<FileInfo> EnumerateFiles(this DirectoryInfo directory, IEnumerable<string> extensions, SearchOption searchOption)
+    public static IEnumerable<FileInfo> EnumerateFiles(this DirectoryInfo directory!!, IEnumerable<string> extensions!!, SearchOption searchOption)
     {
-      Guard.NotNull(directory, nameof(directory));
-      Guard.NotNull(extensions, nameof(extensions));
-
       var set = new HashSet<string>(extensions, StringComparer.OrdinalIgnoreCase);
       // TODO: Use - Enumerable.SelectMany(directory.EnumerateAuthorizedDirectories(true), x =>
       return directory.EnumerateFiles("*.*", searchOption).Where(fileInfo => set.Contains(fileInfo.Extension));
@@ -239,20 +208,16 @@ namespace PW.IO
     }
 
     /// <summary>
-    /// Recursively deletes all sub-directories that are either empty, or only themselves contains empty sub-directories.
-    /// Returns an array of <see cref="DirectoryInfo"/> containing an entry for each directory deleted.
-    /// If the initial directory does not exist, an empty array is returned.
+    /// Recursively deletes all sub-directories that are either empty or only contain empty sub-directories.
+    /// Returns an list of <see cref="DirectoryInfo"/> containing an entry for each directory deleted.
+    /// If the initial directory does not exist, an empty list is returned.
     /// </summary>
-    public static DirectoryInfo[] RecursiveDeleteEmptySubDirectories(this DirectoryInfo initialDirectory)
+    public static List<DirectoryInfo> RecursiveDeleteEmptySubDirectories(this DirectoryInfo initialDirectory!!)
     {
-      Guard.NotNull(initialDirectory, nameof(initialDirectory));
-      if (!initialDirectory.Exists) return Array.Empty<DirectoryInfo>();
+      var deletedDirectories = new List<DirectoryInfo>(); 
+      if (!initialDirectory.Exists) return deletedDirectories;
 
-
-
-      var subDirectories = initialDirectory.GetDirectories("*.*", SearchOption.AllDirectories);//.Reverse();
-
-      var deletedDirectories = new List<DirectoryInfo>();
+      var subDirectories = initialDirectory.GetDirectories("*.*", SearchOption.AllDirectories);
 
       // Note that we delete as we go, rather than after examining all directories. 
       // This is so that 'lower' empty sub-directories are deleted first, resulting in 'higher' sub-directories 
@@ -269,10 +234,8 @@ namespace PW.IO
         }
       }
 
-      return deletedDirectories.ToArray();
-
+      return deletedDirectories;
     }
-
   }
 
 }

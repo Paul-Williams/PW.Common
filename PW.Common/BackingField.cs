@@ -36,12 +36,8 @@ namespace PW
     /// <param name="field">The value to be returned, or set then returned.</param>
     /// <param name="factory">A <see cref="Func{TResult}"/> used to populate <paramref name="field"/>, as required</param>
     /// <returns>The value <paramref name="field"/></returns>
-    public static T? GetLazy<T>(ref T? field, Func<T?> factory) where T : class
-    {
-      factory.NullGuard(nameof(factory));
-      if (field is null) field = factory();
-      return field;
-    }
+    public static T? GetLazy<T>(ref T? field, Func<T?> factory!!) where T : class 
+      => field ??= factory();
 
     /// <summary>
     /// Returns the value of the lazy-initialized variable '<paramref name="field"/>'. 

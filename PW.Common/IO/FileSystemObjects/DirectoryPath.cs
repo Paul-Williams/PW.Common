@@ -31,7 +31,7 @@ namespace PW.IO.FileSystemObjects
       {
         // Cheat and use DirectoryInfo to further validate and construct.
         // To avoid issues during comparison, normalize all directories to end with a path separator.
-        Value = Helpers.Misc.EnsurePathSeparatorTerminated(new DirectoryInfo(directoryPath).FullName);
+        Value = Helpers.PathHelper.NormalizeDirectoryPath(new DirectoryInfo(directoryPath).FullName);
       }
       catch (Exception ex)
       {
@@ -47,7 +47,7 @@ namespace PW.IO.FileSystemObjects
     /// </summary>    
     public DirectoryPath(DirectoryInfo directory!!)
     {
-      Value = Helpers.Misc.EnsurePathSeparatorTerminated(directory.FullName);
+      Value = Helpers.PathHelper.NormalizeDirectoryPath(directory.FullName);
     }
 
     /// <summary>
@@ -57,7 +57,7 @@ namespace PW.IO.FileSystemObjects
     public DirectoryPath(FilePath filePath)
     {
       Value = filePath is not null
-        ? Helpers.Misc.EnsurePathSeparatorTerminated(Path.GetDirectoryName((string)filePath)!)
+        ? Helpers.PathHelper.NormalizeDirectoryPath(Path.GetDirectoryName((string)filePath)!)
         : throw new ArgumentNullException(nameof(filePath));
     }
 
@@ -71,7 +71,7 @@ namespace PW.IO.FileSystemObjects
     /// </summary>
     private static DirectoryPath FromStringInternal(string value)
     {
-      return new() { Value = Helpers.Misc.EnsurePathSeparatorTerminated(Path.GetDirectoryName(value)!) };
+      return new() { Value = Helpers.PathHelper.NormalizeDirectoryPath(Path.GetDirectoryName(value)!) };
     }
 
     #endregion
@@ -115,7 +115,8 @@ namespace PW.IO.FileSystemObjects
     /// Creates a FilePath from a DirectoryPath and FileName.
     /// </summary>
     public static FilePath operator +(DirectoryPath directoryPath, FileName fileName)
-    {return directoryPath is null ? throw new ArgumentNullException(nameof(directoryPath)) : fileName is null ? throw new ArgumentNullException(nameof(fileName)) : (FilePath)(directoryPath.Value + fileName.Value);
+    {
+      return directoryPath is null ? throw new ArgumentNullException(nameof(directoryPath)) : fileName is null ? throw new ArgumentNullException(nameof(fileName)) : (FilePath)(directoryPath.Value + fileName.Value);
     }
 
     /// <summary>
@@ -173,14 +174,14 @@ namespace PW.IO.FileSystemObjects
     /// <summary>
     /// Returns a new <see cref="DirectoryPath"/> instance with the specified file name appended.
     /// </summary>
-    public FilePath Append(FileName file) => 
+    public FilePath Append(FileName file) =>
       file is null ? throw new ArgumentNullException(nameof(file)) : (FilePath)(Value + file.ToString());
 
 
     /// <summary>
     /// Returns a new <see cref="DirectoryPath"/> instance with the specified file name appended.
     /// </summary>
-    public FilePath File(string file) => Append((FileName) file);
+    public FilePath File(string file) => Append((FileName)file);
 
 
     /// <summary>
@@ -222,7 +223,7 @@ namespace PW.IO.FileSystemObjects
     /// <summary>
     /// Determines whether the path refers to an existing directory on disk.
     /// </summary>
-    public bool Exists => Directory.Exists(Value);
+    public override bool Exists => Directory.Exists(Value);
 
     #endregion
 

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using OneOf;
+using PW.OptionTypes;
+using System;
 
 namespace PW.Functional;
 
@@ -29,7 +31,7 @@ public static class FuncExtensions
   /// <param name="f1">Function 1</param>
   /// <param name="f2">Function 2</param>
   /// <returns></returns>
-  [Obsolete ("Use Pipe<T1, T2, T3> instead.", false)]
+  [Obsolete("Use Pipe<T1, T2, T3> instead.", false)]
   public static Func<T, TR2> Then<T, TR1, TR2>(this Func<T, TR1> f1, Func<TR1, TR2> f2)
     => value => f2(f1(value));
 
@@ -104,12 +106,12 @@ public static class FuncExtensions
 
 
   /// <summary>
-  /// Returns <typeparamref name="T"/> or <see cref="OneOfTypes.None"/> or <see cref="Exception"/>
+  /// Returns <typeparamref name="T"/> or <see cref="OneOf.Types.None"/> or <see cref="Exception"/>
   /// If <paramref name="func"/> returns a value, this returns the value. 
-  /// If <paramref name="func"/> returns null, this returns <see cref="OneOfTypes.None"/>. 
+  /// If <paramref name="func"/> returns null, this returns <see cref="OneOf.Types.None"/>. 
   /// If <paramref name="func"/> throws an exception, this returns <see cref="Exception"/>.
   /// </summary>
-  public static OneOf<T, OneOfTypes.None, Exception> ValueOrNoneOrException<T>(this Func<T> func!!)
+  public static ValueOrNoneOrException<T> ValueOrNoneOrException<T>(this Func<T> func!!)
   {
     try
     {
@@ -118,7 +120,7 @@ public static class FuncExtensions
         // Checking for null-result does not make sense for value-type T
         ? func.Invoke()
         // For reference types, check for null and in that case return 'None'
-        : func.Invoke() is T r ? r : new OneOfTypes.None();
+        : func.Invoke() is T r ? r : new OneOf.Types.None();
     }
     catch (Exception ex)
     {
@@ -129,7 +131,7 @@ public static class FuncExtensions
   /// <summary>
   /// Returns the value from <paramref name="func"/>, or <see cref="Exception"/>.
   /// </summary>
-  public static OneOf<T, Exception> ValueOrException<T>(this Func<T> func!!)
+  public static ValueOrException<T> ValueOrException<T>(this Func<T> func!!)
   {
     try
     {

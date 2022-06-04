@@ -64,9 +64,8 @@ namespace PW.Exceptions
     /// <summary>
     /// GetObjectData
     /// </summary>
-    public override void GetObjectData(SerializationInfo info, StreamingContext context)
+    public override void GetObjectData(SerializationInfo info!!, StreamingContext context)
     {
-      info.NullGuard(nameof(info));
       info.AddValue(nameof(ReferenceName), ReferenceName);
       base.GetObjectData(info, context);
     }

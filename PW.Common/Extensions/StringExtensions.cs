@@ -31,7 +31,7 @@ namespace PW.Extensions
     private static Regex? _upperCamelCaseRegex;
 
     private static Regex UpperCamelCaseRegex =>
-      _upperCamelCaseRegex ??=  new Regex(@"(?<!^)((?<!\d)\d|(?(?<=[A-Z])[A-Z](?=[a-z])|[A-Z]))", RegexOptions.Compiled);
+      _upperCamelCaseRegex ??= new Regex(@"(?<!^)((?<!\d)\d|(?(?<=[A-Z])[A-Z](?=[a-z])|[A-Z]))", RegexOptions.Compiled);
 
     /// <summary>
     /// Compresses the string.
@@ -66,47 +66,29 @@ namespace PW.Extensions
     /// <summary>
     /// If any character within <paramref name="str"/> is a number returns true, otherwise returns false.
     /// </summary>
-    public static bool ContainsAnyNumber(this string str) => str.Any(char.IsNumber);
-
-    /// <summary>
-    /// Returns <paramref name="func"/>(<paramref name="str"/>) when <paramref name="str"/> is not null or zero-length. 
-    /// Throws is <paramref name="str"/> is null. 
-    /// Returns <paramref name="resultForEmptyString"/> is <paramref name="str"/> is zero-length.
-    /// </summary>
-    private static T TristateInvoke<T>(this string str, Func<string, T> func, T resultForEmptyString)
-    {
-      Guard.NotNull(str, nameof(str));
-      Guard.NotNull(func, nameof(func));
-      return str.Length != 0 ? func(str) : resultForEmptyString;
-    }
-
-
-
-
+    public static bool ContainsAnyNumber(this string str!!) => str.Length != 0 && str.Any(char.IsNumber);
 
     /// <summary>
     /// Returns true if the last character in <paramref name="str"/> is a number, otherwise returns false.
     /// </summary>
-    public static bool EndsWithNumber(this string str) => str.TristateInvoke(x => char.IsNumber(x[^1]), false);
+    public static bool EndsWithNumber(this string str!!) => str.Length != 0 && char.IsNumber(str[^1]);
 
     /// <summary>
     /// Returns true if the first character of <paramref name="str"/> is a number, otherwise false.
     /// </summary>
-    public static bool StartsWithNumber(this string str) => str.TristateInvoke(x => char.IsNumber(str[0]), false);
+    public static bool StartsWithNumber(this string str!!) => str.Length != 0 && char.IsNumber(str[0]);
 
     /// <summary>
     /// Determines whether <paramref name="str"/> starts with any of the strings in <paramref name="values"/>.
     /// </summary>
-    public static bool StartsWithAny(this string str, IEnumerable<string> values, StringComparison comparisonType) =>
-      str is null ? throw new ArgumentNullException(nameof(str))
-      : values is null ? throw new ArgumentNullException(nameof(values))
-      : str.Length != 0 && values.Any(x => str.StartsWith(x, comparisonType));
+    public static bool StartsWithAny(this string str!!, IEnumerable<string> values!!, StringComparison comparisonType) =>
+      str.Length != 0 && values.Any(x => str.StartsWith(x, comparisonType));
 
     /// <summary>
     /// Tests whether the <paramref name="str"/> ends with <paramref name="value"/>, as an ordinal comparison, ignoring case.
     /// </summary>
-    public static bool EndWithExactly(this string str, string value) =>
-      str != null && str.EndsWith(value, StringComparison.OrdinalIgnoreCase);
+    public static bool EndWithIgnoreCase(this string str!!, string value!!) =>
+      str.EndsWith(value, StringComparison.OrdinalIgnoreCase);
 
     /// <summary>
     /// Inserts a space before each capital letter, other than the first. Useful for converting enums, class names etc. to a 'display' string.
@@ -261,29 +243,27 @@ namespace PW.Extensions
     /// <summary>
     /// Returns true if <paramref name="str1"/> contains any of the characters in <paramref name="chars"/>.
     /// </summary>
-    public static bool ContainsAny(this string str1, params char[] chars)
-    {
-      return string.IsNullOrEmpty(str1) ? throw new ArgumentException($"'{nameof(str1)}' cannot be null or empty.", nameof(str1))
-          : chars is null ? throw new ArgumentNullException(nameof(chars))
-          : str1 is not null && str1.Length != 0 && str1.Any(c => chars.Contains(c));
-    }
+    public static bool ContainsAny(this string str1!!, params char[] chars!!) =>
+      str1.Length != 0 && str1.Any(c => chars.Contains(c));
+
+
+#if NET48
 
     /// <summary>
     /// Determines whether the character is contained within the string.
     /// </summary>
-    public static bool ContainsChar(this string str, char c) =>
-      str is not null ? str.IndexOf(c) != -1 : throw new ArgumentNullException(nameof(str));
+    public static bool ContainsChar(this string str!!, char c) => str.IndexOf(c) != -1;
 
     /// <summary>
     /// Determines whether a specified char is a prefix of the current instance.
     /// </summary>
-    public static bool StartsWith(this string str, char c) => str is not null && str.Length > 0 && str[0] == c;
+    public static bool StartsWith(this string str!!, char c) =>  str.Length > 0 && str[0] == c;
 
     /// <summary>
     /// Determines whether a specified char is a suffix of the current instance.
     /// </summary>
-    public static bool EndsWith(this string str, char c) => str is not null && str.Length > 0 && str[^1] == c;
-
+    public static bool EndsWith(this string str!!, char c) =>  str.Length > 0 && str[^1] == c;
+#endif
 
 
     /// <summary>
@@ -297,31 +277,31 @@ namespace PW.Extensions
     /// <summary>
     /// Returns a limited length version of the string.
     /// </summary>
-    public static string LimitLength(this string str, int maxLength)
+    public static string Truncate(this string str!!, int maxLength)
     {
-      str.NullGuard(nameof(str));
-      return str.Length <= maxLength ? str : str[..maxLength];
+      Guard.GreaterThanZero(maxLength, nameof(maxLength));
+      return maxLength == 0 ? string.Empty : str.Length <= maxLength ? str : str[..maxLength];
     }
 
     /// <summary>
     /// Splits a string into an array, based on new lines. Empty lines are removed.
     /// </summary>
     /// <exception cref="ArgumentNullException"/>
-    public static string[] SplitOnNewLine(this string lines)
+    public static string[] SplitOnNewLine(this string lines!!)
     {
-      Guard.NotNull(lines, nameof(lines));
+#if NET48
       return lines.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+#else
+      return lines.Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries);
+#endif
     }
 
     /// <summary>
     /// Splits a string into an array, based on new lines.
     /// </summary>
     /// <exception cref="ArgumentNullException"/>
-    public static string[] SplitOnNewLine(this string lines, StringSplitOptions splitOptions)
-    {
-      Guard.NotNull(lines, nameof(lines));
-      return lines.Split(new string[] { Environment.NewLine }, splitOptions);
-    }
+    public static string[] SplitOnNewLine(this string lines!!, StringSplitOptions splitOptions)
+      => lines.Split(new string[] { Environment.NewLine }, splitOptions);
 
     /// <summary>
     /// Get the string slice between the two indexes.
@@ -344,41 +324,26 @@ namespace PW.Extensions
     /// <summary>
     /// Returns a copy of the original string with all occurrences of <paramref name="subString"/> removed.
     /// </summary>
-    public static string RemoveAll(this string source, string subString)
-    {
-      Guard.NotNull(source, nameof(source));
-      Guard.NotNull(subString, nameof(subString));
-      return source.Replace(subString, string.Empty);
-    }
+    public static string RemoveAll(this string source!!, string subString!!) => source.Replace(subString, string.Empty);
 
     /// <summary>
     /// Removes all instances of <see cref="char"/> <paramref name="c"/> from the string.
     /// </summary>
-    public static string RemoveAll(this string source, char c)
-    {
-      Guard.NotNull(source, nameof(source));
-      return source.Where(x => x != c).AsString();
-    }
+    public static string RemoveAll(this string source!!, char c) => source.Where(x => x != c).AsString();
 
 
     /// <summary>
     /// Returns the substring between the locations of str1 and str2, within the source string.
     /// </summary>
     public static Result<string> ResultOfSubstringBetween(
-      this string source,
-      string str1,
-      string str2,
+      this string source!!,
+      string str1!!,
+      string str2!!,
       StringComparison comparisonType = StringComparison.OrdinalIgnoreCase,
       int startIndex = 0,
-      string str1NotFoundError = "'str1' was not found.",
-      string str2NotFoundError = "'str2' was not found.")
+      string str1NotFoundError!! = "'str1' was not found.",
+      string str2NotFoundError!! = "'str2' was not found.")
     {
-      Guard.NotNull(source, nameof(source));
-      Guard.NotNull(str1, nameof(str1));
-      Guard.NotNull(str2, nameof(str2));
-      Guard.NotNull(str1NotFoundError, nameof(str1NotFoundError));
-      Guard.NotNull(str2NotFoundError, nameof(str2NotFoundError));
-
       var str1Start = source.IndexOf(str1, startIndex, comparisonType);
       if (str1Start == Constants.NotFound) return Failure<string>(str1NotFoundError);
       var str1End = str1Start + str1.Length;
@@ -398,17 +363,13 @@ namespace PW.Extensions
     /// <param name="defaultValue">Returned when <paramref name="str1"/> or <paramref name="str2"/> is not found. Can be null.</param>
     /// <returns></returns>
     public static string SubstringBetween(
-      this string source,
-      string str1,
-      string str2,
+      this string source!!,
+      string str1!!,
+      string str2!!,
       StringComparison comparisonType = StringComparison.OrdinalIgnoreCase,
       int startIndex = 0,
       string defaultValue = EmptyString)
     {
-      Guard.NotNull(source, nameof(source));
-      Guard.NotNull(str1, nameof(str1));
-      Guard.NotNull(str2, nameof(str2));
-
       var str1Start = source.IndexOf(str1, startIndex, comparisonType);
       if (str1Start == -1) return defaultValue;
       var str1End = str1Start + str1.Length;
@@ -423,16 +384,13 @@ namespace PW.Extensions
     /// </summary>
     /// <param name="str"></param>
     /// <returns></returns>
-    public static bool IsUrl(this string str)
-    {
-      str.NullGuard(nameof(str));
-      return str.StartsWith("https://", StringComparison.OrdinalIgnoreCase) || str.StartsWith("http://", StringComparison.OrdinalIgnoreCase);
-    }
+    public static bool IsUrl(this string str!!)
+      => str.StartsWith("https://", StringComparison.OrdinalIgnoreCase) || str.StartsWith("http://", StringComparison.OrdinalIgnoreCase);
 
     /// <summary>
     /// Enumerates a string as a series of lines.
     /// </summary>
-    public static IEnumerable<string> ReadLines(this string str)
+    public static IEnumerable<string> ReadLines(this string str!!)
     {
       if (str is null) yield break;
       using var sr = new StringReader(str);
@@ -447,10 +405,8 @@ namespace PW.Extensions
     /// <param name="c"></param>
     /// <returns></returns>
     /// <remarks>If original string is nothing, returns nothing. If original string's length is zero, returns String.Empty. If c is not found, returns the original string.</remarks>
-    public static string SubstringAfterLast(this string str, char c)
+    public static string SubstringAfterLast(this string str!!, char c)
     {
-      str.NullGuard(nameof(str));
-
       if (str.Length == 0) return string.Empty;
 
       var startIndex = str.LastIndexOf(c) + 1;
@@ -471,11 +427,7 @@ namespace PW.Extensions
     /// If the string contains leading-zeros, returns the length of the string, otherwise zero.
     /// This seems quite naff. [Sometime much later...] Indeed it does!
     /// </summary>
-    public static int ZeroPaddedLength(this string str)
-    {
-      str.NullGuard(nameof(str));
-      return str[0] == '0' ? str.Length : 0;
-    }
+    public static int ZeroPaddedLength(this string str!!) => str[0] == '0' ? str.Length : 0;
 
 
     /// <summary>
@@ -485,12 +437,8 @@ namespace PW.Extensions
     /// <param name="str">The string to possibly be leading-zero padded.</param>
     /// <param name="matchTo">The string to match against to determine whether to pad <paramref name="str"/>.</param>
     /// <returns></returns>
-    public static string MatchZeroPadding(this string str, string matchTo)
-    {
-      return str is null ? throw new ArgumentNullException(nameof(str))
-          : matchTo is null ? throw new ArgumentNullException(nameof(matchTo))
-          : matchTo[0] == '0' ? str.PadLeft(matchTo.Length, '0') : str;
-    }
+    public static string MatchZeroPadding(this string str!!, string matchTo!!)
+      => matchTo[0] == '0' ? str.PadLeft(matchTo.Length, '0') : str;
   }
 
 

@@ -1,72 +1,78 @@
-﻿#nullable enable 
+﻿namespace PW.IO;
 
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using PW.Extensions;
-using PW.FailFast;
+using static Helpers.PathHelper;
 
-namespace PW.IO
+#if NET48
+using static PW.Extensions.StringExtensions;
+#endif
+
+
+/// <summary>
+/// Class for building file paths -- seems a bit rubbish
+/// </summary>
+public class PathBuilder
 {
+  private StringBuilder StringBuilder { get; } = new(256);
+
   /// <summary>
-  /// Class for building file paths -- seems a bit rubbish
+  /// ctor
   /// </summary>
-  public class PathBuilder
+  public PathBuilder() { }
+
+  /// <summary>
+  /// ctor
+  /// </summary>
+  public PathBuilder(string path!!) => StringBuilder.Append(path);
+  /// <summary>
+  /// ctor
+  /// </summary>
+  public PathBuilder(IEnumerable<string> directoryNames!!) => AppendDirectorNames(directoryNames);
+
+  /// <summary>
+  /// Returns the full path.
+  /// </summary>
+  public override string ToString() => StringBuilder.ToString();
+
+
+
+  /// <summary>
+  /// Appends the directory name to the path
+  /// </summary>
+  /// <param name="directoryName"></param>
+  public PathBuilder AppendDirectory(string directoryName!!)
   {
-    private StringBuilder StringBuilder { get; } = new(256);
-
-    /// <summary>
-    /// ctor
-    /// </summary>
-    public PathBuilder()
-    {
-    }
-
-    /// <summary>
-    /// ctor
-    /// </summary>
-    public PathBuilder(string path)
-    {
-      Guard.NotNull(path, nameof(path));
-      StringBuilder.Append(path);
-    }
-    /// <summary>
-    /// ctor
-    /// </summary>
-    public PathBuilder(IEnumerable<string> directoryNames)
-    {
-      Guard.NotNull(directoryNames, nameof(directoryNames));
-      directoryNames.ForEach(name => StringBuilder.Append(name + Path.DirectorySeparatorChar));
-    }
-
-    /// <summary>
-    /// tostring
-    /// </summary>
-    public override string ToString() => StringBuilder.ToString();
-
-    /// <summary>
-    /// Appends the directory name to the path
-    /// </summary>
-    /// <param name="name"></param>
-    public void AppendDirectory(string name)
-    {
-      Guard.NotNull(name, nameof(name));
-      StringBuilder.Append(name + Path.DirectorySeparatorChar);
-    }
-
-    /// <summary>
-    /// Appends the file name to the path
-    /// </summary>
-    /// <param name="name"></param>
-    public void AppendFilename(string name)
-    {
-      Guard.NotNull(name, nameof(name));
-      StringBuilder.Append(name);
-    }
-      
-      
+    StringBuilder.Append(NormalizeDirectoryPath(directoryName));
+    return this;
   }
+
+  public PathBuilder AppendDirectorNames(IEnumerable<string> directoryNames!!)
+  {
+    StringBuilder.Append(NormalizeDirectoryPath(Path.Combine(directoryNames as string[] ?? directoryNames.ToArray())));
+    return this;
+  }
+
+  /// <summary>
+  /// Appends the file name to the path
+  /// </summary>
+  /// <param name="fileName"></param>
+  public PathBuilder AppendFilename(string fileName!!)
+  {
+    StringBuilder.Append(fileName);
+    return this;
+  }
+
+  /// <summary>
+  /// Appends the file name to the path
+  /// </summary>
+  /// <param name="fileExtension"></param>
+  public PathBuilder AppendFileExtension(string fileExtension!!)
+  {
+    StringBuilder.Append(fileExtension.StartsWith('.') ? fileExtension : '.' + fileExtension);
+    return this;
+  }
+
 }

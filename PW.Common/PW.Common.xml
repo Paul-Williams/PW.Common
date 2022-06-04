@@ -37,12 +37,17 @@
         </member>
         <member name="M:PW.AppRegistration.RegistrationManager.Register(System.String,System.String)">
             <summary>
-            Registers an application with LaunchPad.
+            Registers an application with LaunchPad using the application's product name.
             </summary>
         </member>
         <member name="M:PW.AppRegistration.RegistrationManager.Register">
             <summary>
-            Registers an application with LaunchPad using defaults. 
+            Registers the current application with LaunchPad. 
+            </summary>
+        </member>
+        <member name="M:PW.AppRegistration.RegistrationManager.Register(System.String)">
+            <summary>
+            Registers the current application with LaunchPad using a custom title. 
             </summary>
         </member>
         <member name="M:PW.AppRegistration.RegistrationManager.UnRegister(System.String)">
@@ -997,12 +1002,6 @@
             Guard class for argument validation, such as null-checking etc.
             </summary>
         </member>
-        <member name="M:PW.FailFast.Guard.IsOfType``1(System.Object,System.String)">
-            <summary>
-            Guards against invalid object type. 
-            Throws an exception if <paramref name="argument"/> is not of type <typeparamref name="T"/>
-            </summary>
-        </member>
         <member name="M:PW.FailFast.Guard.NotNull``1(``0,System.String)">
             <summary>
             Guard against null reference arguments etc. Example usage: <code>obj.GuardNull(nameof(obj))</code>
@@ -1079,6 +1078,11 @@
             </summary>
         </member>
         <member name="M:PW.FailFast.Guard.MustExist(System.IO.FileSystemInfo,System.String)">
+            <summary>
+            Ensures that <paramref name="o"/> is not null and that it exists.
+            </summary>
+        </member>
+        <member name="M:PW.FailFast.Guard.MustExist(PW.IO.FileSystemObjects.IFileSystemPath,System.String)">
             <summary>
             Ensures that <paramref name="o"/> is not null and that it exists.
             </summary>
@@ -1566,13 +1570,6 @@
             If any character within <paramref name="str"/> is a number returns true, otherwise returns false.
             </summary>
         </member>
-        <member name="M:PW.Extensions.StringExtensions.TristateInvoke``1(System.String,System.Func{System.String,``0},``0)">
-            <summary>
-            Returns <paramref name="func"/>(<paramref name="str"/>) when <paramref name="str"/> is not null or zero-length. 
-            Throws is <paramref name="str"/> is null. 
-            Returns <paramref name="resultForEmptyString"/> is <paramref name="str"/> is zero-length.
-            </summary>
-        </member>
         <member name="M:PW.Extensions.StringExtensions.EndsWithNumber(System.String)">
             <summary>
             Returns true if the last character in <paramref name="str"/> is a number, otherwise returns false.
@@ -1588,7 +1585,7 @@
             Determines whether <paramref name="str"/> starts with any of the strings in <paramref name="values"/>.
             </summary>
         </member>
-        <member name="M:PW.Extensions.StringExtensions.EndWithExactly(System.String,System.String)">
+        <member name="M:PW.Extensions.StringExtensions.EndWithIgnoreCase(System.String,System.String)">
             <summary>
             Tests whether the <paramref name="str"/> ends with <paramref name="value"/>, as an ordinal comparison, ignoring case.
             </summary>
@@ -1703,21 +1700,6 @@
             Returns true if <paramref name="str1"/> contains any of the characters in <paramref name="chars"/>.
             </summary>
         </member>
-        <member name="M:PW.Extensions.StringExtensions.ContainsChar(System.String,System.Char)">
-            <summary>
-            Determines whether the character is contained within the string.
-            </summary>
-        </member>
-        <member name="M:PW.Extensions.StringExtensions.StartsWith(System.String,System.Char)">
-            <summary>
-            Determines whether a specified char is a prefix of the current instance.
-            </summary>
-        </member>
-        <member name="M:PW.Extensions.StringExtensions.EndsWith(System.String,System.Char)">
-            <summary>
-            Determines whether a specified char is a suffix of the current instance.
-            </summary>
-        </member>
         <member name="M:PW.Extensions.StringExtensions.ContainsHyperlink(System.String)">
             <summary>
             Returns bool whether 'http://' or 'https://' is contained within the string
@@ -1725,7 +1707,7 @@
             <param name="str"></param>
             <returns></returns>
         </member>
-        <member name="M:PW.Extensions.StringExtensions.LimitLength(System.String,System.Int32)">
+        <member name="M:PW.Extensions.StringExtensions.Truncate(System.String,System.Int32)">
             <summary>
             Returns a limited length version of the string.
             </summary>
@@ -1963,9 +1945,9 @@
         </member>
         <member name="M:PW.Functional.FuncExtensions.ValueOrNoneOrException``1(System.Func{``0})">
             <summary>
-            Returns <typeparamref name="T"/> or <see cref="T:PW.Functional.OneOfTypes.None"/> or <see cref="T:System.Exception"/>
+            Returns <typeparamref name="T"/> or <see cref="T:OneOf.Types.None"/> or <see cref="T:System.Exception"/>
             If <paramref name="func"/> returns a value, this returns the value. 
-            If <paramref name="func"/> returns null, this returns <see cref="T:PW.Functional.OneOfTypes.None"/>. 
+            If <paramref name="func"/> returns null, this returns <see cref="T:OneOf.Types.None"/>. 
             If <paramref name="func"/> throws an exception, this returns <see cref="T:System.Exception"/>.
             </summary>
         </member>
@@ -2168,11 +2150,6 @@
             Swaps the values held by the two references.
             </summary>
         </member>
-        <member name="M:PW.Helpers.Misc.EnsurePathSeparatorTerminated(System.String)">
-            <summary>
-            Ensures the directory path string is terminated with a <see cref="F:System.IO.Path.DirectorySeparatorChar"/>
-            </summary>
-        </member>
         <member name="M:PW.Helpers.Misc.GetCompositeHashCode(System.Object[])">
             <summary>
             Creates a composite hash code from for multiple objects.
@@ -2184,6 +2161,16 @@
             </summary>
             <param name="objs"></param>
             <returns></returns>
+        </member>
+        <member name="M:PW.Helpers.PathHelper.NormalizeFileExtension(System.String)">
+            <summary>
+            Unless empty, ensures it starts with a period.
+            </summary>
+        </member>
+        <member name="M:PW.Helpers.PathHelper.NormalizeDirectoryPath(System.String)">
+            <summary>
+            Unless empty, ensures the directory path string is terminated with a <see cref="F:System.IO.Path.DirectorySeparatorChar"/>
+            </summary>
         </member>
         <member name="T:PW.IOperation">
             <summary>
@@ -2227,7 +2214,7 @@
         </member>
         <member name="T:PW.IResultOperation">
             <summary>
-            An interface to an operation which can be performed
+            An interface to an operation, which when performed and returns a <see cref="T:CSharpFunctionalExtensions.Result"/>
             </summary>
         </member>
         <member name="M:PW.IResultOperation.Perform">
@@ -2237,9 +2224,8 @@
         </member>
         <member name="T:PW.IResultOperation`1">
             <summary>
-            Represents a <see cref="T:CSharpFunctionalExtensions.Result"/> returning operation.
+            An interface to an operation, which when performed and returns a <see cref="T:CSharpFunctionalExtensions.Result`1"/>
             </summary>
-            <typeparam name="T"></typeparam>
         </member>
         <member name="M:PW.IResultOperation`1.Perform">
             <summary>
@@ -2379,7 +2365,7 @@
             Creates the directory if it does not already exist. 
             </summary>
             <param name="directory"></param>
-            <returns>The original directory, for fluid-chaining etc.
+            <returns>The original directory, for fluent-chaining etc.
             An exception will be thrown if the directory cannot be created or is null.</returns>
         </member>
         <member name="M:PW.IO.DirectoryInfoExtensions.TryEnsureExists(System.IO.DirectoryInfo)">
@@ -2412,9 +2398,9 @@
         </member>
         <member name="M:PW.IO.DirectoryInfoExtensions.RecursiveDeleteEmptySubDirectories(System.IO.DirectoryInfo)">
             <summary>
-            Recursively deletes all sub-directories that are either empty, or only themselves contains empty sub-directories.
-            Returns an array of <see cref="T:System.IO.DirectoryInfo"/> containing an entry for each directory deleted.
-            If the initial directory does not exist, an empty array is returned.
+            Recursively deletes all sub-directories that are either empty or only contain empty sub-directories.
+            Returns an list of <see cref="T:System.IO.DirectoryInfo"/> containing an entry for each directory deleted.
+            If the initial directory does not exist, an empty list is returned.
             </summary>
         </member>
         <member name="T:PW.IO.DirectoryInfoPathEqualityComparer">
@@ -2569,21 +2555,15 @@
             Changes the name of the file to that specified by <paramref name="newName"/>
             </summary>
         </member>
-        <member name="M:PW.IO.FileInfoExtensions.HasExtension(System.IO.FileInfo,System.String)">
+        <member name="M:PW.IO.FileInfoExtensions.HasExtensionOf(System.IO.FileInfo,System.String)">
             <summary>
-            Checks whether the <see cref="T:System.IO.FileInfo"/> has the specified extension. Include the dot!
+            Checks whether the <see cref="T:System.IO.FileInfo"/> has the specified extension.
             </summary>
-            <param name="file">this</param>
-            <param name="extension">The file extension, including the dot!</param>
-            <returns></returns>
         </member>
-        <member name="M:PW.IO.FileInfoExtensions.CreateRenameOperation(System.IO.FileInfo,System.String)">
+        <member name="M:PW.IO.FileInfoExtensions.HasExtension(System.IO.FileInfo)">
             <summary>
-            Creates a file rename operation that can be performed later.
+            Returns true if the file has an extension.
             </summary>
-            <param name="file">The file to be renamed.</param>
-            <param name="newName">The new name for the file.</param>
-            <returns>An operation that can later be performed.</returns>
         </member>
         <member name="M:PW.IO.FileInfoExtensions.MoveTo(System.IO.FileInfo,System.IO.DirectoryInfo)">
             <summary>
@@ -2906,7 +2886,7 @@
         <member name="P:PW.IO.FileSystemObjects.FileExtension.Cache">
             <summary>
             A cache mapping string -> FileExtension. 
-            String comparison is deliberately NOT case-insensitive. 
+            String comparison is deliberately NOT case-insensitive. [ED: WHY?!]
             Extensions should be converted to lower-case before caching.
             </summary>
         </member>
@@ -3457,11 +3437,6 @@
             
             </summary>
         </member>
-        <member name="T:PW.IO.FileSystemObjects.IFileSystemPath">
-            <summary>
-            Enables polymorphism for classes that inherit from <see cref="T:PW.IO.FileSystemObjects.FileSystemPath`1"/>
-            </summary>
-        </member>
         <member name="T:PW.IO.FileSystemObjects.FileSystemPathSection`1">
             <summary>
             Base class for objects representing a file system path. E.g. DirectoryPath or FilePath.
@@ -3551,6 +3526,11 @@
             <param name="left"></param>
             <param name="right"></param>
             <returns></returns>
+        </member>
+        <member name="T:PW.IO.FileSystemObjects.IFileSystemPath">
+            <summary>
+            Enables polymorphism for classes that inherit from <see cref="T:PW.IO.FileSystemObjects.FileSystemPath`1"/>
+            </summary>
         </member>
         <member name="T:PW.IO.FileSystemObjects.OneDriveDirectory">
             <summary>
@@ -3709,20 +3689,26 @@
         </member>
         <member name="M:PW.IO.PathBuilder.ToString">
             <summary>
-            tostring
+            Returns the full path.
             </summary>
         </member>
         <member name="M:PW.IO.PathBuilder.AppendDirectory(System.String)">
             <summary>
             Appends the directory name to the path
             </summary>
-            <param name="name"></param>
+            <param name="directoryName"></param>
         </member>
         <member name="M:PW.IO.PathBuilder.AppendFilename(System.String)">
             <summary>
             Appends the file name to the path
             </summary>
-            <param name="name"></param>
+            <param name="fileName"></param>
+        </member>
+        <member name="M:PW.IO.PathBuilder.AppendFileExtension(System.String)">
+            <summary>
+            Appends the file name to the path
+            </summary>
+            <param name="fileExtension"></param>
         </member>
         <member name="T:PW.IO.StreamExtensions">
             <summary>
@@ -4095,6 +4081,90 @@
             <summary>
             The exception that occurred.
             </summary>
+        </member>
+        <member name="T:PW.OptionTypes.ValueOrException`1">
+            <summary>
+            Represents either a value or an exception.
+            </summary>
+            <typeparam name="TValue"></typeparam>
+        </member>
+        <member name="M:PW.OptionTypes.ValueOrException`1.#ctor(OneOf.OneOf{`0,System.Exception})">
+            <summary>
+            Creates a new instance.
+            </summary>
+            <param name="input"></param>
+        </member>
+        <member name="M:PW.OptionTypes.ValueOrException`1.op_Implicit(`0)~PW.OptionTypes.ValueOrException{`0}">
+            <summary>
+            
+            </summary>
+            <param name="_"></param>
+        </member>
+        <member name="M:PW.OptionTypes.ValueOrException`1.op_Explicit(PW.OptionTypes.ValueOrException{`0})~`0">
+            <summary>
+            
+            </summary>
+            <param name="_"></param>
+        </member>
+        <member name="M:PW.OptionTypes.ValueOrException`1.op_Implicit(System.Exception)~PW.OptionTypes.ValueOrException{`0}">
+            <summary>
+            
+            </summary>
+            <param name="_"></param>
+        </member>
+        <member name="M:PW.OptionTypes.ValueOrException`1.op_Explicit(PW.OptionTypes.ValueOrException{`0})~System.Exception">
+            <summary>
+            
+            </summary>
+            <param name="_"></param>
+        </member>
+        <member name="T:PW.OptionTypes.ValueOrNoneOrException`1">
+            <summary>
+            Represents either a value or an exception.
+            </summary>
+            <typeparam name="TValue"></typeparam>
+        </member>
+        <member name="M:PW.OptionTypes.ValueOrNoneOrException`1.#ctor(OneOf.OneOf{`0,OneOf.Types.None,System.Exception})">
+            <summary>
+            Creates a new instance.
+            </summary>
+            <param name="input"></param>
+        </member>
+        <member name="M:PW.OptionTypes.ValueOrNoneOrException`1.op_Implicit(`0)~PW.OptionTypes.ValueOrNoneOrException{`0}">
+            <summary>
+            
+            </summary>
+            <param name="_"></param>
+        </member>
+        <member name="M:PW.OptionTypes.ValueOrNoneOrException`1.op_Explicit(PW.OptionTypes.ValueOrNoneOrException{`0})~`0">
+            <summary>
+            
+            </summary>
+            <param name="_"></param>
+        </member>
+        <member name="M:PW.OptionTypes.ValueOrNoneOrException`1.op_Implicit(OneOf.Types.None)~PW.OptionTypes.ValueOrNoneOrException{`0}">
+            <summary>
+            
+            </summary>
+            <param name="_"></param>
+        </member>
+        <member name="M:PW.OptionTypes.ValueOrNoneOrException`1.op_Explicit(PW.OptionTypes.ValueOrNoneOrException{`0})~OneOf.Types.None">
+            <summary>
+            
+            </summary>
+            <param name="_"></param>
+        </member>
+        <member name="M:PW.OptionTypes.ValueOrNoneOrException`1.op_Implicit(System.Exception)~PW.OptionTypes.ValueOrNoneOrException{`0}">
+            <summary>
+            
+            </summary>
+            <param name="_"></param>
+        </member>
+        <member name="M:PW.OptionTypes.ValueOrNoneOrException`1.op_Explicit(PW.OptionTypes.ValueOrNoneOrException{`0})~System.Exception">
+            <summary>
+            
+            </summary>
+            <param name="_"></param>
         </member>
         <member name="T:PW.PropertyComparer`1">
             <summary>
@@ -4471,117 +4541,6 @@
             Implicitly converts <see cref="T:PW.ValueObjects.WriteOnceValue`1"/> to <typeparamref name="T"/>.
             </summary>
             <param name="value"></param>
-        </member>
-    </members>
-</doc>
-ent.
-            </remarks>
-        </member>
-        <member name="P:System.Index.Start">
-            <summary>Create an Index pointing at first element.</summary>
-        </member>
-        <member name="P:System.Index.End">
-            <summary>Create an Index pointing at beyond last element.</summary>
-        </member>
-        <member name="M:System.Index.FromStart(System.Int32)">
-            <summary>Create an Index from the start at the position indicated by the value.</summary>
-            <param name="value">The index value from the start.</param>
-        </member>
-        <member name="M:System.Index.FromEnd(System.Int32)">
-            <summary>Create an Index from the end at the position indicated by the value.</summary>
-            <param name="value">The index value from the end.</param>
-        </member>
-        <member name="P:System.Index.Value">
-            <summary>Returns the index value.</summary>
-        </member>
-        <member name="P:System.Index.IsFromEnd">
-            <summary>Indicates whether the index is from the start or the end.</summary>
-        </member>
-        <member name="M:System.Index.GetOffset(System.Int32)">
-            <summary>Calculate the offset from the start using the giving collection length.</summary>
-            <param name="length">The length of the collection that the Index will be used with. length has to be a positive value</param>
-            <remarks>
-            For performance reason, we don't validate the input length parameter and the returned offset value against negative values.
-            we don't validate either the returned offset is greater than the input length.
-            It is expected Index will be used with collections which always have non negative length/count. If the returned offset is negative and
-            then used to index a collection will get out of range exception which will be same affect as the validation.
-            </remarks>
-        </member>
-        <member name="M:System.Index.Equals(System.Object)">
-            <summary>Indicates whether the current Index object is equal to another object of the same type.</summary>
-            <param name="value">An object to compare with this object</param>
-        </member>
-        <member name="M:System.Index.Equals(System.Index)">
-            <summary>Indicates whether the current Index object is equal to another Index object.</summary>
-            <param name="other">An object to compare with this object</param>
-        </member>
-        <member name="M:System.Index.GetHashCode">
-            <summary>Returns the hash code for this instance.</summary>
-        </member>
-        <member name="M:System.Index.op_Implicit(System.Int32)~System.Index">
-            <summary>Converts integer number to an Index.</summary>
-        </member>
-        <member name="M:System.Index.ToString">
-            <summary>Converts the value of the current Index object to its equivalent string representation.</summary>
-        </member>
-        <member name="T:System.Range">
-            <summary>Represent a range has start and end indexes.</summary>
-            <remarks>
-            Range is used by the C# compiler to support the range syntax.
-            <code>
-            int[] someArray = new int[5] { 1, 2, 3, 4, 5 };
-            int[] subArray1 = someArray[0..2]; // { 1, 2 }
-            int[] subArray2 = someArray[1..^0]; // { 2, 3, 4, 5 }
-            </code>
-            </remarks>
-        </member>
-        <member name="P:System.Range.Start">
-            <summary>Represent the inclusive start index of the Range.</summary>
-        </member>
-        <member name="P:System.Range.End">
-            <summary>Represent the exclusive end index of the Range.</summary>
-        </member>
-        <member name="M:System.Range.#ctor(System.Index,System.Index)">
-            <summary>Construct a Range object using the start and end indexes.</summary>
-            <param name="start">Represent the inclusive start index of the range.</param>
-            <param name="end">Represent the exclusive end index of the range.</param>
-        </member>
-        <member name="M:System.Range.Equals(System.Object)">
-            <summary>Indicates whether the current Range object is equal to another object of the same type.</summary>
-            <param name="value">An object to compare with this object</param>
-        </member>
-        <member name="M:System.Range.Equals(System.Range)">
-            <summary>Indicates whether the current Range object is equal to another Range object.</summary>
-            <param name="other">An object to compare with this object</param>
-        </member>
-        <member name="M:System.Range.GetHashCode">
-            <summary>Returns the hash code for this instance.</summary>
-        </member>
-        <member name="M:System.Range.ToString">
-            <summary>Converts the value of the current Range object to its equivalent string representation.</summary>
-        </member>
-        <member name="M:System.Range.StartAt(System.Index)">
-            <summary>Create a Range object starting from start index to the end of the collection.</summary>
-        </member>
-        <member name="M:System.Range.EndAt(System.Index)">
-            <summary>Create a Range object starting from first element in the collection to the end Index.</summary>
-        </member>
-        <member name="P:System.Range.All">
-            <summary>Create a Range object starting from first element to the end.</summary>
-        </member>
-        <member name="M:System.Range.GetOffsetAndLength(System.Int32)">
-            <summary>Calculate the start offset and length of range object using a collection length.</summary>
-            <param name="length">The length of the collection that the range will be used with. length has to be a positive value.</param>
-            <remarks>
-            For performance reason, we don't validate the input length parameter against negative values.
-            It is expected Range will be used with collections which always have non negative length/count.
-            We validate the range is inside the length scope though.
-            </remarks>
-        </member>
-        <member name="M:System.Runtime.CompilerServices.RuntimeHelpers.GetSubArray``1(``0[],System.Range)">
-            <summary>
-            Slices the specified array using the specified range.
-            </summary>
         </member>
     </members>
 </doc>

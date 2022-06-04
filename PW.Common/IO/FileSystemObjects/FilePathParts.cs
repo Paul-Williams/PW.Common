@@ -14,7 +14,7 @@ namespace PW.IO.FileSystemObjects
     /// <param name="filePath"></param>
     public FilePathParts(FilePath filePath!!)
     {
-      Directory = Helpers.Misc.EnsurePathSeparatorTerminated(Path.GetDirectoryName(filePath.Value)!);
+      Directory = Helpers.PathHelper.NormalizeDirectoryPath(Path.GetDirectoryName(filePath.Value)!);
       FileNameWithoutExtension = Path.GetFileNameWithoutExtension(filePath.Value);
       Extension = Path.GetExtension(filePath.Value);
     }

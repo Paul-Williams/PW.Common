@@ -20,9 +20,8 @@ namespace PW.IO
     /// </summary>
     /// <param name="file">File to be renamed</param>
     /// <param name="newName">New name for the file</param>
-    public FileRenameOperation(FileInfo file, string newName)
+    public FileRenameOperation(FileInfo file!!, string newName)
     {
-      Guard.NotNull(file, nameof(file));
       Guard.NotNullOrWhitespace(newName, nameof(newName));
 
       File = file;
@@ -38,7 +37,8 @@ namespace PW.IO
     {
       try
       {
-        return Success(File.Rename(NewName));
+        File.Rename(NewName);
+        return Success(File);
       }
       catch (System.Exception ex)
       {

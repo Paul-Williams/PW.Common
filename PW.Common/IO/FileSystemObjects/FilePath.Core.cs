@@ -125,7 +125,7 @@ namespace PW.IO.FileSystemObjects
     /// <summary>
     /// Determines whether the path refers to an existing file on disk. Not cached.
     /// </summary>
-    public bool Exists => File.Exists(Value);
+    public override bool Exists => File.Exists(Value);
 
   }
 }

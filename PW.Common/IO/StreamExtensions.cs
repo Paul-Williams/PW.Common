@@ -19,9 +19,8 @@ namespace PW.IO
     /// <returns>New instance of <seealso cref="MemoryStream"/></returns>
     /// <exception cref="ArgumentNullException"></exception>
     /// <exception cref="ArgumentException"></exception>
-    public static MemoryStream CopyToMemory(this Stream source)
+    public static MemoryStream CopyToMemory(this Stream source!!)
     {
-      Guard.NotNull(source, nameof(source));
       Guard.True(source.CanRead, $"Stream {nameof(source)} does not support reading.");
 
       MemoryStream? returnStream = null;
@@ -50,14 +49,10 @@ namespace PW.IO
     /// <exception cref="ArgumentNullException"></exception>
     /// <exception cref="ArgumentException"></exception>
 
-    public static void CopyTo(this Stream source, Action<byte[]> consumer, int start, int length)
+    public static void CopyTo(this Stream source!!, Action<byte[]> consumer!!, int start, int length)
     {
-      Guard.NotNull(source, nameof(source));
-      Guard.NotNull(consumer, nameof(consumer));
       Guard.GreaterThanZero(length, nameof(length));
       Guard.ZeroOrGreater(start, nameof(start));
-      //Ensure.True(source.CanSeek, "Stream '" + nameof(source) + "' does not support seeking.");
-      //Ensure.True(source.CanRead, "Stream '" + nameof(source) + "' does not support reading.");
 
       source.Position = start;
       var buffer = new byte[length];

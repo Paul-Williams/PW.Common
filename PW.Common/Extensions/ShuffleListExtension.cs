@@ -18,11 +18,9 @@ namespace PW.Extensions
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="list"></param>
-    public static void Shuffle<T>(this IList<T> list)
+    public static void Shuffle<T>(this IList<T> list!!)
     {
-      Guard.NotNull(list, nameof(list));
-
-      // If there are more then 2 elements in the list than perform the shuffle.
+      // If there are more then 2 elements in the list then perform the shuffle.
 
       // Method:
       // Cursor backwards through the list

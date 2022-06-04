@@ -16,7 +16,7 @@ namespace PW.IO.FileSystemObjects
 
     /// <summary>
     /// A cache mapping string -> FileExtension. 
-    /// String comparison is deliberately NOT case-insensitive. 
+    /// String comparison is deliberately NOT case-insensitive. [ED: WHY?!]
     /// Extensions should be converted to lower-case before caching.
     /// </summary>
     private static Dictionary<string, FileExtension> Cache { get; } = new Dictionary<string, FileExtension>(StringComparer.Ordinal);

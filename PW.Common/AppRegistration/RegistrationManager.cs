@@ -4,6 +4,7 @@ using Microsoft.Win32;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System;
 
 
 /// <summary>
@@ -53,10 +54,6 @@ public static class RegistrationManager
   /// </summary>
   public static void UnRegister() => UnRegister(GetProductName());
 
-
-  private static string GetProductName() => ((AssemblyProductAttribute)System.Attribute.GetCustomAttribute(Assembly.GetExecutingAssembly(), 
-    typeof(AssemblyProductAttribute))).Product;
-
   /// <summary>
   /// Returns a list of all existing application registrations.
   /// </summary>
@@ -74,4 +71,10 @@ public static class RegistrationManager
   /// </summary>   
   private static RegistryKey GetAppRegKey() => Registry.CurrentUser.CreateSubKey(RegPath);
 
+  private static string GetProductName()
+  {
+    return Attribute.GetCustomAttribute(Assembly.GetExecutingAssembly(), typeof(AssemblyProductAttribute)) is AssemblyProductAttribute t
+      ? t.Product
+      : throw new Exception("AssemblyProductAttribute is null.");
+  }
 }

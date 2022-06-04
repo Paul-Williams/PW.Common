@@ -15,9 +15,8 @@ namespace PW.Collections
     /// </summary>
     /// <param name="collection"></param>
     /// <exception cref="ArgumentException">If any string is null, or any 'Find' string is empty.</exception>
-    public StringReplacementList(IEnumerable<(string Find, string ReplaceWith)> collection) : base(collection)
+    public StringReplacementList(IEnumerable<(string Find, string ReplaceWith)> collection!!) : base(collection)
     {
-      Guard.NotNull(collection, nameof(collection));
       Guard.False(this.Any(x => x.Find is null || x.ReplaceWith is null), nameof(collection), "Collection contains at least one null 'Find' or 'ReplaceWith' entry.");
       Guard.False(this.Any(x => x.Find == string.Empty), nameof(collection), "Collection contains at least one empty 'Find' entry.");
     }

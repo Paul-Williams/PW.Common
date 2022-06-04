@@ -50,7 +50,7 @@ namespace PW
   }
 
   /// <summary>
-  /// An interface to an operation which can be performed
+  /// An interface to an operation, which when performed and returns a <see cref="Result"/>
   /// </summary>
   public interface IResultOperation
   {
@@ -61,9 +61,8 @@ namespace PW
   }
 
   /// <summary>
-  /// Represents a <see cref="Result"/> returning operation.
+  /// An interface to an operation, which when performed and returns a <see cref="Result{T}"/>
   /// </summary>
-  /// <typeparam name="T"></typeparam>
   public interface IResultOperation<T>
   {
     /// <summary>

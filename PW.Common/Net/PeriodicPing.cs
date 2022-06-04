@@ -63,14 +63,13 @@ namespace PW.Net
     /// </summary>
     public bool WaitForPeriodAfterStart { get; set; } //= false;
 
-    private SynchronizationContext SynchronizationContext { get; }
+    private SynchronizationContext? SynchronizationContext { get; }
 
     /// <summary>
     /// Creates a new <see cref="PeriodicPing"/> instance to ping the specified IP address.
     /// </summary>
-    public PeriodicPing(IPAddress ipAddress, SynchronizationContext synchronizationContext)
+    public PeriodicPing(IPAddress ipAddress!!, SynchronizationContext? synchronizationContext)
     {
-      Guard.NotNull(ipAddress, nameof(ipAddress));
       IPAddress = ipAddress;
       Timer = new Timer(Timer_Callback);
       SynchronizationContext = synchronizationContext;
