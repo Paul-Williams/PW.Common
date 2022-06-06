@@ -1,4 +1,4 @@
-﻿ 
+﻿
 
 using System;
 using System.ComponentModel;
@@ -14,25 +14,37 @@ namespace PW.Extensions
   public static class EnumExtensions
   {
     /// <summary>
-    /// Returns the <see cref="DescriptionAttribute"/> value for the supplied <see cref="Enum"/>, or <see cref="string.Empty"/> if none is found.
+    /// Returns the <see cref="DescriptionAttribute.Description"/> value for the supplied <see cref="Enum"/>, or <see cref="string.Empty"/> if none is found.
     /// </summary>
-    public static string Description(this Enum value)
+    public static string Description(this Enum enumMember!!)
     {
-      return value is null
-          ? throw new ArgumentNullException(nameof(value))
-          : value
-            .GetType()
-            .GetMember(value.ToString())
-            .FirstOrDefault()
-            ?.GetCustomAttribute<DescriptionAttribute>()
-            ?.Description
-            ?? string.Empty;
+      return enumMember
+        .GetType()
+        .GetMember(enumMember.ToString())
+        .FirstOrDefault()?
+        .GetCustomAttribute<DescriptionAttribute>()?
+        .Description
+        ?? string.Empty;
+    }
+
+    /// <summary>
+    /// Returns the <see cref="DescriptionAttribute.Description"/> value for the supplied <see cref="Enum"/>.
+    /// </summary>
+    /// <exception cref="Exception">Thrown if <paramref name="enumMember"/> is not defined or does not have a description attribute.</exception>
+    public static string Description(this Enum enumMember, bool throwExceptions)
+    {
+      if (!throwExceptions) return Description(enumMember);
+      
+      var member = enumMember.GetType().GetMember(enumMember.ToString()).FirstOrDefault() 
+        ?? throw new Exception($"Enum member not defined: {enumMember}.");
+
+      return member.GetCustomAttribute<DescriptionAttribute>()?.Description
+        ?? throw new Exception($"Member {enumMember} does not have a description attribute.");
     }
 
     /// <summary>
     /// Formats enum string for display by inserting a space before each upper-case character.
     /// </summary>
-    public static string DisplayName(this Enum e) => 
-      e is null ? throw new ArgumentNullException(nameof(e)) : e.ToString().SpaceDelimitCapitals();
+    public static string DisplayName(this Enum enumMember!!) => enumMember.ToString().SpaceDelimitCapitals();
   }
 }
