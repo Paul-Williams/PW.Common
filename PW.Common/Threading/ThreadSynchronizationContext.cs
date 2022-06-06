@@ -1,4 +1,4 @@
-﻿#nullable enable 
+﻿ 
 
 // A simple SynchronizationContext that encapsulates it's own dedicated task queue and processing
 // thread for servicing Send() & Post() calls.  

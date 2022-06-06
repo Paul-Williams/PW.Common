@@ -1,4 +1,4 @@
-﻿#nullable enable 
+﻿ 
 
 using CSharpFunctionalExtensions;
 using System;

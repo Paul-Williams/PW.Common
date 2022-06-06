@@ -1,4 +1,4 @@
-﻿#nullable enable
+﻿
 
 using PW.IO.FileSystemObjects;
 using System.ComponentModel;

@@ -1,4 +1,4 @@
-﻿#nullable enable 
+﻿ 
 
 using Microsoft.Win32.SafeHandles;
 using System;

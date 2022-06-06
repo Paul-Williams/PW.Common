@@ -1,4 +1,4 @@
-﻿#nullable enable
+﻿
 
 using PW.Collections;
 using System;

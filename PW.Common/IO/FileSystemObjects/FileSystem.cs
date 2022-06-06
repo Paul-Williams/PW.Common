@@ -1,4 +1,4 @@
-﻿#nullable enable
+﻿
 
 using Microsoft.VisualBasic.FileIO;
 using PW.Extensions;
