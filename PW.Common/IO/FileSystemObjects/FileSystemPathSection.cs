@@ -8,7 +8,7 @@ namespace PW.IO.FileSystemObjects
   /// <summary>
   /// Base class for objects representing a file system path. E.g. DirectoryPath or FilePath.
   /// </summary>
-  public abstract class FileSystemPathSection<T> : IComparable, IComparable<FileSystemPathSection<T>>, IEquatable<FileSystemPathSection<T>>, IValue<string>
+  public abstract class FileSystemPathSection<T> : IComparable, IComparable<FileSystemPathSection<T>>, IEquatable<FileSystemPathSection<T>>, IReadOnlyValue<string>
   {
     //NB: Generic type T is used to ensure that only like sub-types can be compared.
     private static StringNaturalComparer Comparer => StringNaturalComparer.AscendingComparer;

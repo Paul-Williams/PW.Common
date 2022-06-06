@@ -8,10 +8,10 @@ using System.Collections.Generic;
 namespace PW.Collections
 {
   /// <summary>
-  /// Performs 'natural' compare, sort and equality tests for strings and classes implementing <see cref="IValue{T}"/> of string
+  /// Performs 'natural' compare, sort and equality tests for strings and classes implementing <see cref="IReadOnlyValue{T}"/> of string
   /// Digits in the strings are considered as numerical content rather than text. Tests are not case-sensitive.
   /// </summary>
-  public class StringNaturalComparer : IComparer<IValue<string>>, IEqualityComparer<IValue<string>>, IComparer, IEqualityComparer, IComparer<string>, IEqualityComparer<string>
+  public class StringNaturalComparer : IComparer<IReadOnlyValue<string>>, IEqualityComparer<IReadOnlyValue<string>>, IComparer, IEqualityComparer, IComparer<string>, IEqualityComparer<string>
   {
 
     #region Constructors
@@ -99,17 +99,17 @@ namespace PW.Collections
     /// <summary>
     /// Compares two instances.
     /// </summary>
-    public int Compare(IValue<string>? x, IValue<string>? y) => Compare(x?.Value, y?.Value);
+    public int Compare(IReadOnlyValue<string>? x, IReadOnlyValue<string>? y) => Compare(x?.Value, y?.Value);
 
     /// <summary>
     /// Determines whether two instances are equal.
     /// </summary>
-    public bool Equals(IValue<string>? x, IValue<string>? y) => Equals(x?.Value, y?.Value);
+    public bool Equals(IReadOnlyValue<string>? x, IReadOnlyValue<string>? y) => Equals(x?.Value, y?.Value);
 
     /// <summary>
     /// Returns a hashcode for the instance.
     /// </summary>
-    public int GetHashCode(IValue<string>? obj) => GetHashCode(obj?.Value);
+    public int GetHashCode(IReadOnlyValue<string>? obj) => GetHashCode(obj?.Value);
 
     #endregion
 
@@ -123,7 +123,7 @@ namespace PW.Collections
     {
       if (ReferenceEquals(x, y)) return 0;
       if (x is string sx && y is string sy) return Compare(sx, sy);
-      if (x is IValue<string> vx && y is IValue<string> vy) return Compare(vx.Value, vy.Value);
+      if (x is IReadOnlyValue<string> vx && y is IReadOnlyValue<string> vy) return Compare(vx.Value, vy.Value);
 
       // Invert x and y for descending comparison.
       if (SortOrder == SortOrder.Descending) Helpers.Misc.Swap(ref x, ref y);
@@ -144,7 +144,7 @@ namespace PW.Collections
     {
       return x is string sx && y is string sy
           ? Equals(sx, sy)
-          : x is IValue<string> vx && y is IValue<string> vy 
+          : x is IReadOnlyValue<string> vx && y is IReadOnlyValue<string> vy 
             ? Equals(vx.Value, vy.Value) 
             : object.Equals(x, y);
     }
@@ -158,7 +158,7 @@ namespace PW.Collections
       // See: https://referencesource.microsoft.com/#mscorlib/system/stringcomparer.cs,65a413891296af3a
       return obj is null
           ? throw new ArgumentNullException(nameof(obj))
-          : obj is string s ? GetHashCode(s) : obj is IValue<string> vs ? GetHashCode(vs.Value) : obj.GetHashCode();
+          : obj is string s ? GetHashCode(s) : obj is IReadOnlyValue<string> vs ? GetHashCode(vs.Value) : obj.GetHashCode();
     }
 
     #endregion

@@ -382,7 +382,7 @@
         </member>
         <member name="T:PW.Collections.StringNaturalComparer">
             <summary>
-            Performs 'natural' compare, sort and equality tests for strings and classes implementing <see cref="T:PW.IValue`1"/> of string
+            Performs 'natural' compare, sort and equality tests for strings and classes implementing <see cref="T:PW.IReadOnlyValue`1"/> of string
             Digits in the strings are considered as numerical content rather than text. Tests are not case-sensitive.
             </summary>
         </member>
@@ -431,17 +431,17 @@
             Gets the hash code for the specified string
             </summary>
         </member>
-        <member name="M:PW.Collections.StringNaturalComparer.Compare(PW.IValue{System.String},PW.IValue{System.String})">
+        <member name="M:PW.Collections.StringNaturalComparer.Compare(PW.IReadOnlyValue{System.String},PW.IReadOnlyValue{System.String})">
             <summary>
             Compares two instances.
             </summary>
         </member>
-        <member name="M:PW.Collections.StringNaturalComparer.Equals(PW.IValue{System.String},PW.IValue{System.String})">
+        <member name="M:PW.Collections.StringNaturalComparer.Equals(PW.IReadOnlyValue{System.String},PW.IReadOnlyValue{System.String})">
             <summary>
             Determines whether two instances are equal.
             </summary>
         </member>
-        <member name="M:PW.Collections.StringNaturalComparer.GetHashCode(PW.IValue{System.String})">
+        <member name="M:PW.Collections.StringNaturalComparer.GetHashCode(PW.IReadOnlyValue{System.String})">
             <summary>
             Returns a hashcode for the instance.
             </summary>
@@ -3734,6 +3734,17 @@
             <param name="length">The number of bytes passed to the <paramref name="consumer"/> action.</param>
             <exception cref="T:System.ArgumentNullException"></exception>
             <exception cref="T:System.ArgumentException"></exception>
+        </member>
+        <member name="T:PW.IReadOnlyValue`1">
+            <summary>
+            Interface to a class which has a value that it represents. 
+            Use for equality comparison, sorting etc.
+            </summary>
+        </member>
+        <member name="P:PW.IReadOnlyValue`1.Value">
+            <summary>
+            The value represented by this interface.
+            </summary>
         </member>
         <member name="T:PW.IValue`1">
             <summary>
