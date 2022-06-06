@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace PW
+namespace PW.Events
 {
 
   /// <summary>
@@ -18,6 +18,6 @@ namespace PW
   /// <typeparam name="TArgs">The type of the event arguments.</typeparam>
   /// <param name="sender">The control where the event originated.</param>
   /// <param name="e">Any event arguments.</param>
-  public delegate void EventHandler<TSender, TArgs>(TSender sender, TArgs e) where TArgs : EventArgs;
+  public delegate void TypedSenderEventHandler<TSender, TArgs>(TSender sender, TArgs e) where TArgs : EventArgs;
 
 }

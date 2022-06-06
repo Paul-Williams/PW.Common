@@ -1,7 +1,7 @@
 ﻿using OneOf;
 using System;
 
-namespace PW.OptionTypes
+namespace PW.Functional.Options
 {
 
   /// <summary>

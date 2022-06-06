@@ -14,11 +14,7 @@ public static class ICollectionExtensions
   /// </summary>
   public static bool ContainsNulls<T>(this ICollection<T> seq) => seq.Any(x => x is null);
 
-  /// <summary>
-  /// Removes all strings from <paramref name="first"/> that are in <paramref name="second"/> and returns the number of strings removed.
-  /// </summary>
-  public static int RemoveAllIgnoreCase(this ICollection<string> first!!, IEnumerable<string> second!!)
-    => RemoveAll(first, second, StringComparer.OrdinalIgnoreCase);
+
 
   /// <summary>
   /// Removes all elements from <paramref name="first"/> that are in <paramref name="second"/> and returns the number of elements removed.

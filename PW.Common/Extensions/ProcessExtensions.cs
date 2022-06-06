@@ -1,6 +1,4 @@
-﻿ 
-
-using PW.FailFast;
+﻿using PW.FailFast;
 using System;
 using System.Diagnostics;
 using System.Threading;
@@ -8,7 +6,7 @@ using System.Threading.Tasks;
 
 // See: https://stackoverflow.com/questions/470256/process-waitforexit-asynchronously/470288#470288
 
-namespace PW.Diagnostics
+namespace PW.Extensions
 {
   /// <summary>
   /// Extension methods for <see cref="Process"/>

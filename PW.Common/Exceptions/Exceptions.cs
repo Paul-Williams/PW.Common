@@ -1,20 +1,18 @@
-﻿
-
-using PW.IO.FileSystemObjects;
+﻿using PW.IO.FileSystemObjects;
 using System.ComponentModel;
 using System.IO;
 
-namespace PW
+namespace PW.Exceptions
 {
   /// <summary>
   /// Exception factory
   /// </summary>
-  public static class ExceptionFactory
+  public static class Exceptions
   {
     /// <summary>
     /// Creates a new <see cref="System.IO.FileNotFoundException"/>
     /// </summary>
-    public static FileNotFoundException FileNotFoundException(string? file) => 
+    public static FileNotFoundException FileNotFoundException(string? file) =>
       file is not null ? new FileNotFoundException("File not found: " + file, file) : new FileNotFoundException();
 
     /// <summary>

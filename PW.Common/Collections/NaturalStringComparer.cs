@@ -1,5 +1,6 @@
 ﻿
 
+using PW.Interfaces;
 using PW.NativeMethods;
 using System;
 using System.Collections;

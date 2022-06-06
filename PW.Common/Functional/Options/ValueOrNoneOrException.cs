@@ -2,7 +2,7 @@
 using OneOf.Types;
 using System;
 
-namespace PW.OptionTypes;
+namespace PW.Functional.Options;
 
 /// <summary>
 /// Represents either a value or an exception.

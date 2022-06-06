@@ -1,6 +1,7 @@
 ﻿
 
 using PW.Collections;
+using PW.Interfaces;
 using System;
 
 namespace PW.IO.FileSystemObjects

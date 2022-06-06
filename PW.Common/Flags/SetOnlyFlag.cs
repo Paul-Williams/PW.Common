@@ -1,4 +1,4 @@
-﻿namespace PW
+﻿namespace PW.Flags
 {
   /// <summary>
   /// A flag value, which can only be set.

@@ -1,6 +1,4 @@
-﻿ 
-
-using System;
+﻿using System;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
@@ -34,7 +32,7 @@ class MarsLanderStats
 
 */
 
-namespace PW
+namespace PW.Lazy
 {
   /// <summary>
   /// Provides support for asynchronous lazy initialization. E.g. var t = await AsyncLazy{T}

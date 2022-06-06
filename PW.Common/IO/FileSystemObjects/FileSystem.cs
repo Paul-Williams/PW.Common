@@ -1,6 +1,7 @@
 ﻿
 
 using Microsoft.VisualBasic.FileIO;
+using PW.Exceptions;
 using PW.Extensions;
 using System;
 using System.Collections.Generic;
@@ -83,7 +84,7 @@ namespace PW.IO.FileSystemObjects
     ///<exception cref="PathTooLongException">The specified path, file name, or both exceed the system-defined maximum length.</exception>
     public static bool Unblock(this FilePath file!!)
     {
-      if (!file.Exists) throw ExceptionFactory.FileNotFoundException(file);
+      if (!file.Exists) throw Exceptions.Exceptions.FileNotFoundException(file);
 
       var ziFile = file.Value + ":Zone.Identifier";
       if (!File.Exists(ziFile)) return false;

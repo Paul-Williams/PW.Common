@@ -1,9 +1,10 @@
-﻿ 
+﻿
 
 using PW.FailFast;
 using System.IO;
 using static CSharpFunctionalExtensions.Result;
 using CSharpFunctionalExtensions;
+using PW.Interfaces;
 
 namespace PW.IO
 {

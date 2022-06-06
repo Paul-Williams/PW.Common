@@ -5,7 +5,7 @@ using PW.Extensions;
 using PW.IO.FileSystemObjects;
 using System;
 using System.IO;
-
+using PW.Interfaces;
 
 namespace PW.IO
 {
