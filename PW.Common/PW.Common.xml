@@ -584,7 +584,7 @@
         </member>
         <member name="M:PW.CompressedString.#ctor(System.Byte[])">
             <summary>
-            Creates a new instance from a previously compressed byte-data. For use by de-serializers.
+            Creates a new instance from a previously compressed byte-data. For use by deserializers.
             </summary>
             <param name="bytes">Previously compressed string's byte-data.</param>
         </member>
