@@ -32,29 +32,28 @@ class MarsLanderStats
 
 */
 
-namespace PW.Lazy
+namespace PW.Lazy;
+
+/// <summary>
+/// Provides support for asynchronous lazy initialization. E.g. var t = await AsyncLazy{T}
+/// </summary>
+/// <typeparam name="T">The type of object that is being asynchronously initialized.</typeparam>
+public class LazyAsync<T> : Lazy<Task<T>>
 {
   /// <summary>
-  /// Provides support for asynchronous lazy initialization. E.g. var t = await AsyncLazy{T}
+  /// Initializes a new instance which invokes '<paramref name="valueFactory"/>' within an awaitable Task.
   /// </summary>
-  /// <typeparam name="T">The type of object that is being asynchronously initialized.</typeparam>
-  public class LazyAsync<T> : Lazy<Task<T>>
-  {
-    /// <summary>
-    /// Initializes a new instance which invokes '<paramref name="valueFactory"/>' within an awaitable Task.
-    /// </summary>
-    /// <param name="valueFactory">A function which returns <typeparamref name="T"/>.</param>
-    public LazyAsync(Func<T> valueFactory) : base(() => Task.Run(valueFactory)) { }
+  /// <param name="valueFactory">A function which returns <typeparamref name="T"/>.</param>
+  public LazyAsync(Func<T> valueFactory) : base(() => Task.Run(valueFactory)) { }
 
-    /// <summary>
-    /// Initializes a new instance.
-    /// </summary>
-    /// <param name="taskFactory">A function which is invoked to return a Task. This Task is then run to return <typeparamref name="T"/>.</param>
-    public LazyAsync(Func<Task<T>> taskFactory) : base(() => Task.Run(() => taskFactory())) { }
+  /// <summary>
+  /// Initializes a new instance.
+  /// </summary>
+  /// <param name="taskFactory">A function which is invoked to return a Task. This Task is then run to return <typeparamref name="T"/>.</param>
+  public LazyAsync(Func<Task<T>> taskFactory) : base(() => Task.Run(() => taskFactory())) { }
 
-    /// <summary>
-    /// Asynchronous infrastructure support. This method permits instances of this class to be awaited.
-    /// </summary>
-    public TaskAwaiter<T> GetAwaiter() => Value.GetAwaiter();
-  }
+  /// <summary>
+  /// Asynchronous infrastructure support. This method permits instances of this class to be awaited.
+  /// </summary>
+  public TaskAwaiter<T> GetAwaiter() => Value.GetAwaiter();
 }

@@ -18,14 +18,18 @@
             <summary>
             Creates a new instance with the specified initial value.
             </summary>
-            <param name="initialValue"></param>
         </member>
-        <member name="P:PW.Accumulator.Next">
+        <member name="P:PW.Accumulator.IncrementBy">
+            <summary>
+            Amount by which to increment the accumulator.
+            </summary>
+        </member>
+        <member name="M:PW.Accumulator.Increment">
             <summary>
             Increments the accumulator and returns the new value.
             </summary>
         </member>
-        <member name="P:PW.Accumulator.Current">
+        <member name="P:PW.Accumulator.Value">
             <summary>
             The current value of the accumulator.
             </summary>
@@ -301,16 +305,6 @@
             <typeparam name="TKey"></typeparam>
             <typeparam name="TElements"></typeparam>
         </member>
-        <member name="T:PW.Collections.ILoopable">
-            <summary>
-            Implemented by objects that support loping, such as certain enumerators.
-            </summary>
-        </member>
-        <member name="P:PW.Collections.ILoopable.Looping">
-            <summary>
-            Determines whether the object will loop which it reaches the end of a sequence.
-            </summary>
-        </member>
         <member name="T:PW.Collections.IterateDirection">
             <summary>
             Options for iteration direction or movement of cursor index in sequence.
@@ -382,7 +376,7 @@
         </member>
         <member name="T:PW.Collections.StringNaturalComparer">
             <summary>
-            Performs 'natural' compare, sort and equality tests for strings and classes implementing <see cref="T:PW.IReadOnlyValue`1"/> of string
+            Performs 'natural' compare, sort and equality tests for strings and classes implementing <see cref="T:PW.Interfaces.IReadOnlyValue`1"/> of string
             Digits in the strings are considered as numerical content rather than text. Tests are not case-sensitive.
             </summary>
         </member>
@@ -431,17 +425,17 @@
             Gets the hash code for the specified string
             </summary>
         </member>
-        <member name="M:PW.Collections.StringNaturalComparer.Compare(PW.IReadOnlyValue{System.String},PW.IReadOnlyValue{System.String})">
+        <member name="M:PW.Collections.StringNaturalComparer.Compare(PW.Interfaces.IReadOnlyValue{System.String},PW.Interfaces.IReadOnlyValue{System.String})">
             <summary>
             Compares two instances.
             </summary>
         </member>
-        <member name="M:PW.Collections.StringNaturalComparer.Equals(PW.IReadOnlyValue{System.String},PW.IReadOnlyValue{System.String})">
+        <member name="M:PW.Collections.StringNaturalComparer.Equals(PW.Interfaces.IReadOnlyValue{System.String},PW.Interfaces.IReadOnlyValue{System.String})">
             <summary>
             Determines whether two instances are equal.
             </summary>
         </member>
-        <member name="M:PW.Collections.StringNaturalComparer.GetHashCode(PW.IReadOnlyValue{System.String})">
+        <member name="M:PW.Collections.StringNaturalComparer.GetHashCode(PW.Interfaces.IReadOnlyValue{System.String})">
             <summary>
             Returns a hashcode for the instance.
             </summary>
@@ -628,21 +622,6 @@
             Performs the conversion from <typeparamref name="TInput"/> to <typeparamref name="TOutput"/>
             </summary>
             <returns></returns>
-        </member>
-        <member name="T:PW.PayloadEventHandler`1">
-            <summary>
-            Delegate used to handle events with a strongly-typed payload only. No sender, just data of type <typeparamref name="TPayload"/>.
-            </summary>
-            <typeparam name="TPayload">The type event's payload.</typeparam>
-        </member>
-        <member name="T:PW.EventHandler`2">
-            <summary>
-            Delegate used to handle events with a strongly-typed sender.
-            </summary>
-            <typeparam name="TSender">The type of the sender.</typeparam>
-            <typeparam name="TArgs">The type of the event arguments.</typeparam>
-            <param name="sender">The control where the event originated.</param>
-            <param name="e">Any event arguments.</param>
         </member>
         <member name="T:PW.Dates.DateTimeRange">
             <summary>
@@ -849,65 +828,35 @@
             Stops the timer.
             </summary>
         </member>
-        <member name="T:PW.Diagnostics.ProcessExtensions">
+        <member name="T:PW.Events.PayloadEventHandler`1">
             <summary>
-            Extension methods for <see cref="T:System.Diagnostics.Process"/>
+            Delegate used to handle events with a strongly-typed payload only. No sender, just data of type <typeparamref name="TPayload"/>.
             </summary>
+            <typeparam name="TPayload">The type event's payload.</typeparam>
         </member>
-        <member name="M:PW.Diagnostics.ProcessExtensions.WaitForExitAsync(System.Diagnostics.Process,System.Threading.CancellationToken)">
+        <member name="T:PW.Events.TypedSenderEventHandler`2">
             <summary>
-            Waits asynchronously for the process to exit. Polling interval is 1 second.
+            Delegate used to handle events with a strongly-typed sender.
             </summary>
+            <typeparam name="TSender">The type of the sender.</typeparam>
+            <typeparam name="TArgs">The type of the event arguments.</typeparam>
+            <param name="sender">The control where the event originated.</param>
+            <param name="e">Any event arguments.</param>
         </member>
-        <member name="M:PW.Diagnostics.ProcessExtensions.WaitForExitAsync(System.Diagnostics.Process,System.TimeSpan,System.Threading.CancellationToken)">
-            <summary>
-            Waits asynchronously for the process to exit, with the specified polling interval.
-            </summary>
-        </member>
-        <member name="T:PW.EventArgs`1">
+        <member name="T:PW.Events.PayloadEventArgs`1">
             <summary>
             Adds a payload to the standard <see cref="T:System.EventArgs"/> class.
             </summary>  
         </member>
-        <member name="M:PW.EventArgs`1.#ctor(`0)">
+        <member name="M:PW.Events.PayloadEventArgs`1.#ctor(`0)">
             <summary>
             Creates a new instance.
             </summary>
             <param name="payload"></param>
         </member>
-        <member name="P:PW.EventArgs`1.Payload">
+        <member name="P:PW.Events.PayloadEventArgs`1.Payload">
             <summary>
             Payload carried by the event.
-            </summary>
-        </member>
-        <member name="T:PW.ExceptionFactory">
-            <summary>
-            Exception factory
-            </summary>
-        </member>
-        <member name="M:PW.ExceptionFactory.FileNotFoundException(System.String)">
-            <summary>
-            Creates a new <see cref="T:System.IO.FileNotFoundException"/>
-            </summary>
-        </member>
-        <member name="M:PW.ExceptionFactory.FileNotFoundException(PW.IO.FileSystemObjects.FilePath)">
-            <summary>
-            Creates a new <see cref="T:System.IO.FileNotFoundException"/>
-            </summary>
-        </member>
-        <member name="M:PW.ExceptionFactory.FileNotFoundException(System.IO.FileInfo)">
-            <summary>
-            Creates a new <see cref="T:System.IO.FileNotFoundException"/>
-            </summary>
-        </member>
-        <member name="M:PW.ExceptionFactory.Win32Exception(System.Int32)">
-            <summary>
-            Creates a new <see cref="T:System.ComponentModel.Win32Exception"/> using the specified error code.
-            </summary>
-        </member>
-        <member name="M:PW.ExceptionFactory.Win32Exception">
-            <summary>
-            Creates a new <see cref="T:System.ComponentModel.Win32Exception"/> using the error code from the last Win32 error.
             </summary>
         </member>
         <member name="T:PW.FailFast.AssertionException">
@@ -1093,6 +1042,36 @@
             Prevents 'CA1062: Validate arguments of public methods' warning for arguments.
             </summary>
         </member>
+        <member name="T:PW.Exceptions.Exceptions">
+            <summary>
+            Exception factory
+            </summary>
+        </member>
+        <member name="M:PW.Exceptions.Exceptions.FileNotFoundException(System.String)">
+            <summary>
+            Creates a new <see cref="T:System.IO.FileNotFoundException"/>
+            </summary>
+        </member>
+        <member name="M:PW.Exceptions.Exceptions.FileNotFoundException(PW.IO.FileSystemObjects.FilePath)">
+            <summary>
+            Creates a new <see cref="T:System.IO.FileNotFoundException"/>
+            </summary>
+        </member>
+        <member name="M:PW.Exceptions.Exceptions.FileNotFoundException(System.IO.FileInfo)">
+            <summary>
+            Creates a new <see cref="T:System.IO.FileNotFoundException"/>
+            </summary>
+        </member>
+        <member name="M:PW.Exceptions.Exceptions.Win32Exception(System.Int32)">
+            <summary>
+            Creates a new <see cref="T:System.ComponentModel.Win32Exception"/> using the specified error code.
+            </summary>
+        </member>
+        <member name="M:PW.Exceptions.Exceptions.Win32Exception">
+            <summary>
+            Creates a new <see cref="T:System.ComponentModel.Win32Exception"/> using the error code from the last Win32 error.
+            </summary>
+        </member>
         <member name="T:PW.Exceptions.InvalidFileNameException">
             <summary>
             File name is invalid.
@@ -1223,14 +1202,9 @@
             Extension methods for use with chars.
             </summary>
         </member>
-        <member name="M:PW.Extensions.CharExtensions.Concat(System.Collections.Generic.IEnumerable{System.Char})">
-            <summary>
-            Converts an enumeration of chars in to a string.
-            </summary>
-        </member>
         <member name="M:PW.Extensions.CharExtensions.AsString(System.Collections.Generic.IEnumerable{System.Char})">
             <summary>
-            Converts an enumeration of chars in to a string.
+            Concatenates an enumeration of chars in to a string.
             </summary>
         </member>
         <member name="T:PW.Extensions.EnumExtensions">
@@ -1240,8 +1214,14 @@
         </member>
         <member name="M:PW.Extensions.EnumExtensions.Description(System.Enum)">
             <summary>
-            Returns the <see cref="T:System.ComponentModel.DescriptionAttribute"/> value for the supplied <see cref="T:System.Enum"/>, or <see cref="F:System.String.Empty"/> if none is found.
+            Returns the <see cref="P:System.ComponentModel.DescriptionAttribute.Description"/> value for the supplied <see cref="T:System.Enum"/>, or <see cref="F:System.String.Empty"/> if none is found.
             </summary>
+        </member>
+        <member name="M:PW.Extensions.EnumExtensions.Description(System.Enum,System.Boolean)">
+            <summary>
+            Returns the <see cref="P:System.ComponentModel.DescriptionAttribute.Description"/> value for the supplied <see cref="T:System.Enum"/>.
+            </summary>
+            <exception cref="T:System.Exception">Thrown if <paramref name="enumMember"/> is not defined or does not have a description attribute.</exception>
         </member>
         <member name="M:PW.Extensions.EnumExtensions.DisplayName(System.Enum)">
             <summary>
@@ -1283,11 +1263,6 @@
             Returns true if any elements in the sequence are null.
             </summary>
         </member>
-        <member name="M:PW.Extensions.ICollectionExtensions.RemoveAllIgnoreCase(System.Collections.Generic.ICollection{System.String},System.Collections.Generic.IEnumerable{System.String})">
-            <summary>
-            Removes all strings from <paramref name="first"/> that are in <paramref name="second"/> and returns the number of strings removed.
-            </summary>
-        </member>
         <member name="M:PW.Extensions.ICollectionExtensions.RemoveAll``1(System.Collections.Generic.ICollection{``0},System.Collections.Generic.IEnumerable{``0})">
             <summary>
             Removes all elements from <paramref name="first"/> that are in <paramref name="second"/> and returns the number of elements removed.
@@ -1296,6 +1271,11 @@
         <member name="M:PW.Extensions.ICollectionExtensions.RemoveAll``1(System.Collections.Generic.ICollection{``0},System.Collections.Generic.IEnumerable{``0},System.Collections.Generic.IEqualityComparer{``0})">
             <summary>
             Removes all elements from <paramref name="first"/> that are in <paramref name="second"/> and returns the number of elements removed.
+            </summary>
+        </member>
+        <member name="M:PW.Extensions.ICollectionOfStringExtensions.RemoveAllIgnoreCase(System.Collections.Generic.ICollection{System.String},System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Removes all strings from <paramref name="first"/> that are in <paramref name="second"/> and returns the number of strings removed.
             </summary>
         </member>
         <member name="T:PW.Extensions.IEnumerableExtensions">
@@ -1511,6 +1491,21 @@
         <member name="M:PW.Extensions.NumericExtensions.ToStringByteSize(System.UInt64)">
             <summary>
             Converts a value into a string that represents the number expressed as a size value in bytes, kilobytes, megabytes, or gigabytes, depending on the size.
+            </summary>
+        </member>
+        <member name="T:PW.Extensions.ProcessExtensions">
+            <summary>
+            Extension methods for <see cref="T:System.Diagnostics.Process"/>
+            </summary>
+        </member>
+        <member name="M:PW.Extensions.ProcessExtensions.WaitForExitAsync(System.Diagnostics.Process,System.Threading.CancellationToken)">
+            <summary>
+            Waits asynchronously for the process to exit. Polling interval is 1 second.
+            </summary>
+        </member>
+        <member name="M:PW.Extensions.ProcessExtensions.WaitForExitAsync(System.Diagnostics.Process,System.TimeSpan,System.Threading.CancellationToken)">
+            <summary>
+            Waits asynchronously for the process to exit, with the specified polling interval.
             </summary>
         </member>
         <member name="T:PW.Extensions.ShuffleListExtension">
@@ -1801,56 +1796,77 @@
             <param name="matchTo">The string to match against to determine whether to pad <paramref name="str"/>.</param>
             <returns></returns>
         </member>
-        <member name="T:PW.FlagAutoReset">
-            <summary>
-            Use to set a bool flag in a using-block, for example 'don't fire event for the moment...' Flag is flipped back when disposed.
-            Ensures flag value is restored in the event of an exception.
-            </summary>
-        </member>
-        <member name="M:PW.FlagAutoReset.System#IDisposable#Dispose">
-            <summary>
-            Flip the flag state when token is released.
-            </summary>
-        </member>
-        <member name="T:PW.Flag">
+        <member name="T:PW.Flags.AutoResetFlag">
             <summary>
             A class which acts as a wrapper for a bool-flag and additionally provides a mechanism to automatically set/unset the flag in a using block.
             </summary>
         </member>
-        <member name="P:PW.Flag.Value">
+        <member name="P:PW.Flags.AutoResetFlag.Value">
             <summary>
             The value of the flag
             </summary>
         </member>
-        <member name="M:PW.Flag.op_Implicit(PW.Flag)~System.Boolean">
+        <member name="M:PW.Flags.AutoResetFlag.op_Implicit(PW.Flags.AutoResetFlag)~System.Boolean">
             <summary>
             Converts flag -> bool
             </summary>
             <param name="flag"></param>
         </member>
-        <member name="M:PW.Flag.op_Implicit(System.Boolean)~PW.Flag">
+        <member name="M:PW.Flags.AutoResetFlag.op_Implicit(System.Boolean)~PW.Flags.AutoResetFlag">
             <summary>
-            Creates a new <see cref="T:PW.Flag"/> instance with the specified value.
+            Creates a new <see cref="T:PW.Flags.AutoResetFlag"/> instance with the specified value.
             </summary>
             <param name="value"></param>
         </member>
-        <member name="M:PW.Flag.ToString">
+        <member name="M:PW.Flags.AutoResetFlag.ToString">
             <summary>
-            Returns <see cref="P:PW.Flag.Value"/> as string.
+            Returns <see cref="P:PW.Flags.AutoResetFlag.Value"/> as string.
             </summary>
             <returns></returns>
         </member>
-        <member name="P:PW.Flag.IsSet">
+        <member name="P:PW.Flags.AutoResetFlag.IsSet">
             <summary>
-            Whether the <see cref="T:PW.Flag"/> is set to true.
+            Whether the <see cref="T:PW.Flags.AutoResetFlag"/> is set to true.
             </summary>
         </member>
-        <member name="M:PW.Flag.CreateAutoResetToken(System.Boolean)">
+        <member name="M:PW.Flags.AutoResetFlag.CreateAutoResetToken(System.Boolean)">
             <summary>
             Creates a disposable 'token' which sets and resets the flag within a using block or Try-Finally block.
             </summary>
             <param name="value">The value for the flag while the token is in use. 
             This is then toggled when the token is disposed.</param>
+        </member>
+        <member name="T:PW.Flags.AutoResetFlag.FlagAutoReset">
+            <summary>
+            Use to set a bool flag in a using-block, for example 'don't fire event for the moment...' Flag is flipped back when disposed.
+            Ensures flag value is restored in the event of an exception.
+            </summary>
+        </member>
+        <member name="M:PW.Flags.AutoResetFlag.FlagAutoReset.System#IDisposable#Dispose">
+            <summary>
+            Flip the flag state when token is released.
+            </summary>
+        </member>
+        <member name="T:PW.Flags.SetOnlyFlag">
+            <summary>
+            A flag value, which can only be set.
+            </summary>
+        </member>
+        <member name="P:PW.Flags.SetOnlyFlag.IsSet">
+            <summary>
+            Whether the flag has been set.
+            </summary>
+        </member>
+        <member name="M:PW.Flags.SetOnlyFlag.Set">
+            <summary>
+            Sets the flag.
+            </summary>
+        </member>
+        <member name="M:PW.Flags.SetOnlyFlag.op_Implicit(PW.Flags.SetOnlyFlag)~System.Boolean">
+            <summary>
+            Returns true if the flag has been set, otherwise false.
+            </summary>
+            <param name="flag"></param>
         </member>
         <member name="T:PW.Functional.Disposable">
             <summary>
@@ -2010,6 +2026,90 @@
             <summary>
             Executes the function pipeline
             </summary>
+        </member>
+        <member name="T:PW.Functional.Options.ValueOrException`1">
+            <summary>
+            Represents either a value or an exception.
+            </summary>
+            <typeparam name="TValue"></typeparam>
+        </member>
+        <member name="M:PW.Functional.Options.ValueOrException`1.#ctor(OneOf.OneOf{`0,System.Exception})">
+            <summary>
+            Creates a new instance.
+            </summary>
+            <param name="input"></param>
+        </member>
+        <member name="M:PW.Functional.Options.ValueOrException`1.op_Implicit(`0)~PW.Functional.Options.ValueOrException{`0}">
+            <summary>
+            
+            </summary>
+            <param name="_"></param>
+        </member>
+        <member name="M:PW.Functional.Options.ValueOrException`1.op_Explicit(PW.Functional.Options.ValueOrException{`0})~`0">
+            <summary>
+            
+            </summary>
+            <param name="_"></param>
+        </member>
+        <member name="M:PW.Functional.Options.ValueOrException`1.op_Implicit(System.Exception)~PW.Functional.Options.ValueOrException{`0}">
+            <summary>
+            
+            </summary>
+            <param name="_"></param>
+        </member>
+        <member name="M:PW.Functional.Options.ValueOrException`1.op_Explicit(PW.Functional.Options.ValueOrException{`0})~System.Exception">
+            <summary>
+            
+            </summary>
+            <param name="_"></param>
+        </member>
+        <member name="T:PW.Functional.Options.ValueOrNoneOrException`1">
+            <summary>
+            Represents either a value or an exception.
+            </summary>
+            <typeparam name="TValue"></typeparam>
+        </member>
+        <member name="M:PW.Functional.Options.ValueOrNoneOrException`1.#ctor(OneOf.OneOf{`0,OneOf.Types.None,System.Exception})">
+            <summary>
+            Creates a new instance.
+            </summary>
+            <param name="input"></param>
+        </member>
+        <member name="M:PW.Functional.Options.ValueOrNoneOrException`1.op_Implicit(`0)~PW.Functional.Options.ValueOrNoneOrException{`0}">
+            <summary>
+            
+            </summary>
+            <param name="_"></param>
+        </member>
+        <member name="M:PW.Functional.Options.ValueOrNoneOrException`1.op_Explicit(PW.Functional.Options.ValueOrNoneOrException{`0})~`0">
+            <summary>
+            
+            </summary>
+            <param name="_"></param>
+        </member>
+        <member name="M:PW.Functional.Options.ValueOrNoneOrException`1.op_Implicit(OneOf.Types.None)~PW.Functional.Options.ValueOrNoneOrException{`0}">
+            <summary>
+            
+            </summary>
+            <param name="_"></param>
+        </member>
+        <member name="M:PW.Functional.Options.ValueOrNoneOrException`1.op_Explicit(PW.Functional.Options.ValueOrNoneOrException{`0})~OneOf.Types.None">
+            <summary>
+            
+            </summary>
+            <param name="_"></param>
+        </member>
+        <member name="M:PW.Functional.Options.ValueOrNoneOrException`1.op_Implicit(System.Exception)~PW.Functional.Options.ValueOrNoneOrException{`0}">
+            <summary>
+            
+            </summary>
+            <param name="_"></param>
+        </member>
+        <member name="M:PW.Functional.Options.ValueOrNoneOrException`1.op_Explicit(PW.Functional.Options.ValueOrNoneOrException{`0})~System.Exception">
+            <summary>
+            
+            </summary>
+            <param name="_"></param>
         </member>
         <member name="T:PW.Functional.WithStatement">
             <summary>
@@ -2172,64 +2272,96 @@
             Unless empty, ensures the directory path string is terminated with a <see cref="F:System.IO.Path.DirectorySeparatorChar"/>
             </summary>
         </member>
-        <member name="T:PW.IOperation">
+        <member name="T:PW.Interfaces.ILoopable">
             <summary>
-            Interface to perform void returning operation.
+            Implemented by objects that support loping, such as certain enumerators.
             </summary>
         </member>
-        <member name="M:PW.IOperation.Perform">
+        <member name="P:PW.Interfaces.ILoopable.Looping">
             <summary>
-            Performs the operation
-            </summary> 
-        </member>
-        <member name="T:PW.IOperation`1">
-            <summary>
-            Interface to perform an operation which returns a value of type <typeparamref name="T"/>
+            Determines whether the object will loop which it reaches the end of a sequence.
             </summary>
         </member>
-        <member name="M:PW.IOperation`1.Perform">
-            <summary>
-            Performs the operation
-            </summary>    
-        </member>
-        <member name="T:PW.INullableOperation`1">
-            <summary>
-            Interface to perform an operation which returns a value of type <typeparamref name="T"/>, which may be null.
-            </summary>
-        </member>
-        <member name="M:PW.INullableOperation`1.Perform">
-            <summary>
-            Performs the operation
-            </summary>    
-        </member>
-        <member name="T:PW.IMaybeOperation`1">
+        <member name="T:PW.Interfaces.IMaybeOperation`1">
             <summary>
             Interface to perform an operation which returns a value of type <see cref="T:CSharpFunctionalExtensions.Maybe`1"/>.
             </summary>
         </member>
-        <member name="M:PW.IMaybeOperation`1.Perform">
+        <member name="M:PW.Interfaces.IMaybeOperation`1.Perform">
             <summary>
             Performs the operation
             </summary>    
         </member>
-        <member name="T:PW.IResultOperation">
+        <member name="T:PW.Interfaces.INullableOperation`1">
+            <summary>
+            Interface to perform an operation which returns a value of type <typeparamref name="T"/>, which may be null.
+            </summary>
+        </member>
+        <member name="M:PW.Interfaces.INullableOperation`1.Perform">
+            <summary>
+            Performs the operation
+            </summary>    
+        </member>
+        <member name="T:PW.Interfaces.IOperation">
+            <summary>
+            Interface to perform void returning operation.
+            </summary>
+        </member>
+        <member name="M:PW.Interfaces.IOperation.Perform">
+            <summary>
+            Performs the operation
+            </summary> 
+        </member>
+        <member name="T:PW.Interfaces.IOperation`1">
+            <summary>
+            Interface to perform an operation which returns a value of type <typeparamref name="T"/>
+            </summary>
+        </member>
+        <member name="M:PW.Interfaces.IOperation`1.Perform">
+            <summary>
+            Performs the operation
+            </summary>    
+        </member>
+        <member name="T:PW.Interfaces.IReadOnlyValue`1">
+            <summary>
+            Interface to a class which has a value that it represents. 
+            Use for equality comparison, sorting etc.
+            </summary>
+        </member>
+        <member name="P:PW.Interfaces.IReadOnlyValue`1.Value">
+            <summary>
+            The value represented by this interface.
+            </summary>
+        </member>
+        <member name="T:PW.Interfaces.IResultOperation">
             <summary>
             An interface to an operation, which when performed and returns a <see cref="T:CSharpFunctionalExtensions.Result"/>
             </summary>
         </member>
-        <member name="M:PW.IResultOperation.Perform">
+        <member name="M:PW.Interfaces.IResultOperation.Perform">
             <summary>
             Performs the operation and returns a <see cref="T:CSharpFunctionalExtensions.Result"/> of success or failure.
             </summary>    
         </member>
-        <member name="T:PW.IResultOperation`1">
+        <member name="T:PW.Interfaces.IResultOperation`1">
             <summary>
             An interface to an operation, which when performed and returns a <see cref="T:CSharpFunctionalExtensions.Result`1"/>
             </summary>
         </member>
-        <member name="M:PW.IResultOperation`1.Perform">
+        <member name="M:PW.Interfaces.IResultOperation`1.Perform">
             <summary>
             Performs the operation.
+            </summary>
+        </member>
+        <member name="T:PW.Interfaces.IValue`1">
+            <summary>
+            Interface to a class which has a value that it represents. 
+            Use for equality comparison, sorting etc.
+            </summary>
+        </member>
+        <member name="P:PW.Interfaces.IValue`1.Value">
+            <summary>
+            The value represented by this interface.
             </summary>
         </member>
         <member name="T:PW.IO.DelimitedFieldFileWriter">
@@ -3735,50 +3867,61 @@
             <exception cref="T:System.ArgumentNullException"></exception>
             <exception cref="T:System.ArgumentException"></exception>
         </member>
-        <member name="T:PW.IReadOnlyValue`1">
-            <summary>
-            Interface to a class which has a value that it represents. 
-            Use for equality comparison, sorting etc.
-            </summary>
-        </member>
-        <member name="P:PW.IReadOnlyValue`1.Value">
-            <summary>
-            The value represented by this interface.
-            </summary>
-        </member>
-        <member name="T:PW.IValue`1">
-            <summary>
-            Interface to a class which has a value that it represents. 
-            Use for equality comparison, sorting etc.
-            </summary>
-        </member>
-        <member name="P:PW.IValue`1.Value">
-            <summary>
-            The value represented by this interface.
-            </summary>
-        </member>
-        <member name="T:PW.LazyAsync`1">
+        <member name="T:PW.Lazy.LazyAsync`1">
             <summary>
             Provides support for asynchronous lazy initialization. E.g. var t = await AsyncLazy{T}
             </summary>
             <typeparam name="T">The type of object that is being asynchronously initialized.</typeparam>
         </member>
-        <member name="M:PW.LazyAsync`1.#ctor(System.Func{`0})">
+        <member name="M:PW.Lazy.LazyAsync`1.#ctor(System.Func{`0})">
             <summary>
             Initializes a new instance which invokes '<paramref name="valueFactory"/>' within an awaitable Task.
             </summary>
             <param name="valueFactory">A function which returns <typeparamref name="T"/>.</param>
         </member>
-        <member name="M:PW.LazyAsync`1.#ctor(System.Func{System.Threading.Tasks.Task{`0}})">
+        <member name="M:PW.Lazy.LazyAsync`1.#ctor(System.Func{System.Threading.Tasks.Task{`0}})">
             <summary>
             Initializes a new instance.
             </summary>
             <param name="taskFactory">A function which is invoked to return a Task. This Task is then run to return <typeparamref name="T"/>.</param>
         </member>
-        <member name="M:PW.LazyAsync`1.GetAwaiter">
+        <member name="M:PW.Lazy.LazyAsync`1.GetAwaiter">
             <summary>
             Asynchronous infrastructure support. This method permits instances of this class to be awaited.
             </summary>
+        </member>
+        <member name="T:PW.Lazy.ResettableLazy`1">
+            <summary>
+            A version of <see cref="T:System.Lazy`1"/> which supports resetting to its initial state, before the value was created.
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="P:PW.Lazy.ResettableLazy`1.Value">
+            <summary>
+            Gets the lazily initialized value of the current <see cref="T:PW.Lazy.ResettableLazy`1"/> instance.
+            </summary>
+        </member>
+        <member name="P:PW.Lazy.ResettableLazy`1.IsValueCreated">
+            <summary>
+            Gets a value that indicates whether a value has been created for this <see cref="T:PW.Lazy.ResettableLazy`1"/> instance.
+            </summary>
+        </member>
+        <member name="M:PW.Lazy.ResettableLazy`1.#ctor(System.Func{`0})">
+            <summary>
+            Initializes a new instance of the <see cref="T:PW.Lazy.ResettableLazy`1"/> class. When lazy initialization
+            occurs, the specified initialization function is used.
+            </summary>
+        </member>
+        <member name="M:PW.Lazy.ResettableLazy`1.InitNewLazyUsingFactory">
+            <summary>
+            Centralized initialization of the object.
+            </summary>
+        </member>
+        <member name="M:PW.Lazy.ResettableLazy`1.Reset(System.Action{`0})">
+            <summary>
+            Resets the instance so that there is no longer a value. Does nothing if there is no current value.
+            </summary>
+            <param name="shutdownAction">Optional shutdown operation to perform on the value <typeparamref name="T"/></param>
         </member>
         <member name="T:PW.Mapping`2">
             <summary>
@@ -4093,93 +4236,9 @@
             The exception that occurred.
             </summary>
         </member>
-        <member name="T:PW.OptionTypes.ValueOrException`1">
-            <summary>
-            Represents either a value or an exception.
-            </summary>
-            <typeparam name="TValue"></typeparam>
-        </member>
-        <member name="M:PW.OptionTypes.ValueOrException`1.#ctor(OneOf.OneOf{`0,System.Exception})">
-            <summary>
-            Creates a new instance.
-            </summary>
-            <param name="input"></param>
-        </member>
-        <member name="M:PW.OptionTypes.ValueOrException`1.op_Implicit(`0)~PW.OptionTypes.ValueOrException{`0}">
-            <summary>
-            
-            </summary>
-            <param name="_"></param>
-        </member>
-        <member name="M:PW.OptionTypes.ValueOrException`1.op_Explicit(PW.OptionTypes.ValueOrException{`0})~`0">
-            <summary>
-            
-            </summary>
-            <param name="_"></param>
-        </member>
-        <member name="M:PW.OptionTypes.ValueOrException`1.op_Implicit(System.Exception)~PW.OptionTypes.ValueOrException{`0}">
-            <summary>
-            
-            </summary>
-            <param name="_"></param>
-        </member>
-        <member name="M:PW.OptionTypes.ValueOrException`1.op_Explicit(PW.OptionTypes.ValueOrException{`0})~System.Exception">
-            <summary>
-            
-            </summary>
-            <param name="_"></param>
-        </member>
-        <member name="T:PW.OptionTypes.ValueOrNoneOrException`1">
-            <summary>
-            Represents either a value or an exception.
-            </summary>
-            <typeparam name="TValue"></typeparam>
-        </member>
-        <member name="M:PW.OptionTypes.ValueOrNoneOrException`1.#ctor(OneOf.OneOf{`0,OneOf.Types.None,System.Exception})">
-            <summary>
-            Creates a new instance.
-            </summary>
-            <param name="input"></param>
-        </member>
-        <member name="M:PW.OptionTypes.ValueOrNoneOrException`1.op_Implicit(`0)~PW.OptionTypes.ValueOrNoneOrException{`0}">
-            <summary>
-            
-            </summary>
-            <param name="_"></param>
-        </member>
-        <member name="M:PW.OptionTypes.ValueOrNoneOrException`1.op_Explicit(PW.OptionTypes.ValueOrNoneOrException{`0})~`0">
-            <summary>
-            
-            </summary>
-            <param name="_"></param>
-        </member>
-        <member name="M:PW.OptionTypes.ValueOrNoneOrException`1.op_Implicit(OneOf.Types.None)~PW.OptionTypes.ValueOrNoneOrException{`0}">
-            <summary>
-            
-            </summary>
-            <param name="_"></param>
-        </member>
-        <member name="M:PW.OptionTypes.ValueOrNoneOrException`1.op_Explicit(PW.OptionTypes.ValueOrNoneOrException{`0})~OneOf.Types.None">
-            <summary>
-            
-            </summary>
-            <param name="_"></param>
-        </member>
-        <member name="M:PW.OptionTypes.ValueOrNoneOrException`1.op_Implicit(System.Exception)~PW.OptionTypes.ValueOrNoneOrException{`0}">
-            <summary>
-            
-            </summary>
-            <param name="_"></param>
-        </member>
-        <member name="M:PW.OptionTypes.ValueOrNoneOrException`1.op_Explicit(PW.OptionTypes.ValueOrNoneOrException{`0})~System.Exception">
-            <summary>
-            
-            </summary>
-            <param name="_"></param>
-        </member>
         <member name="T:PW.PropertyComparer`1">
             <summary>
-            Compare an object by any property.
+            Compares two objects by any comparable property.
             </summary>
             <typeparam name="T"></typeparam>
         </member>
@@ -4199,60 +4258,6 @@
             <summary>
             Compare two objects for sorting purposes.
             </summary>
-        </member>
-        <member name="T:PW.ResettableLazy`1">
-            <summary>
-            A version of <see cref="T:System.Lazy`1"/> which supports resetting to its initial state, before the value was created.
-            </summary>
-            <typeparam name="T"></typeparam>
-        </member>
-        <member name="P:PW.ResettableLazy`1.Value">
-            <summary>
-            Gets the lazily initialized value of the current <see cref="T:PW.ResettableLazy`1"/> instance.
-            </summary>
-        </member>
-        <member name="P:PW.ResettableLazy`1.IsValueCreated">
-            <summary>
-            Gets a value that indicates whether a value has been created for this <see cref="T:PW.ResettableLazy`1"/> instance.
-            </summary>
-        </member>
-        <member name="M:PW.ResettableLazy`1.#ctor(System.Func{`0})">
-            <summary>
-            Initializes a new instance of the <see cref="T:PW.ResettableLazy`1"/> class. When lazy initialization
-            occurs, the specified initialization function is used.
-            </summary>
-        </member>
-        <member name="M:PW.ResettableLazy`1.InitNewLazyUsingFactory">
-            <summary>
-            Centralized initialization of the object.
-            </summary>
-        </member>
-        <member name="M:PW.ResettableLazy`1.Reset(System.Action{`0})">
-            <summary>
-            Resets the instance so that there is no longer a value. Does nothing if there is no current value.
-            </summary>
-            <param name="shutdownAction">Optional shutdown operation to perform on the value <typeparamref name="T"/></param>
-        </member>
-        <member name="T:PW.SetOnlyFlag">
-            <summary>
-            A flag value, which can only be set.
-            </summary>
-        </member>
-        <member name="P:PW.SetOnlyFlag.IsSet">
-            <summary>
-            Whether the flag has been set.
-            </summary>
-        </member>
-        <member name="M:PW.SetOnlyFlag.Set">
-            <summary>
-            Sets the flag.
-            </summary>
-        </member>
-        <member name="M:PW.SetOnlyFlag.op_Implicit(PW.SetOnlyFlag)~System.Boolean">
-            <summary>
-            Returns true if the flag has been set, otherwise false.
-            </summary>
-            <param name="flag"></param>
         </member>
         <member name="T:PW.SortOrder">
             <summary>

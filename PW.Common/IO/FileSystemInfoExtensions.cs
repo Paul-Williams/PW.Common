@@ -1,29 +1,26 @@
-﻿ 
-
-using PW.FailFast;
+﻿using PW.FailFast;
 using System.Diagnostics;
 using System.IO;
 
-namespace PW.IO
+namespace PW.IO;
+
+/// <summary>
+/// Extension methods for <see cref="FileSystemInfo"/> instances.
+/// </summary>
+public static class FileSystemInfoExtensions
 {
   /// <summary>
-  /// Extension methods for <see cref="FileSystemInfo"/> instances.
+  /// Deletes the <see cref="FileSystemInfo"/> entry from disk, if it exists. Otherwise does nothing.
   /// </summary>
-  public static class FileSystemInfoExtensions
+  /// <param name="fso"></param>
+  public static void DeleteIfExists(this FileSystemInfo fso!!)
   {
-    /// <summary>
-    /// Deletes the <see cref="FileSystemInfo"/> entry from disk, if it exists. Otherwise does nothing.
-    /// </summary>
-    /// <param name="fso"></param>
-    public static void DeleteIfExists(this FileSystemInfo fso!!)
-    {
-      if (fso.Exists) fso.Delete();
-    }
-
-    /// <summary>
-    /// Launches the <see cref="FileSystemInfo"/> in a new process and returns the new process.
-    /// </summary>
-    public static Process Launch(this FileSystemInfo fso!!) => Process.Start(fso.FullName);
-
+    if (fso.Exists) fso.Delete();
   }
+
+  /// <summary>
+  /// Launches the <see cref="FileSystemInfo"/> in a new process and returns the new process.
+  /// </summary>
+  public static Process Launch(this FileSystemInfo fso!!) => Process.Start(fso.FullName);
+
 }

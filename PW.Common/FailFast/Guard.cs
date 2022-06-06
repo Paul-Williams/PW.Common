@@ -1,6 +1,4 @@
-﻿# nullable enable 
-
-using PW.Extensions;
+﻿using PW.Extensions;
 using PW.IO.FileSystemObjects;
 using System;
 using System.Collections.Generic;

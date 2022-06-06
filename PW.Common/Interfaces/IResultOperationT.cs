@@ -1,20 +1,16 @@
-﻿
+﻿using CSharpFunctionalExtensions;
 
-using CSharpFunctionalExtensions;
+namespace PW.Interfaces;
 
-namespace PW.Interfaces
+/// <summary>
+/// An interface to an operation, which when performed and returns a <see cref="Result{T}"/>
+/// </summary>
+public interface IResultOperation<T>
 {
-
   /// <summary>
-  /// An interface to an operation, which when performed and returns a <see cref="Result{T}"/>
+  /// Performs the operation.
   /// </summary>
-  public interface IResultOperation<T>
-  {
-    /// <summary>
-    /// Performs the operation.
-    /// </summary>
-    Result<T> Perform();
-  }
-
-
+  Result<T> Perform();
 }
+
+

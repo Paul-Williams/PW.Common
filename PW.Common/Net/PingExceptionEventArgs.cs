@@ -2,20 +2,19 @@
 
 using System;
 
-namespace PW.Net
+namespace PW.Net;
+
+/// <summary>
+/// <see cref="PeriodicPing.OnPingException"/> event arguments.
+/// </summary>
+public class PingExceptionEventArgs : EventArgs
 {
   /// <summary>
-  /// <see cref="PeriodicPing.OnPingException"/> event arguments.
+  /// The exception that occurred.
   /// </summary>
-  public class PingExceptionEventArgs : EventArgs
+  public Exception Exception { get; }
+  internal PingExceptionEventArgs (Exception exception)
   {
-    /// <summary>
-    /// The exception that occurred.
-    /// </summary>
-    public Exception Exception { get; }
-    internal PingExceptionEventArgs (Exception exception)
-    {
-      Exception = exception;
-    }
+    Exception = exception;
   }
 }

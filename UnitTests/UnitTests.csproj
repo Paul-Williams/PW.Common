@@ -3,10 +3,11 @@
 
   <PropertyGroup>
     <TargetFrameworks>net6.0;net48</TargetFrameworks>
-
+		<LangVersion>preview</LangVersion>
     <IsPackable>false</IsPackable>
 
     <AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
+		<AnalysisLevel>preview-recommended</AnalysisLevel>
   </PropertyGroup>
 
   <ItemGroup>

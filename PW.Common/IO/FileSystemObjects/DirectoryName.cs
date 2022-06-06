@@ -1,63 +1,60 @@
-﻿
-
-using PW.Extensions;
+﻿using PW.Extensions;
 using System;
 using System.IO;
 
-namespace PW.IO.FileSystemObjects
+namespace PW.IO.FileSystemObjects;
+
+/// <summary>
+/// Represents a single directory name, without the rest of the directory path.
+/// </summary>
+public class DirectoryName : FileSystemPathSection<DirectoryName>
 {
   /// <summary>
-  /// Represents a single directory name, without the rest of the directory path.
-  /// </summary>
-  public class DirectoryName : FileSystemPathSection<DirectoryName>
+  /// ctor -- Throws exceptions if invalid <paramref name="value"/> is passed.
+  /// </summary>    
+  public DirectoryName(string value)
   {
-    /// <summary>
-    /// ctor -- Throws exceptions if invalid <paramref name="value"/> is passed.
-    /// </summary>    
-    public DirectoryName(string value)
-    {
-      if (value is null)
-        throw new ArgumentNullException(nameof(value), "Value cannot be null.");
+    if (value is null)
+      throw new ArgumentNullException(nameof(value), "Value cannot be null.");
 
-      if (string.IsNullOrWhiteSpace(value))
-        throw new ArgumentException("Value cannot be empty or white-space.", nameof(value));
+    if (string.IsNullOrWhiteSpace(value))
+      throw new ArgumentException("Value cannot be empty or white-space.", nameof(value));
 
-      if (value.ContainsAny(Path.GetInvalidFileNameChars()))
-        throw new ArgumentException("Value contains invalid characters.", nameof(value));
+    if (value.ContainsAny(Path.GetInvalidFileNameChars()))
+      throw new ArgumentException("Value contains invalid characters.", nameof(value));
 
-      Value = value;
-    }
-
-    /// <summary>
-    /// Creates a new instance from an existing <see cref="DirectoryPath"/>. Skips validation.
-    /// </summary>
-    public DirectoryName(DirectoryPath directoryPath!!)
-    {
-
-      // ASSUMES: DirectoryPath values are always normalized to be terminated with a trailing back-slash.
-      // This needs to be removed before calling Path.GetFileName(), otherwise an empty string will be returned.
-      Value = Path.GetFileName(directoryPath.ToString(false));
-    }
-
-    /// <summary>
-    /// Creates a new instance from an existing <see cref="FilePath"/>. Skips validation.
-    /// </summary>
-    public DirectoryName(FilePath filePath!!)
-    {
-      Value = filePath.ToFileInfo().Directory!.Name;
-    }
-
-    /// <summary>
-    /// Casts a string to a <see cref="DirectoryName"/>.
-    /// </summary> 
-    public static explicit operator DirectoryName(string str) => 
-      str != null ? new DirectoryName(str) : throw new ArgumentNullException(nameof(str));
-
-    /// <summary>
-    /// Casts a <see cref="DirectoryName"/> to a string.
-    /// </summary>    
-    public static explicit operator string(DirectoryName directoryName) => 
-      directoryName?.Value ?? throw new ArgumentNullException(nameof (directoryName));
-
+    Value = value;
   }
+
+  /// <summary>
+  /// Creates a new instance from an existing <see cref="DirectoryPath"/>. Skips validation.
+  /// </summary>
+  public DirectoryName(DirectoryPath directoryPath!!)
+  {
+
+    // ASSUMES: DirectoryPath values are always normalized to be terminated with a trailing back-slash.
+    // This needs to be removed before calling Path.GetFileName(), otherwise an empty string will be returned.
+    Value = Path.GetFileName(directoryPath.ToString(false));
+  }
+
+  /// <summary>
+  /// Creates a new instance from an existing <see cref="FilePath"/>. Skips validation.
+  /// </summary>
+  public DirectoryName(FilePath filePath!!)
+  {
+    Value = filePath.ToFileInfo().Directory!.Name;
+  }
+
+  /// <summary>
+  /// Casts a string to a <see cref="DirectoryName"/>.
+  /// </summary> 
+  public static explicit operator DirectoryName(string str) => 
+    str != null ? new DirectoryName(str) : throw new ArgumentNullException(nameof(str));
+
+  /// <summary>
+  /// Casts a <see cref="DirectoryName"/> to a string.
+  /// </summary>    
+  public static explicit operator string(DirectoryName directoryName) => 
+    directoryName?.Value ?? throw new ArgumentNullException(nameof (directoryName));
+
 }
