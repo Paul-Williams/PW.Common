@@ -19,7 +19,7 @@ public static partial class FileInfoExtensions
   /// <param name="timeout">Time-out period to wait, when file is locked.</param>
   /// <returns>Open <see cref="FileStream"/> on success or null if the time-out expires.</returns>
   public static FileStream? WaitForAccess(this FileInfo file!!, TimeSpan timeout) =>
-    WaitForAccess(file, timeout, FileOpenArguments.OpenForSharedRead);
+    WaitForAccess(file, timeout, FileOpenArguments.OpenExistingForSharedRead);
 
 
   /// <summary>
@@ -29,36 +29,41 @@ public static partial class FileInfoExtensions
   public static bool IsReadLocked(this FileInfo file!!)
     => file.Exists
         && file.OpenFileSharedRead().DisposeAfter(handle => handle.IsInvalid)
-        && Marshal.GetLastWin32Error() == Error.ERROR_SHARING_VIOLATION;
+        && Marshal.GetLastWin32Error() == Error.SharingViolation;
 
   /// <summary>
   /// Determines whether an existing file can be opened for shared-read access. 
   /// Returns true if it exists and is not locked to prevent shared-read. Otherwise returns false.
   /// </summary>
   public static bool IsReadable(this FileInfo file!!)
-    => file.Exists && file.OpenFileSharedRead().DisposeAfter(handle => handle.IsInvalid == false);
+    => file.Exists && file.OpenFileSharedRead().DisposeAfter(handle => !handle.IsInvalid);
 
   private static SafeFileHandle OpenFileSharedRead(this FileInfo file)
     => SafeNativeMethods.CreateFile(
         file.FullName,
-        System.IO.FileAccess.Read.ToWin32FileAccess(),
-        System.IO.FileShare.Read.ToWin32FileShare(),
+        Win32.FileAccess.GenericRead,
+        Win32.FileShare.Read,
         IntPtr.Zero,
-        FileMode.Open.ToWin32CreationDisposition(),
+        Win32.FileMode.OpenExisting,
         Win32.FileAttributes.Normal, IntPtr.Zero);
 
   /// <summary>
-  /// Attempts to open the file with a retrying timeout. 
-  /// Useful for files which may initially be locked. 
+  /// Attempts to open the file with a retrying timeout. Useful for accessing files which may initially be locked. 
   /// NB: Blocks thread for <paramref name="pollInterval"/> milliseconds during wait loop.
   /// </summary>
-  public static FileStream? WaitForAccess(this FileInfo file!!, TimeSpan timeout, FileOpenArguments arguments!!, int pollInterval = 200)
+  /// <param name="file">The file to open.</param>
+  /// <param name="timeout">Number of milliseconds to wait.</param>
+  /// <param name="arguments">Defaults to <see cref="FileOpenArguments.OpenExistingForSharedRead"/></param>
+  /// <param name="pollInterval">Interval, in milliseconds, at which to try to be opening the file.</param>
+  /// <returns>Either a stream or null if the file cannot be opened within the time-out period.</returns>
+  public static FileStream? WaitForAccess(this FileInfo file!!, TimeSpan timeout, FileOpenArguments? arguments = null, int pollInterval = 200)
   {
     var start = DateTime.Now;
+    if (arguments == null) arguments = FileOpenArguments.OpenExistingForSharedRead;
 
     while (true)
     {
-      if (OpenFileInternal(file, arguments) is FileStream retval) return retval;
+      if (TryOpenPossiblyLockedFile(file, arguments) is FileStream retval) return retval;
 
       // Return null if we have timed out on retries.
       if ((DateTime.Now - start) > timeout) return null;
@@ -69,13 +74,20 @@ public static partial class FileInfoExtensions
 
   }
 
-  public static async Task<FileStream?> WaitForAccessAsync(this FileInfo file!!, TimeSpan timeout, FileOpenArguments arguments!!)
+  /// <summary>
+  /// Attempts to open the file with a retrying timeout.  Useful for accessing files which may initially be locked. 
+  /// </summary>
+  /// <param name="file">The file to open.</param>
+  /// <param name="timeout">Number of milliseconds to wait.</param>
+  /// <param name="arguments">Defaults to <see cref="FileOpenArguments.OpenExistingForSharedRead"/></param>
+  /// <returns>Either a stream or null if the file cannot be opened within the time-out period.</returns>
+  public static async Task<FileStream?> WaitForAccessAsync(this FileInfo file!!, TimeSpan timeout, FileOpenArguments? arguments = null)
   {
     var start = DateTime.Now;
-
+    if (arguments == null) arguments = FileOpenArguments.OpenExistingForSharedRead;
     while (true)
     {
-      if (OpenFileInternal(file, arguments) is FileStream retval) return retval;
+      if (TryOpenPossiblyLockedFile(file, arguments) is FileStream retval) return retval;
 
       // Return null if we have timed out on retries.
       if ((DateTime.Now - start) > timeout) return null;
@@ -84,7 +96,7 @@ public static partial class FileInfoExtensions
     }
   }
 
-  private static FileStream? OpenFileInternal(this FileInfo file!!, FileOpenArguments open!!)
+  private static FileStream? TryOpenPossiblyLockedFile(this FileInfo file!!, FileOpenArguments arguments!!)
   {
     // WHAT : SafeHandle is not always disposed.
     // WHY  : FileStream disposes the SafeHandle when disposed.
@@ -93,48 +105,24 @@ public static partial class FileInfoExtensions
 
     var fileHandle = SafeNativeMethods.CreateFile(
       file.FullName,
-      open.Access.ToWin32FileAccess(),
-      open.Share.ToWin32FileShare(),
+      arguments.Access,
+      arguments.Share,
       IntPtr.Zero,
-      open.Mode.ToWin32CreationDisposition(),
+      arguments.Mode,
       Win32.FileAttributes.Normal,
       IntPtr.Zero);
 
     // Return the file-stream if it opened OK.
-    if (!fileHandle.IsInvalid) return new FileStream(fileHandle, open.Access);
+    if (!fileHandle.IsInvalid) return new FileStream(fileHandle, (System.IO.FileAccess)arguments.Access);
     else
     {
       fileHandle.Dispose();
 
       // If the failure to open the file was not due to a sharing violation, then throw an exception
       var errorCode = Marshal.GetLastWin32Error();
-      return errorCode != Error.ERROR_SHARING_VIOLATION
+      return errorCode != Error.SharingViolation
         ? throw new IOException(new Win32Exception(errorCode).Message, errorCode)
         : null;
     }
   }
-
-
-
-  private static Win32.FileAccess ToWin32FileAccess(this System.IO.FileAccess access) =>
-    access == System.IO.FileAccess.ReadWrite
-      ? Win32.FileAccess.GenericRead | Win32.FileAccess.GenericWrite
-      : access == System.IO.FileAccess.Read
-        ? Win32.FileAccess.GenericRead
-        : Win32.FileAccess.GenericWrite;
-
-
-  private static Win32.FileShare ToWin32FileShare(this System.IO.FileShare share) => (Win32.FileShare)((uint)share);
-
-  private static CreationDisposition ToWin32CreationDisposition(this FileMode mode) =>
-    mode == FileMode.Open
-      ? CreationDisposition.OpenExisting
-      : mode == FileMode.OpenOrCreate
-        ? CreationDisposition.OpenAlways
-        : (CreationDisposition)(uint)mode;
-
-
-
-
-
 }

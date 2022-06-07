@@ -1,7 +1,7 @@
 ﻿namespace PW.Win32;
 
 [Flags]
-internal enum FileShare : uint
+public enum FileShare : uint
 {
   /// <summary>
   ///

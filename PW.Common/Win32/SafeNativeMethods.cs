@@ -11,18 +11,24 @@ namespace PW.Win32;
 [SuppressUnmanagedCodeSecurity]
 internal static class SafeNativeMethods
 {
+  // The AddFontMemResourceEx function adds the font resource from a memory image to the system.
+  // Negates need to 'UseCompatibleTextRendering' to correctly render fonts.
+  // Enables safe use of Marshal.FreeCoTaskMem() to free unmanaged memory used in AddFontFromResource()
+  // See: https://docs.microsoft.com/en-us/windows/win32/api/wingdi/nf-wingdi-addfontmemresourceex
+  [DllImport("gdi32.dll")]
+  internal static extern IntPtr AddFontMemResourceEx(IntPtr pbFont, uint cbFont, IntPtr pdv, [In] ref uint pcFonts);
 
-  // See: https://docs.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-createfilew
-
+  // See: https://docs.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-createfilew          
   [DllImport("kernel32.dll", EntryPoint = "CreateFileW", SetLastError = true, CharSet = CharSet.Unicode)]
   internal static extern SafeFileHandle CreateFile(
-     string lpFileName,
-     Win32.FileAccess dwDesiredAccess,
-     Win32.FileShare dwShareMode,
+     [MarshalAs(UnmanagedType.LPWStr)] string fileName,
+     [MarshalAs(UnmanagedType.U4)] FileAccess access,
+     [MarshalAs(UnmanagedType.U4)] FileShare share,
      IntPtr lpSecurityAttributes,
-     CreationDisposition dwCreationDisposition,
-     Win32.FileAttributes dwFlagsAndAttributes,
+     [MarshalAs(UnmanagedType.U4)] FileMode mode,
+     [MarshalAs(UnmanagedType.U4)] FileAttributes attributes,
      IntPtr hTemplateFile);
+
 
   // See: https://msdn.microsoft.com/en-us/library/windows/desktop/aa365743(v=vs.85).aspx
   [DllImport("kernel32.dll", SetLastError = true)]

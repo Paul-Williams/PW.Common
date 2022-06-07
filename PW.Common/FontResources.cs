@@ -2,6 +2,7 @@
 using System.Drawing.Text;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using static PW.Win32.SafeNativeMethods;
 
 namespace MouseProfiles;
 
@@ -49,12 +50,7 @@ internal class FontResources
   }
 
 
-  // The AddFontMemResourceEx function adds the font resource from a memory image to the system.
-  // Negates need to 'UseCompatibleTextRendering' to correctly render fonts
-  // Enabled safe use of Marshal.FreeCoTaskMem() to free unmanaged memory used in AddFontFromResource()
-  // See: https://docs.microsoft.com/en-us/windows/win32/api/wingdi/nf-wingdi-addfontmemresourceex
-  [DllImport("gdi32.dll")]
-  private static extern IntPtr AddFontMemResourceEx(IntPtr pbFont, uint cbFont, IntPtr pdv, [In] ref uint pcFonts);
+
 
   /// <summary>
   /// Returns just the embedded font resource names from the assembly manifest.

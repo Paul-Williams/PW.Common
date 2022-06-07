@@ -4498,32 +4498,6 @@
             The calling process must open the file with the GENERIC_WRITE access right.
             </summary>
         </member>
-        <member name="F:PW.Win32.FileShare.None">
-             <summary>
-            
-             </summary>
-        </member>
-        <member name="F:PW.Win32.FileShare.Read">
-            <summary>
-            Enables subsequent open operations on an object to request read access.
-            Otherwise, other processes cannot open the object if they request read access.
-            If this flag is not specified, but the object has been opened for read access, the function fails.
-            </summary>
-        </member>
-        <member name="F:PW.Win32.FileShare.Write">
-            <summary>
-            Enables subsequent open operations on an object to request write access.
-            Otherwise, other processes cannot open the object if they request write access.
-            If this flag is not specified, but the object has been opened for write access, the function fails.
-            </summary>
-        </member>
-        <member name="F:PW.Win32.FileShare.Delete">
-            <summary>
-            Enables subsequent open operations on an object to request delete access.
-            Otherwise, other processes cannot open the object if they request delete access.
-            If this flag is not specified, but the object has been opened for delete access, the function fails.
-            </summary>
-        </member>
         <member name="T:PW.Win32.SafeNativeMethods">
             <summary>
             Wrapper for Win32 API calls.

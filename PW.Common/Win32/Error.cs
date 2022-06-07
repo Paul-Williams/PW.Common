@@ -50,7 +50,7 @@ internal static class Error
   //public const int ERROR_WRITE_FAULT = 29;
   //public const int ERROR_READ_FAULT = 30;
   //public const int ERROR_GEN_FAILURE = 31;
-  public const int ERROR_SHARING_VIOLATION = 32;
+  public const int SharingViolation = 32;
   //public const int ERROR_LOCK_VIOLATION = 33;
   //public const int ERROR_WRONG_DISK = 34;
   //public const int ERROR_SHARING_BUFFER_EXCEEDED = 36;
