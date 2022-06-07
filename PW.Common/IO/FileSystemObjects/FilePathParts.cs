@@ -1,7 +1,4 @@
-﻿using System;
-using System.IO;
-
-namespace PW.IO.FileSystemObjects;
+﻿namespace PW.IO.FileSystemObjects;
 
 /// <summary>
 /// Separates a <see cref="FilePath"/> into its constituent parts.
@@ -44,7 +41,7 @@ public class FilePathParts
   /// Converts back to a <see cref="FilePath"/> object.
   /// </summary>
   /// <returns></returns>
-  public FilePath ToFilePath () => (FilePath)ToString();
+  public FilePath ToFilePath() => (FilePath)ToString();
 
 
   //public static implicit operator FilePath (FilePathParts obj) => (FilePath)obj.ToString();

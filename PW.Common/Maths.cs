@@ -1,6 +1,4 @@
-﻿ 
-
-namespace PW;
+﻿namespace PW;
 
 /// <summary>
 /// Some maths methods

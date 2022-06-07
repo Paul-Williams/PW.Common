@@ -1,10 +1,4 @@
-﻿using PW.Exceptions;
-using PW.Extensions;
-using System;
-using System.IO;
-using System.Linq;
-
-namespace PW.IO.FileSystemObjects;
+﻿namespace PW.IO.FileSystemObjects;
 
 /// <summary>
 /// Represents a file name, without it's extension element.
@@ -109,7 +103,7 @@ public class FileNameWithoutExtension : FileSystemPathSection<FileNameWithoutExt
   /// <summary>
   /// Creates a FileName from a FileNameWithoutExtension and FileExtension.
   /// </summary>
-  public static FileName operator +(FileNameWithoutExtension fileNameWithoutExtension, FileExtension fileExtension) => 
+  public static FileName operator +(FileNameWithoutExtension fileNameWithoutExtension, FileExtension fileExtension) =>
     fileNameWithoutExtension is null
     ? throw new ArgumentNullException(nameof(fileNameWithoutExtension))
     : fileExtension is null

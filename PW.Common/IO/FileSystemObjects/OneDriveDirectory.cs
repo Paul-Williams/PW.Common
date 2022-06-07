@@ -1,7 +1,4 @@
-﻿using System;
-using System.IO;
-
-namespace PW.IO.FileSystemObjects;
+﻿namespace PW.IO.FileSystemObjects;
 
 /// <summary>
 /// A <see cref="DirectoryPath"/> pointing to the OneDrive folder.

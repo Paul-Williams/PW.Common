@@ -1,8 +1,5 @@
-﻿using System;
-using System.ComponentModel;
-using System.Linq;
+﻿using System.ComponentModel;
 using System.Reflection;
-using System.Text.RegularExpressions;
 
 namespace PW.Extensions;
 
@@ -32,8 +29,8 @@ public static class EnumExtensions
   public static string Description(this Enum enumMember, bool throwExceptions)
   {
     if (!throwExceptions) return Description(enumMember);
-    
-    var member = enumMember.GetType().GetMember(enumMember.ToString()).FirstOrDefault() 
+
+    var member = enumMember.GetType().GetMember(enumMember.ToString()).FirstOrDefault()
       ?? throw new Exception($"Enum member not defined: {enumMember}.");
 
     return member.GetCustomAttribute<DescriptionAttribute>()?.Description

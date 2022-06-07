@@ -1,8 +1,4 @@
-﻿using PW.FailFast;
-using System;
-using System.Collections.Generic;
-
-namespace PW.Helpers;
+﻿namespace PW.Helpers;
 
 /// <summary>
 /// Helper methods for working with generic types.

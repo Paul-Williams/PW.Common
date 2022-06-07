@@ -1,13 +1,4 @@
-﻿using CSharpFunctionalExtensions;
-using PW.Extensions;
-using PW.FailFast;
-using PW.IO.FileSystemObjects;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using static CSharpFunctionalExtensions.Result;
+﻿using static CSharpFunctionalExtensions.Result;
 
 namespace PW.IO;
 
@@ -34,10 +25,10 @@ public static partial class DirectoryInfoExtensions
   /// </summary>
   public static DirectoryInfo Append(this DirectoryInfo directory, DirectoryName subDirectory)
   {
-    return directory is null 
-      ? throw new ArgumentNullException(nameof(directory)) 
-      : subDirectory is null 
-        ? throw new ArgumentNullException(nameof(subDirectory)) 
+    return directory is null
+      ? throw new ArgumentNullException(nameof(directory))
+      : subDirectory is null
+        ? throw new ArgumentNullException(nameof(subDirectory))
         : new DirectoryInfo(Path.Combine(directory.FullName, subDirectory.Value));
   }
 
@@ -46,10 +37,10 @@ public static partial class DirectoryInfoExtensions
   /// </summary>
   public static DirectoryInfo Append(this DirectoryInfo directory, string subDirectory)
   {
-    return directory is null 
-      ? throw new ArgumentNullException(nameof(directory)) 
-      : subDirectory is null 
-        ? throw new ArgumentNullException(nameof(subDirectory)) 
+    return directory is null
+      ? throw new ArgumentNullException(nameof(directory))
+      : subDirectory is null
+        ? throw new ArgumentNullException(nameof(subDirectory))
         : new DirectoryInfo(Path.Combine(directory.FullName, subDirectory));
   }
 
@@ -212,7 +203,7 @@ public static partial class DirectoryInfoExtensions
   /// </summary>
   public static List<DirectoryInfo> RecursiveDeleteEmptySubDirectories(this DirectoryInfo initialDirectory!!)
   {
-    var deletedDirectories = new List<DirectoryInfo>(); 
+    var deletedDirectories = new List<DirectoryInfo>();
     if (!initialDirectory.Exists) return deletedDirectories;
 
     var subDirectories = initialDirectory.GetDirectories("*.*", SearchOption.AllDirectories);

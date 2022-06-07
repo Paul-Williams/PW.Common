@@ -1,13 +1,9 @@
-﻿
-
-using System;
-
-namespace PW.ValueObjects;
+﻿namespace PW.ValueObjects;
 
 /// <summary>
 /// Represents a value type, which can only be set once.
 /// </summary>
-public struct WriteOnceValue<T> where T : struct
+public struct WriteOnceValue<T> : PW.Interfaces.IValue<T> where T : struct
 {
   private T _value;
 

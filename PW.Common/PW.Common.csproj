@@ -22,7 +22,7 @@
     <Description>Common shared library</Description>
     <Copyright>© Paul Williams 2022</Copyright>
     <NeutralLanguage>en-GB</NeutralLanguage>
-		<ImplicitUsings>false</ImplicitUsings>
+		<ImplicitUsings>enable</ImplicitUsings>
     <AnalysisLevel>preview-recommended</AnalysisLevel>
     <PackageReadmeFile>Readme.md</PackageReadmeFile>
     <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
@@ -64,9 +64,27 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="CSharpFunctionalExtensions" Version="2.29.1" />
+    <PackageReference Include="CSharpFunctionalExtensions" Version="2.29.2" />
     <PackageReference Include="Microsoft.VisualBasic" Version="10.3.0" />
     <PackageReference Include="OneOf" Version="3.0.216" />
+    <PackageReference Include="System.Drawing.Common" Version="6.0.0" />
   </ItemGroup>
 
+	<ItemGroup>
+		<!--<Using Include="" />-->
+		<Using Remove="System.Net.Http" />
+		<Using Include="System" />
+		<Using Include="System.Collections.Generic" />
+		<Using Include="System.Linq" />
+		<Using Include="PW.Extensions.IEnumerableExtensions" Static="true" />
+		<Using Include="PW.Extensions.StringExtensions" Static="true" />
+		<Using Include="System.Collections" />
+		<Using Include="PW.FailFast" />
+		<Using Include="PW.Interfaces" />
+		<Using Include="CSharpFunctionalExtensions" />
+		<Using Include="PW.IO.FileSystemObjects" />
+		<Using Include="PW.Collections" />
+		<Using Include="CSharpFunctionalExtensions.Result" Static="true" />
+		<Using Include="PW.ValueObjects" />
+	</ItemGroup>
 </Project>

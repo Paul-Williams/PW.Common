@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace PW;
+﻿namespace PW;
 
 /// <summary>
 /// Compares two objects by any comparable property.

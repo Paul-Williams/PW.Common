@@ -1,9 +1,4 @@
-﻿using PW.Extensions;
-using System;
-using System.Collections.Generic;
-using System.IO;
-
-namespace PW.IO.FileSystemObjects;
+﻿namespace PW.IO.FileSystemObjects;
 
 /// <summary>
 /// Represents a file's extension. Instances of this class are cached. The same instance will always be returned for a particular extension.
@@ -81,19 +76,19 @@ public class FileExtension : FileSystemPathSection<FileExtension>
   /// <summary>
   /// Creates an instance from an existing <see cref="FilePath"/> object.
   /// </summary>
-  public static FileExtension From(FilePath filePath) => 
+  public static FileExtension From(FilePath filePath) =>
     filePath is null ? throw new ArgumentNullException(nameof(filePath)) : GetInstance(Path.GetExtension((string)filePath));
 
   /// <summary>
   /// Creates an instance from an existing <see cref="FilePath"/> object.
   /// </summary>
-  public static FileExtension From(FileName fileName) => 
+  public static FileExtension From(FileName fileName) =>
     fileName is null ? throw new ArgumentNullException(nameof(fileName)) : GetInstance(Path.GetExtension((string)fileName));
 
   /// <summary>
   /// Creates an instance from an existing <see cref="FileInfo"/> object.
   /// </summary>
-  public static FileExtension From(FileInfo fileInfo) => 
+  public static FileExtension From(FileInfo fileInfo) =>
     fileInfo is null ? throw new ArgumentNullException(nameof(fileInfo)) : GetInstance(fileInfo.Extension);
 
   #endregion

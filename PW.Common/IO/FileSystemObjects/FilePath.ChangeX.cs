@@ -1,7 +1,4 @@
-﻿using System;
-using System.IO;
-
-namespace PW.IO.FileSystemObjects;
+﻿namespace PW.IO.FileSystemObjects;
 
 /// <summary>
 /// Instance methods for FilePath.ChangeX
@@ -44,8 +41,8 @@ public partial class FilePath
   /// </summary>
   public FilePath ChangeName(Func<string, string> f)
   {
-    return f is null 
-      ? throw new ArgumentNullException(nameof(f)) 
+    return f is null
+      ? throw new ArgumentNullException(nameof(f))
       : ChangeName((FileName)f.Invoke(Path.GetFileName(Value)));
   }
 
@@ -57,7 +54,7 @@ public partial class FilePath
   {
     return newName is null
         ? throw new ArgumentNullException(nameof(newName))
-        : new FilePathParts(this) { FileNameWithoutExtension=(string)newName}.ToFilePath();
+        : new FilePathParts(this) { FileNameWithoutExtension = (string)newName }.ToFilePath();
   }
 
 }

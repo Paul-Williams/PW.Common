@@ -2,14 +2,12 @@
 // It is also possible that 'Func<T> objectExpression' would be re-evaluated for each action
 // Would need to test that.
 
-using System;
-
 namespace PW.Functional;
 
 /// <summary>
 /// Extension methods equivalent to the Visual Basic 'With...End With' Statement block.
 /// </summary>
-[Obsolete("Will revert if used anywhere much.",false)] 
+[Obsolete("Will revert if used anywhere much.", false)]
 public static class WithStatement
 {
   /// <summary>

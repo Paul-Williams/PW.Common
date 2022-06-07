@@ -1,9 +1,4 @@
-﻿using PW.FailFast;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace PW.Collections;
+﻿namespace PW.Collections;
 
 /// <summary>
 /// A list of string-pairs for 'find and replace' purposes.

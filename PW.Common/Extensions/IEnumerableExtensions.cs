@@ -1,10 +1,4 @@
-﻿using PW.Collections;
-using PW.Functional;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace PW.Extensions;
+﻿namespace PW.Extensions;
 
 /// <summary>
 /// Extension methods for use with IEnumerable.
@@ -55,7 +49,7 @@ public static class IEnumerableExtensions
   /// <summary>
   /// Performs <paramref name="f"/> for each item in <paramref name="seq"/>
   /// </summary>
-  public static IEnumerable<T> ForEach<T>(this IEnumerable<T> seq!!, Func<T,T> f!!)
+  public static IEnumerable<T> ForEach<T>(this IEnumerable<T> seq!!, Func<T, T> f!!)
   {
     foreach (var x in seq) yield return f.Invoke(x);
   }
@@ -63,7 +57,7 @@ public static class IEnumerableExtensions
   /// <summary>
   /// Performs <paramref name="f"/> for each item in <paramref name="seq"/>
   /// </summary>
-  public static IEnumerable<TR> ForEach<T,TR>(this IEnumerable<T> seq!!, Func<T, TR> f!!)
+  public static IEnumerable<TR> ForEach<T, TR>(this IEnumerable<T> seq!!, Func<T, TR> f!!)
   {
     foreach (var x in seq) yield return f.Invoke(x);
   }
@@ -72,7 +66,7 @@ public static class IEnumerableExtensions
   /// <summary>
   /// Returns a single string containing each string in the sequence separated by the specified separator.
   /// </summary>
-  public static string Join(this IEnumerable<string> seq, string separator, bool enquote = false) => 
+  public static string Join(this IEnumerable<string> seq, string separator, bool enquote = false) =>
     string.Join(separator, !enquote ? seq : seq.Select(x => $"\"{x}\""));
 
 #if NET5_0_OR_GREATER

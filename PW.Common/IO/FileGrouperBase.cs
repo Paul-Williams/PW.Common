@@ -1,11 +1,4 @@
-﻿using System.Linq;
-using PW.Extensions;
-using PW.IO.FileSystemObjects;
-using System;
-using System.IO;
-using PW.Interfaces;
-
-namespace PW.IO;
+﻿namespace PW.IO;
 
 /// <summary>
 /// Provides base functionality to classes designed to 'group' files into sub-directories.

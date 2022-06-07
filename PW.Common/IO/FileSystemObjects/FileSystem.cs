@@ -1,11 +1,5 @@
 ﻿using Microsoft.VisualBasic.FileIO;
-using PW.Exceptions;
-using PW.Extensions;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.IO;
-using System.Linq;
 
 // NB: SendFileToRecycleBin() will not work from non UI interactive apps like windows services.
 // See: https://stackoverflow.com/questions/2342628/deleting-file-to-recycle-bin-on-windows-x64-in-c-sharp
@@ -189,7 +183,7 @@ public static class FileSystem
   /// </summary>
   public static DirectoryPath Move(this DirectoryPath path!!, DirectoryPath newPath!!)
   {
-    var r = NativeMethods.SafeNativeMethods.MoveFile(path.Value, newPath.Value);
+    var r = Win32.SafeNativeMethods.MoveFile(path.Value, newPath.Value);
 
     return r == false ? throw new Win32Exception() : newPath;
   }

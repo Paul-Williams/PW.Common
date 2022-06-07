@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using CSharpFunctionalExtensions;
-using PW.FailFast;
-using static CSharpFunctionalExtensions.Result;
-
-
-// TODO: XML Comments
+﻿// TODO: XML Comments
 
 namespace PW.Functional;
 
@@ -61,7 +53,7 @@ public struct FuncPipeS<T>
   public FuncPipeS(Func<T, T> func!!) => Func = func;
 
   public Func<T, T> Func { get; }
-  
+
   /// <summary>
   /// Connects the next function to the pipeline.
   /// </summary>
@@ -89,7 +81,7 @@ public struct FuncPipeS<T>
 /// Composes (links together) a list of functions which all have both input and output of type <typeparamref name="T"/>.
 /// </summary>
 /// <typeparam name="T">The type which each function works with.</typeparam>
-[Obsolete("Use FuncPipe instead.",false)]
+[Obsolete("Use FuncPipe instead.", false)]
 public class FunctionPipeline<T> //: List<Func<T, T>>
 {
 

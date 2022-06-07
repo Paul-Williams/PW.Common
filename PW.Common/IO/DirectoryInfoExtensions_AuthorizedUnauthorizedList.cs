@@ -1,9 +1,4 @@
-﻿using PW.FailFast;
-using System;
-using System.Collections.Generic;
-using System.IO;
-
-namespace PW.IO;
+﻿namespace PW.IO;
 
 public static partial class DirectoryInfoExtensions
 {

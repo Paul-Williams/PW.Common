@@ -1,6 +1,4 @@
-﻿using System;
-using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
+﻿using System.Runtime.CompilerServices;
 
 // Source: https://blogs.msdn.microsoft.com/pfxteam/2011/01/15/asynclazyt/
 

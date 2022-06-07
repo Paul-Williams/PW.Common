@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 
 namespace PW.Helpers;
 
@@ -13,7 +11,7 @@ public static class EnumHelper
   /// Returns an array of values for the enumeration <typeparamref name="T"/>.
   /// </summary>
   /// <typeparam name="T">MUST BE AN ENUM !!</typeparam>
-  public static T[] GetValues<T>() where T : Enum => (T[])Enum.GetValues(typeof(T)) ;
+  public static T[] GetValues<T>() where T : Enum => (T[])Enum.GetValues(typeof(T));
 
   /// <summary>
   /// The count of values in the Enum <typeparamref name="T"/>.

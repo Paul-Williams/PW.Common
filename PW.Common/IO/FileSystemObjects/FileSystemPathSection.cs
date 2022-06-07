@@ -1,8 +1,4 @@
-﻿using PW.Collections;
-using PW.Interfaces;
-using System;
-
-namespace PW.IO.FileSystemObjects;
+﻿namespace PW.IO.FileSystemObjects;
 
 /// <summary>
 /// Base class for objects representing a file system path. E.g. DirectoryPath or FilePath.
@@ -38,10 +34,10 @@ public abstract class FileSystemPathSection<T> : IComparable, IComparable<FileSy
 
   // See: https://stackoverflow.com/questions/11475737/gethashcode-for-ordinalignorecase-dependent-string-classes
 
-    /// <summary>
-    /// Returns hash code.
-    /// </summary>
-    /// <returns></returns>
+  /// <summary>
+  /// Returns hash code.
+  /// </summary>
+  /// <returns></returns>
   public override int GetHashCode() => Comparer.GetHashCode(this);
 
 
@@ -99,7 +95,7 @@ public abstract class FileSystemPathSection<T> : IComparable, IComparable<FileSy
   /// <param name="left"></param>
   /// <param name="right"></param>
   /// <returns></returns>
-  public static bool operator <(FileSystemPathSection<T> left, FileSystemPathSection<T> right) => 
+  public static bool operator <(FileSystemPathSection<T> left, FileSystemPathSection<T> right) =>
     left is null ? right is not null : left.CompareTo(right) < 0;
 
   /// <summary>
@@ -108,7 +104,7 @@ public abstract class FileSystemPathSection<T> : IComparable, IComparable<FileSy
   /// <param name="left"></param>
   /// <param name="right"></param>
   /// <returns></returns>
-  public static bool operator <=(FileSystemPathSection<T> left, FileSystemPathSection<T> right) => 
+  public static bool operator <=(FileSystemPathSection<T> left, FileSystemPathSection<T> right) =>
     left is null || left.CompareTo(right) <= 0;
 
   /// <summary>
@@ -117,7 +113,7 @@ public abstract class FileSystemPathSection<T> : IComparable, IComparable<FileSy
   /// <param name="left"></param>
   /// <param name="right"></param>
   /// <returns></returns>
-  public static bool operator >(FileSystemPathSection<T> left, FileSystemPathSection<T> right) => 
+  public static bool operator >(FileSystemPathSection<T> left, FileSystemPathSection<T> right) =>
     left is not null && left.CompareTo(right) > 0;
 
   /// <summary>
@@ -126,7 +122,7 @@ public abstract class FileSystemPathSection<T> : IComparable, IComparable<FileSy
   /// <param name="left"></param>
   /// <param name="right"></param>
   /// <returns></returns>
-  public static bool operator >=(FileSystemPathSection<T> left, FileSystemPathSection<T> right) => 
+  public static bool operator >=(FileSystemPathSection<T> left, FileSystemPathSection<T> right) =>
     left is null ? right is null : left.CompareTo(right) >= 0;
 
   #endregion

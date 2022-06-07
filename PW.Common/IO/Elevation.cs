@@ -5,9 +5,7 @@ using static CSharpFunctionalExtensions.Result;
 
 namespace PW.IO;
 
-// On user cancellation exception thrown:
-// System.ComponentModel.Win32Exception (0x80004005)
-//		ErrorCode	-2147467259	int
+
 
 
 /// <summary>
@@ -15,19 +13,20 @@ namespace PW.IO;
 /// </summary>
 public static class Elevation
 {
-  private const int HRESULT_E_FAIL = -2147467259;//0x80004005;
+  private const int UserCancelled = -2147467259;
 
 
   /// <summary>
   /// Runs/opens the specified executable/file with administrative rights.
-  /// Only catches 'user-cancelled' exception when <paramref name="ignoreCancellationException"/> is true.
+  /// Only catches 'user-canceled' exception when <paramref name="ignoreCancellationException"/> is true.
   /// </summary>
   /// <returns>On success: Maybe{Process}. On cancellation: Maybe{Process}.None. On other exception: throws.</returns>
-  public static Maybe<Process> RunAsAdministrator(string path, bool ignoreCancellationException)
+  public static Maybe<Process> RunAsAdministrator(string path, bool ignoreCancellationException = true)
   {
-    try { return Process.Start(new ProcessStartInfo(path) { Verb = "runas" })!; }
+    try { return Process.Start(new ProcessStartInfo(path) { Verb = "runas" }) ?? Maybe<Process>.None; }
     // Catch this specifically as it is expected. It happens if the user cancels the UAC prompt.
-    catch (System.ComponentModel.Win32Exception ex) when (ignoreCancellationException == true && ex.ErrorCode == HRESULT_E_FAIL)
+    // On user cancellation exception thrown: System.ComponentModel.Win32Exception (0x80004005) - ErrorCode	-2147467259	int
+    catch (System.ComponentModel.Win32Exception ex) when (ignoreCancellationException == true && ex.ErrorCode == UserCancelled)
     { return Maybe<Process>.None; }
   }
 
@@ -44,7 +43,12 @@ public static class Elevation
   /// </summary>
   public static Result<Process> TryRunAsAdministrator(string path)
   {
-    try { return Success(RunAsAdministrator(path)!); } // BUG??
+    try 
+    {
+      return RunAsAdministrator(path) is Process p
+        ? Success(p)
+        : Failure<Process>("Process.Start() returned null.");
+    }
     catch (Exception ex) { return Failure<Process>(ex.Message); }
   }
 

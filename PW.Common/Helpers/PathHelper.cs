@@ -1,10 +1,4 @@
-﻿using System.IO;
-
-#if NET48
-using static PW.Extensions.StringExtensions;
-#endif
-
-namespace PW.Helpers;
+﻿namespace PW.Helpers;
 
 public static class PathHelper
 {

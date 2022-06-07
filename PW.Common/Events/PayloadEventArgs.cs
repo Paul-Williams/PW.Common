@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace PW.Events;
+﻿namespace PW.Events;
 
 /// <summary>
 /// Adds a payload to the standard <see cref="EventArgs"/> class.

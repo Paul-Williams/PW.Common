@@ -1,8 +1,4 @@
-﻿ 
-
-using static PW.ValueObjects.ValidationResult;
-
-namespace PW.ValueObjects;
+﻿namespace PW.ValueObjects;
 
 /// <summary>
 /// Represents a error message string. String is not validated.

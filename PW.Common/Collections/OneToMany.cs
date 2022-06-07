@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace PW.Collections;
+﻿namespace PW.Collections;
 
 #if NET5_0_OR_GREATER
 

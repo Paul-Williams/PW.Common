@@ -1,7 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-
-namespace PW.Functional;
+﻿namespace PW.Functional;
 
 /// <summary>
 /// Extension methods for working with disposable objects in a functional manor.

@@ -1,10 +1,9 @@
-﻿using System;
-using System.ComponentModel;
+﻿using Microsoft.Win32.SafeHandles;
 using System.Runtime.InteropServices;
 using System.Security;
 using System.Text;
 
-namespace PW.NativeMethods;
+namespace PW.Win32;
 
 /// <summary>
 /// Wrapper for Win32 API calls.
@@ -12,6 +11,28 @@ namespace PW.NativeMethods;
 [SuppressUnmanagedCodeSecurity]
 internal static class SafeNativeMethods
 {
+
+  // See: https://docs.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-createfilew
+
+  [DllImport("kernel32.dll", EntryPoint = "CreateFileW", SetLastError = true, CharSet = CharSet.Unicode)]
+  internal static extern SafeFileHandle CreateFile(
+     string lpFileName,
+     Win32.FileAccess dwDesiredAccess,
+     Win32.FileShare dwShareMode,
+     IntPtr lpSecurityAttributes,
+     CreationDisposition dwCreationDisposition,
+     Win32.FileAttributes dwFlagsAndAttributes,
+     IntPtr hTemplateFile);
+
+  // See: https://msdn.microsoft.com/en-us/library/windows/desktop/aa365743(v=vs.85).aspx
+  [DllImport("kernel32.dll", SetLastError = true)]
+  public static extern bool Wow64DisableWow64FsRedirection(ref IntPtr ptr);
+
+  // See: https://msdn.microsoft.com/en-us/library/windows/desktop/aa365745(v=vs.85).aspx
+  [DllImport("kernel32.dll", SetLastError = true)]
+  public static extern bool Wow64RevertWow64FsRedirection(IntPtr ptr);
+
+
   // See: https://docs.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-movefile
   [DllImport("kernel32", SetLastError = true, CharSet = CharSet.Unicode)]
   public static extern bool MoveFile(string lpExistingFileName, string lpNewFileName);
@@ -31,7 +52,7 @@ internal static class SafeNativeMethods
   /// Returns -1 if the string pointed to by psz1 has a lesser value than that pointed to by psz2.
   /// Returns -2 if either or both strings are null.
   /// </returns>
-  [DllImport("shlwapi.dll", CharSet = CharSet.Unicode)] 
+  [DllImport("shlwapi.dll", CharSet = CharSet.Unicode)]
   public static extern int StrCmpLogicalW(string psz1, string psz2);
 
 
@@ -52,7 +73,7 @@ internal static class SafeNativeMethods
   private static extern IntPtr StrFormatByteSizeW(ulong valueToConvert, StringBuilder builder, uint builderCapacity);
 
 
-  public static string StrFormatByteSize (ulong value)
+  public static string StrFormatByteSize(ulong value)
   {
     var sb = new StringBuilder(128);
     _ = StrFormatByteSizeW(value, sb, (uint)sb.Capacity);

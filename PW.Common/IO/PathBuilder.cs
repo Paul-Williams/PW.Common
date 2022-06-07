@@ -1,15 +1,7 @@
-﻿namespace PW.IO;
+﻿using System.Text;
+using static PW.Helpers.PathHelper;
 
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using static Helpers.PathHelper;
-
-#if NET48
-using static PW.Extensions.StringExtensions;
-#endif
-
+namespace PW.IO;
 
 /// <summary>
 /// Class for building file paths -- seems a bit rubbish

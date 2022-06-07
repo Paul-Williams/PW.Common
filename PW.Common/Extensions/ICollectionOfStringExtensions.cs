@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace PW.Extensions;
+﻿namespace PW.Extensions;
 internal static class ICollectionOfStringExtensions
 {
   /// <summary>

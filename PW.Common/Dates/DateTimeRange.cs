@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace PW.Dates;
+﻿namespace PW.Dates;
 
 /// <summary>
 /// Used when querying data from a DB WHERE rows fall between 
 /// two dates or between the start and end of a single day.
 /// </summary>
-public class DateTimeRange : CSharpFunctionalExtensions.ValueObject
+public class DateTimeRange : ValueObject
 {
   /// <summary>
   /// The start date of the range

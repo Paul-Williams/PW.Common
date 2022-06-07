@@ -1,8 +1,4 @@
-﻿ 
-
-using PW.ValueObjects;
-
-namespace PW.Net;
+﻿namespace PW.Net;
 
 /// <summary>
 /// 

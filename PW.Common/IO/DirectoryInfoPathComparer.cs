@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.IO;
-
-namespace PW.IO;
+﻿namespace PW.IO;
 
 /// <summary>
 /// Equality comparer for <see cref="DirectoryInfo"/> objects using FullName equality, rather than reference equality.
@@ -18,7 +15,7 @@ public class DirectoryInfoPathEqualityComparer : IEqualityComparer<DirectoryInfo
   /// Returns true if the two <see cref="DirectoryInfo"/> instances have the same path. Otherwise returns false.
   /// Casing is ignored.
   /// </summary>
-  public bool Equals(DirectoryInfo? x, DirectoryInfo? y) => 
+  public bool Equals(DirectoryInfo? x, DirectoryInfo? y) =>
     (x != null && y != null && string.Equals(x.FullName, y.FullName, System.StringComparison.OrdinalIgnoreCase));
 
   /// <summary>

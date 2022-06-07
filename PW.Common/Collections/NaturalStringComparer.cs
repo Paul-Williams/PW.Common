@@ -1,8 +1,4 @@
-﻿using PW.Interfaces;
-using PW.NativeMethods;
-using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using PW.Win32;
 
 namespace PW.Collections;
 
@@ -86,9 +82,9 @@ public class StringNaturalComparer : IComparer<IReadOnlyValue<string>>, IEqualit
   /// <summary>
   /// Gets the hash code for the specified string
   /// </summary>
-  public int GetHashCode(string? obj) => 
-    obj is null 
-    ? throw new ArgumentNullException(nameof(obj)) 
+  public int GetHashCode(string? obj) =>
+    obj is null
+    ? throw new ArgumentNullException(nameof(obj))
     : StringComparer.InvariantCultureIgnoreCase.GetHashCode(obj);
 
   #endregion
@@ -127,12 +123,12 @@ public class StringNaturalComparer : IComparer<IReadOnlyValue<string>>, IEqualit
     // Invert x and y for descending comparison.
     if (SortOrder == SortOrder.Descending) Helpers.Misc.Swap(ref x, ref y);
 
-    return x is null 
-      ? -1 
-      : y is null 
-        ? 1 
-        : x is IComparable xc 
-          ? xc.CompareTo(y) 
+    return x is null
+      ? -1
+      : y is null
+        ? 1
+        : x is IComparable xc
+          ? xc.CompareTo(y)
           : throw new ArgumentException("Implement IComparable.");
   }
 
@@ -143,8 +139,8 @@ public class StringNaturalComparer : IComparer<IReadOnlyValue<string>>, IEqualit
   {
     return x is string sx && y is string sy
         ? Equals(sx, sy)
-        : x is IReadOnlyValue<string> vx && y is IReadOnlyValue<string> vy 
-          ? Equals(vx.Value, vy.Value) 
+        : x is IReadOnlyValue<string> vx && y is IReadOnlyValue<string> vy
+          ? Equals(vx.Value, vy.Value)
           : object.Equals(x, y);
   }
 

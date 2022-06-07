@@ -1,10 +1,4 @@
-﻿ 
-
-using CSharpFunctionalExtensions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
+﻿using System.Linq.Expressions;
 using System.Reflection;
 
 // See: https://github.com/mcintyre321/ValueOf/blob/master/ValueOf/ValueOf.cs
@@ -121,7 +115,7 @@ public abstract class ValueOf<TValue, TSelf> where TSelf : ValueOf<TValue, TSelf
   /// Performs equality comparison of the two instances
   /// </summary>
   /// <returns></returns>
-  public static bool operator ==(ValueOf<TValue, TSelf> a, ValueOf<TValue, TSelf> b) => 
+  public static bool operator ==(ValueOf<TValue, TSelf> a, ValueOf<TValue, TSelf> b) =>
     a is null && b is null || a is not null && b is not null && a.Equals(b);
 
 

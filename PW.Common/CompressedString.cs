@@ -1,6 +1,5 @@
 ﻿using System.IO.Compression;
 using System.Runtime.Serialization;
-using static PW.StringCompression;
 
 // See: http://gigi.nullneuron.net/gigilabs/compressing-strings-using-gzip-in-c/
 // This article formed the basis for this class. 

@@ -1,10 +1,4 @@
-﻿using PW.FailFast;
-using System.IO;
-using static CSharpFunctionalExtensions.Result;
-using CSharpFunctionalExtensions;
-using PW.Interfaces;
-
-namespace PW.IO;
+﻿namespace PW.IO;
 
 /// <summary>
 /// Encapsulates a file rename operation

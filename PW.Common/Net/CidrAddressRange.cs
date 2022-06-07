@@ -1,11 +1,4 @@
-﻿ 
-
-using PW.Extensions;
-using PW.ValueObjects;
-using System;
-using System.Linq;
-
-namespace PW.Net;
+﻿namespace PW.Net;
 
 /// <summary>
 /// Represents a CIDR IP4 address range. E.g. 192.168.0.0/24 is IP4 address range: 192.168.0.1 to 192.168.0.254 .
@@ -17,7 +10,8 @@ public class CidrAddressRange : ValueOf<string, CidrAddressRange>
   /// <summary>
   /// Sizes of address range by class
   /// </summary>
-  public enum Range { 
+  public enum Range
+  {
     /// <summary>
     /// Class A
     /// </summary>
@@ -33,7 +27,7 @@ public class CidrAddressRange : ValueOf<string, CidrAddressRange>
     /// <summary>
     /// Single IP
     /// </summary>
-    SingleIP = 32 
+    SingleIP = 32
   }
 
   /// <summary>
@@ -63,20 +57,20 @@ public class CidrAddressRange : ValueOf<string, CidrAddressRange>
     return range.IsNullOrWhiteSpace()
         ? throw new Exception("/ not found or nothing after /")
         : range switch
-          {
-            "8" => (IP4AddressMask)"255.0.0.0",
-            "16" => (IP4AddressMask)"255.255.0.0",
-            "24" => (IP4AddressMask)"255.255.255.0",
-            "32" => (IP4AddressMask)"255.255.255.255",
-            _ => throw new Exception("Cannot create mask. Unsupported CIDR range"),
-          };
+        {
+          "8" => (IP4AddressMask)"255.0.0.0",
+          "16" => (IP4AddressMask)"255.255.0.0",
+          "24" => (IP4AddressMask)"255.255.255.0",
+          "32" => (IP4AddressMask)"255.255.255.255",
+          _ => throw new Exception("Cannot create mask. Unsupported CIDR range"),
+        };
   }
 
   /// <summary>
   /// Converts a single IP4 address into CIDR notation. E.g. 192.168.0.1 --> 192.168.0.1/32
   /// </summary>
-  public static CidrAddressRange From(IP4Address address) => 
-    address is null ? throw new ArgumentNullException(nameof(address)) 
+  public static CidrAddressRange From(IP4Address address) =>
+    address is null ? throw new ArgumentNullException(nameof(address))
     : (CidrAddressRange)(address.Value + "/32");
 }
 

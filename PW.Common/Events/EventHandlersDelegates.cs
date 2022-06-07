@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace PW.Events;
+﻿namespace PW.Events;
 
 /// <summary>
 /// Delegate used to handle events with a strongly-typed payload only. No sender, just data of type <typeparamref name="TPayload"/>.

@@ -1,8 +1,4 @@
-﻿ 
-
-using System;
-
-namespace PW.Net;
+﻿namespace PW.Net;
 
 /// <summary>
 /// <see cref="PeriodicPing.OnPingException"/> event arguments.
@@ -13,7 +9,7 @@ public class PingExceptionEventArgs : EventArgs
   /// The exception that occurred.
   /// </summary>
   public Exception Exception { get; }
-  internal PingExceptionEventArgs (Exception exception)
+  internal PingExceptionEventArgs(Exception exception)
   {
     Exception = exception;
   }

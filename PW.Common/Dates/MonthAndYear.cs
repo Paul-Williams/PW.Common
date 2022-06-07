@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace PW.Dates;
+﻿namespace PW.Dates;
 
 /// <summary>
 /// Simple class to store and operate on a month and year as a single unit.
 /// </summary>
-public class MonthAndYear : CSharpFunctionalExtensions.ValueObject
+public class MonthAndYear : ValueObject
 {
 
   /// <summary>

@@ -1,13 +1,24 @@
-﻿// See: http://www.pinvoke.net/default.aspx/Constants/WINERROR.html
+﻿namespace PW.Win32;
 
-// Having all these constants defined caused the DLL size to increate by ~150K !!
+// See: http://www.pinvoke.net/default.aspx/Constants/WINERROR.html
+
+// Having all these constants defined caused the DLL size to increase by ~150K !!
 // Just uncomment those required by Win32 calls made by this library.
 
-namespace PW;
-
-internal static class Win32Error
+internal static class Error
 {
-  //public const int ERROR_SUCCESS = 0;
+
+  public static string GetName(int value, bool format = false)
+  {
+    string GetNameInternal(int value) => typeof(Error).GetFields().FirstOrDefault(fi => fi.GetValue(null) is int i && i == value)?.Name
+      ?? throw new Exception($"{nameof(Error)} does not contain a field with value {value}.");
+
+    return !format
+      ? GetNameInternal(value)
+      : GetNameInternal(value).Replace('_', ' ').ToTitleCase();
+  }
+
+  public const int ERROR_SUCCESS = 0;
   //public const int ERROR_INVALID_FUNCTION = 1;
   //public const int ERROR_FILE_NOT_FOUND = 2;
   //public const int ERROR_PATH_NOT_FOUND = 3;

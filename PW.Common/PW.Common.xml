@@ -1413,6 +1413,13 @@
             Extensions methods for <see cref="T:System.Collections.Generic.IList`1"/>.
             </summary>
         </member>
+        <member name="M:PW.Extensions.IListExtensions.Shuffle``1(System.Collections.Generic.IList{``0})">
+            <summary>
+            Performs an in-place shuffle of the items in the list.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="list"></param>
+        </member>
         <member name="M:PW.Extensions.IListExtensions.Replace``1(System.Collections.Generic.IList{``0},``0,``0)">
             <summary>
             Attempts to replace <paramref name="item"/> with <paramref name="replacement"/>
@@ -1507,18 +1514,6 @@
             <summary>
             Waits asynchronously for the process to exit, with the specified polling interval.
             </summary>
-        </member>
-        <member name="T:PW.Extensions.ShuffleListExtension">
-            <summary>
-            Extension methods for shuffling lists.
-            </summary>
-        </member>
-        <member name="M:PW.Extensions.ShuffleListExtension.Shuffle``1(System.Collections.Generic.IList{``0})">
-            <summary>
-            Performs an in-place shuffle of the items in the list.
-            </summary>
-            <typeparam name="T"></typeparam>
-            <param name="list"></param>
         </member>
         <member name="T:PW.Extensions.StringExtensions">
             <summary>
@@ -2583,7 +2578,7 @@
         <member name="M:PW.IO.Elevation.RunAsAdministrator(System.String,System.Boolean)">
             <summary>
             Runs/opens the specified executable/file with administrative rights.
-            Only catches 'user-cancelled' exception when <paramref name="ignoreCancellationException"/> is true.
+            Only catches 'user-canceled' exception when <paramref name="ignoreCancellationException"/> is true.
             </summary>
             <returns>On success: Maybe{Process}. On cancellation: Maybe{Process}.None. On other exception: throws.</returns>
         </member>
@@ -2728,68 +2723,11 @@
             Returns true if it exists and is not locked to prevent shared-read. Otherwise returns false.
             </summary>
         </member>
-        <member name="M:PW.IO.FileInfoExtensions.WaitForAccess(System.IO.FileInfo,System.TimeSpan,PW.IO.FileOpenArguments)">
+        <member name="M:PW.IO.FileInfoExtensions.WaitForAccess(System.IO.FileInfo,System.TimeSpan,PW.IO.FileOpenArguments,System.Int32)">
             <summary>
-            Attempts to open the file with a retrying timeout. Useful for files which may initially be locked. NB: Uses <see cref="M:System.Threading.Thread.Sleep(System.Int32)"/> during wait loop.
-            </summary>
-            <param name="file">this</param>
-            <param name="timeout"></param>
-            <param name="open"></param>
-            <returns></returns>
-        </member>
-        <member name="F:PW.IO.FileInfoExtensions.Win32FileShare.None">
-             <summary>
-            
-             </summary>
-        </member>
-        <member name="F:PW.IO.FileInfoExtensions.Win32FileShare.Read">
-            <summary>
-            Enables subsequent open operations on an object to request read access.
-            Otherwise, other processes cannot open the object if they request read access.
-            If this flag is not specified, but the object has been opened for read access, the function fails.
-            </summary>
-        </member>
-        <member name="F:PW.IO.FileInfoExtensions.Win32FileShare.Write">
-            <summary>
-            Enables subsequent open operations on an object to request write access.
-            Otherwise, other processes cannot open the object if they request write access.
-            If this flag is not specified, but the object has been opened for write access, the function fails.
-            </summary>
-        </member>
-        <member name="F:PW.IO.FileInfoExtensions.Win32FileShare.Delete">
-            <summary>
-            Enables subsequent open operations on an object to request delete access.
-            Otherwise, other processes cannot open the object if they request delete access.
-            If this flag is not specified, but the object has been opened for delete access, the function fails.
-            </summary>
-        </member>
-        <member name="F:PW.IO.FileInfoExtensions.Win32CreationDisposition.New">
-            <summary>
-            Creates a new file. The function fails if a specified file exists.
-            </summary>
-        </member>
-        <member name="F:PW.IO.FileInfoExtensions.Win32CreationDisposition.CreateAlways">
-            <summary>
-            Creates a new file, always.
-            If a file exists, the function overwrites the file, clears the existing attributes, combines the specified file attributes,
-            and flags with FILE_ATTRIBUTE_ARCHIVE, but does not set the security descriptor that the SECURITY_ATTRIBUTES structure specifies.
-            </summary>
-        </member>
-        <member name="F:PW.IO.FileInfoExtensions.Win32CreationDisposition.OpenExisting">
-            <summary>
-            Opens a file. The function fails if the file does not exist.
-            </summary>
-        </member>
-        <member name="F:PW.IO.FileInfoExtensions.Win32CreationDisposition.OpenAlways">
-            <summary>
-            Opens a file, always.
-            If a file does not exist, the function creates a file as if dwCreationDisposition is CREATE_NEW.
-            </summary>
-        </member>
-        <member name="F:PW.IO.FileInfoExtensions.Win32CreationDisposition.TruncateExisting">
-            <summary>
-            Opens a file and truncates it so that its size is 0 (zero) bytes. The function fails if the file does not exist.
-            The calling process must open the file with the GENERIC_WRITE access right.
+            Attempts to open the file with a retrying timeout. 
+            Useful for files which may initially be locked. 
+            NB: Blocks thread for <paramref name="pollInterval"/> milliseconds during wait loop.
             </summary>
         </member>
         <member name="T:PW.IO.FileOpenArguments">
@@ -3998,33 +3936,6 @@
             <param name="num"></param>
             <returns></returns>
         </member>
-        <member name="T:PW.NativeMethods.SafeNativeMethods">
-            <summary>
-            Wrapper for Win32 API calls.
-            </summary>
-        </member>
-        <member name="M:PW.NativeMethods.SafeNativeMethods.StrCmpLogicalW(System.String,System.String)">
-            <summary>
-            Compares two Unicode strings. Digits in the strings are considered as numerical content rather than text. This test is not case-sensitive.
-            </summary>
-            <param name="psz1">A pointer to the first null-terminated string to be compared.</param>
-            <param name="psz2">A pointer to the second null-terminated string to be compared.</param>
-            <returns>    
-            Returns zero if the strings are identical.    
-            Returns 1 if the string pointed to by psz1 has a greater value than that pointed to by psz2.     
-            Returns -1 if the string pointed to by psz1 has a lesser value than that pointed to by psz2.
-            Returns -2 if either or both strings are null.
-            </returns>
-        </member>
-        <member name="M:PW.NativeMethods.SafeNativeMethods.StrFormatByteSizeW(System.UInt64,System.Text.StringBuilder,System.UInt32)">
-            <summary>
-            Converts a numeric value into a string that represents the number expressed as a size value in bytes, kilobytes, megabytes, or gigabytes, depending on the size.
-            </summary>
-            <param name="valueToConvert">The numeric value to be converted.</param>
-            <param name="builder">A <see cref="T:System.Text.StringBuilder"/> that, when this function returns successfully, receives the converted number.</param>
-            <param name="builderCapacity">The size of the buffer pointed to by <paramref name="builder"/>, in characters.</param>
-            <returns>Returns a pointer to the converted string, or NULL if the conversion fails.</returns>
-        </member>
         <member name="T:PW.Net.CidrAddressRange">
             <summary>
             Represents a CIDR IP4 address range. E.g. 192.168.0.0/24 is IP4 address range: 192.168.0.1 to 192.168.0.254 .
@@ -4557,6 +4468,135 @@
             Implicitly converts <see cref="T:PW.ValueObjects.WriteOnceValue`1"/> to <typeparamref name="T"/>.
             </summary>
             <param name="value"></param>
+        </member>
+        <member name="F:PW.Win32.CreationDisposition.New">
+            <summary>
+            Creates a new file. The function fails if a specified file exists.
+            </summary>
+        </member>
+        <member name="F:PW.Win32.CreationDisposition.CreateAlways">
+            <summary>
+            Creates a new file, always.
+            If a file exists, the function overwrites the file, clears the existing attributes, combines the specified file attributes,
+            and flags with FILE_ATTRIBUTE_ARCHIVE, but does not set the security descriptor that the SECURITY_ATTRIBUTES structure specifies.
+            </summary>
+        </member>
+        <member name="F:PW.Win32.CreationDisposition.OpenExisting">
+            <summary>
+            Opens a file. The function fails if the file does not exist.
+            </summary>
+        </member>
+        <member name="F:PW.Win32.CreationDisposition.OpenAlways">
+            <summary>
+            Opens a file, always.
+            If a file does not exist, the function creates a file as if dwCreationDisposition is CREATE_NEW.
+            </summary>
+        </member>
+        <member name="F:PW.Win32.CreationDisposition.TruncateExisting">
+            <summary>
+            Opens a file and truncates it so that its size is 0 (zero) bytes. The function fails if the file does not exist.
+            The calling process must open the file with the GENERIC_WRITE access right.
+            </summary>
+        </member>
+        <member name="F:PW.Win32.FileShare.None">
+             <summary>
+            
+             </summary>
+        </member>
+        <member name="F:PW.Win32.FileShare.Read">
+            <summary>
+            Enables subsequent open operations on an object to request read access.
+            Otherwise, other processes cannot open the object if they request read access.
+            If this flag is not specified, but the object has been opened for read access, the function fails.
+            </summary>
+        </member>
+        <member name="F:PW.Win32.FileShare.Write">
+            <summary>
+            Enables subsequent open operations on an object to request write access.
+            Otherwise, other processes cannot open the object if they request write access.
+            If this flag is not specified, but the object has been opened for write access, the function fails.
+            </summary>
+        </member>
+        <member name="F:PW.Win32.FileShare.Delete">
+            <summary>
+            Enables subsequent open operations on an object to request delete access.
+            Otherwise, other processes cannot open the object if they request delete access.
+            If this flag is not specified, but the object has been opened for delete access, the function fails.
+            </summary>
+        </member>
+        <member name="T:PW.Win32.SafeNativeMethods">
+            <summary>
+            Wrapper for Win32 API calls.
+            </summary>
+        </member>
+        <member name="M:PW.Win32.SafeNativeMethods.StrCmpLogicalW(System.String,System.String)">
+            <summary>
+            Compares two Unicode strings. Digits in the strings are considered as numerical content rather than text. This test is not case-sensitive.
+            </summary>
+            <param name="psz1">A pointer to the first null-terminated string to be compared.</param>
+            <param name="psz2">A pointer to the second null-terminated string to be compared.</param>
+            <returns>    
+            Returns zero if the strings are identical.    
+            Returns 1 if the string pointed to by psz1 has a greater value than that pointed to by psz2.     
+            Returns -1 if the string pointed to by psz1 has a lesser value than that pointed to by psz2.
+            Returns -2 if either or both strings are null.
+            </returns>
+        </member>
+        <member name="M:PW.Win32.SafeNativeMethods.StrFormatByteSizeW(System.UInt64,System.Text.StringBuilder,System.UInt32)">
+            <summary>
+            Converts a numeric value into a string that represents the number expressed as a size value in bytes, kilobytes, megabytes, or gigabytes, depending on the size.
+            </summary>
+            <param name="valueToConvert">The numeric value to be converted.</param>
+            <param name="builder">A <see cref="T:System.Text.StringBuilder"/> that, when this function returns successfully, receives the converted number.</param>
+            <param name="builderCapacity">The size of the buffer pointed to by <paramref name="builder"/>, in characters.</param>
+            <returns>Returns a pointer to the converted string, or NULL if the conversion fails.</returns>
+        </member>
+        <member name="T:MouseProfiles.FontResources">
+            <summary>
+            Enables access to fonts embedded within an assembly's resource.
+            Uses the singleton pattern for app-wide sharing of fonts.
+            </summary>
+        </member>
+        <member name="M:MouseProfiles.FontResources.#ctor">
+            <summary>
+            Private constructor -- Singleton pattern. Access class via Instance property.
+            </summary>
+        </member>
+        <member name="P:MouseProfiles.FontResources.Instance">
+            <summary>
+            Returns a singleton instance.
+            </summary>
+        </member>
+        <member name="M:MouseProfiles.FontResources.CreateFont(System.String,System.Int32)">
+            <summary>
+            Creates a regular-style font of the specified family and size.
+            </summary>
+        </member>
+        <member name="M:MouseProfiles.FontResources.CreateFont(System.String,System.Int32,System.Drawing.FontStyle)">
+            <summary>
+            Creates a font of the specified family, size and style.
+            </summary>
+            <exception cref="T:System.Exception">No embedded fonts or requested font family not found.</exception>
+        </member>
+        <member name="M:MouseProfiles.FontResources.EnumerateEmbeddedFontResources">
+            <summary>
+            Returns just the embedded font resource names from the assembly manifest.
+            </summary>  
+        </member>
+        <member name="M:MouseProfiles.FontResources.GetResourceBytes(System.Reflection.Assembly,System.String)">
+            <summary>
+            Creates a byte array from the specified assembly resource.
+            </summary>
+        </member>
+        <member name="M:MouseProfiles.FontResources.AddAllEmbeddedFonts">
+            <summary>
+            Adds all embedded fonts to the PrivateFontCollection.
+            </summary>
+        </member>
+        <member name="M:MouseProfiles.FontResources.PopulateLookup">
+            <summary>
+            Populates the lookup from font family name -> PrivateFontCollection.Families[index].
+            </summary>
         </member>
     </members>
 </doc>

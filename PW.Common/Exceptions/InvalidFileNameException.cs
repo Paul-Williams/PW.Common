@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace PW.Exceptions;
+﻿namespace PW.Exceptions;
 
 /// <summary>
 /// File name is invalid.

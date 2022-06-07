@@ -1,6 +1,4 @@
-﻿ 
-
-namespace PW.ValueObjects;
+﻿namespace PW.ValueObjects;
 
 /// <summary>
 /// Represents a ok/error validation result.

@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-
-namespace PW.Extensions;
+﻿namespace PW.Extensions;
 
 /// <summary>
 /// Extensions methods for IGrouping interface.

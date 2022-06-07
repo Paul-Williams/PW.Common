@@ -1,8 +1,4 @@
-﻿ using PW.Extensions;
-using PW.FailFast;
-using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using static PW.Extensions.IListExtensions;
 
 namespace PW.Collections;
 

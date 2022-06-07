@@ -1,9 +1,4 @@
-﻿using PW.Exceptions;
-using PW.Extensions;
-using System;
-using System.IO;
-
-namespace PW.IO.FileSystemObjects;
+﻿namespace PW.IO.FileSystemObjects;
 
 /// <summary>
 /// Represents a file's name, without the directory path element.

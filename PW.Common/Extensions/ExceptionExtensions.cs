@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace PW.Extensions;
+﻿namespace PW.Extensions;
 
 /// <summary>
 /// Various helper methods for use with <see cref="Exception"/> objects.
@@ -16,8 +13,8 @@ public static class ExceptionExtensions
   {
     if (includeTopLevel) yield return ex;
 
-    while ((ex = ex?.InnerException!) is not null) 
-      yield return ex;      
+    while ((ex = ex?.InnerException!) is not null)
+      yield return ex;
   }
 
   /// <summary>
@@ -25,7 +22,7 @@ public static class ExceptionExtensions
   /// </summary>
   public static IEnumerable<string> EnumerateMessages(this Exception ex, bool includeTopLevel = true)
   {
-    foreach (var e in ex.EnumerateExceptions(includeTopLevel)) 
+    foreach (var e in ex.EnumerateExceptions(includeTopLevel))
       yield return e.Message;
   }
 

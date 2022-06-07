@@ -1,6 +1,5 @@
 ﻿using OneOf;
 using OneOf.Types;
-using System;
 
 namespace PW.Functional.Options;
 

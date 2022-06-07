@@ -1,6 +1,4 @@
-﻿using System;
-using System.Runtime.Serialization;
-using System.Security.Permissions;
+﻿using System.Runtime.Serialization;
 
 namespace PW.FailFast;
 
@@ -65,5 +63,5 @@ public class AssertionException : Exception
     base.GetObjectData(info, context);
   }
 
-     
+
 }

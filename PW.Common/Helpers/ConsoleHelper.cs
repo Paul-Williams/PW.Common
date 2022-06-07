@@ -1,6 +1,4 @@
-﻿using PW.Extensions;
-using System;
-using static System.Console;
+﻿using static System.Console;
 
 namespace PW.Helpers;
 
@@ -9,7 +7,7 @@ namespace PW.Helpers;
 /// </summary>
 public static class ConsoleHelper
 {
-  
+
   /// <summary>
   /// Displays 'Push a key to exit.' then and waits for a key before continuing.
   /// </summary>  

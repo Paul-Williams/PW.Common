@@ -1,10 +1,4 @@
-﻿using PW.Extensions;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace PW.Collections;
+﻿namespace PW.Collections;
 
 /// <summary>
 /// 
@@ -107,8 +101,8 @@ public class Grouping<TKey, TElement> : IGrouping<TKey, TElement>, IList<TElemen
   {
     get
     {
-      return index < 0 || index >= count 
-        ? throw new ArgumentOutOfRangeException(nameof(index)) 
+      return index < 0 || index >= count
+        ? throw new ArgumentOutOfRangeException(nameof(index))
         : _elements[index];
     }
     set

@@ -1,13 +1,6 @@
-﻿ 
-
-using System;
-using PW.FailFast;
-
-
+﻿namespace PW;
 // This class could be made static for use as an extension method as:
 // TOutput =  Tinput.Convert(Func<TInput, TOutput> func);
-
-namespace PW;
 
 /// <summary>
 /// Converts from TSource to TResult using function delegates.
@@ -24,7 +17,7 @@ public class Converter<TInput, TOutput>
   /// </summary>
   /// <param name="inputProvider">A function delegate which provides the input to be converted</param>
   /// <param name="convertionCallback">A function delegate which performs the conversion from <typeparamref name="TInput"/> to  <typeparamref name="TOutput"/></param>
-  
+
   public Converter(Func<TInput> inputProvider!!, Func<TInput, TOutput> convertionCallback!!)
   {
     _convertionCallback = convertionCallback;

@@ -1,7 +1,4 @@
-﻿
-using System;
-using System.Diagnostics;
-using System.IO;
+﻿using System.Diagnostics;
 using System.Runtime.CompilerServices;
 
 namespace PW.FailFast;
@@ -55,7 +52,7 @@ public static class Assert
   /// <summary>
   /// Throws exception is <paramref name="o"/> is null.
   /// </summary>    
-  public static void IsNotNull<T>([ValidatedNotNull] T? o, [ValidatedNotNull] string message = "Must not be null.") where T: class
+  public static void IsNotNull<T>([ValidatedNotNull] T? o, [ValidatedNotNull] string message = "Must not be null.") where T : class
   {
     if (o is null) throw new AssertionException(ClassMethodName(), message ?? "Must not be null.");
   }

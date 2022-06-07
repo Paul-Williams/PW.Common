@@ -1,8 +1,4 @@
-﻿using System;
-using System.IO;
-using PW.FailFast;
-
-namespace PW.IO;
+﻿namespace PW.IO;
 
 /// <summary>
 /// Extension methods for the <see cref="Stream"/> class.

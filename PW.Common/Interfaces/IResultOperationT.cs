@@ -1,6 +1,4 @@
-﻿using CSharpFunctionalExtensions;
-
-namespace PW.Interfaces;
+﻿namespace PW.Interfaces;
 
 /// <summary>
 /// An interface to an operation, which when performed and returns a <see cref="Result{T}"/>

@@ -1,11 +1,4 @@
-﻿ 
-
-using System;
-using System.Threading;
-
-// See: https://stackoverflow.com/questions/273313/randomize-a-listt
-
-namespace PW.Threading;
+﻿namespace PW.Threading;
 
 /// <summary>
 /// A thread-safe wrapper for the initialisation of <see cref="Random"/>.

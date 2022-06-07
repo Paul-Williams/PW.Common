@@ -1,7 +1,4 @@
-﻿using System;
-using System.Threading;
-
-namespace PW.Lazy;
+﻿namespace PW.Lazy;
 
 /// <summary>
 /// A version of <see cref="Lazy{T}"/> which supports resetting to its initial state, before the value was created.

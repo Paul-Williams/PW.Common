@@ -1,8 +1,4 @@
-﻿
-
-using PW.Interfaces;
-
-namespace PW;
+﻿namespace PW;
 
 /// <summary>
 /// Simple integer accumulator class

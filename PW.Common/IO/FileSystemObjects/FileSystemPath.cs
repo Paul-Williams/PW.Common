@@ -1,7 +1,4 @@
-﻿using PW.Collections;
-using System;
-
-namespace PW.IO.FileSystemObjects;
+﻿namespace PW.IO.FileSystemObjects;
 
 /// <summary>
 /// Base class for objects representing a file system path. E.g. DirectoryPath or FilePath.

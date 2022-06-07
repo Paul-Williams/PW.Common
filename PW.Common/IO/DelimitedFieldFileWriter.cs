@@ -1,9 +1,4 @@
-﻿using PW.FailFast;
-using PW.IO.FileSystemObjects;
-using System;
-using System.IO;
-
-namespace PW.IO;
+﻿namespace PW.IO;
 
 /// <summary>
 /// Class for writing to delimited text files.

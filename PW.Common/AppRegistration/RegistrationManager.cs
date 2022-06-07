@@ -1,11 +1,7 @@
-﻿namespace PW.AppRegistration;
-
-using Microsoft.Win32;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Microsoft.Win32;
 using System.Reflection;
-using System;
 
+namespace PW.AppRegistration;
 
 /// <summary>
 /// Management of application registrations for LaunchPad.

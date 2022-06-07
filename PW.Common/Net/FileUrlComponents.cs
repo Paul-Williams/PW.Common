@@ -1,9 +1,4 @@
-﻿ 
-
-using System;
-using System.Collections.Generic;
-
-namespace PW.Net;
+﻿namespace PW.Net;
 
 /// <summary>
 /// Represents the path-name-extension components of which a file url is comprised.

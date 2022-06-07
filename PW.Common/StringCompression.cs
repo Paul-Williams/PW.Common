@@ -1,5 +1,4 @@
-﻿using System.IO;
-using System.IO.Compression;
+﻿using System.IO.Compression;
 using System.Text;
 using static PW.Functional.Disposable;
 
@@ -15,7 +14,7 @@ namespace PW;
 
 public static class StringCompression
 {
-  public static byte[] Compress(this string inputStr!!, CompressionLevel compressionLevel = CompressionLevel.Optimal) 
+  public static byte[] Compress(this string inputStr!!, CompressionLevel compressionLevel = CompressionLevel.Optimal)
     => CompressToStream(inputStr, compressionLevel).DisposeAfter(stream => stream.ToArray());
 
   public static MemoryStream CompressToStream(this string inputStr!!, CompressionLevel compressionLevel = CompressionLevel.Optimal)
@@ -26,7 +25,7 @@ public static class StringCompression
     using var compressor = new DeflateStream(outputStream, compressionLevel, true);
     compressor.Write(inputBytes, 0, inputBytes.Length);
     compressor.Close(); // VERY important, otherwise output stream will always be zero-length.
-    return outputStream;  
+    return outputStream;
   }
 
 

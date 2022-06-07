@@ -1,8 +1,4 @@
-﻿using PW.Extensions;
-using System;
-using System.IO;
-
-namespace PW.IO.FileSystemObjects;
+﻿namespace PW.IO.FileSystemObjects;
 
 /// <summary>
 /// Represents a single directory name, without the rest of the directory path.
@@ -48,13 +44,13 @@ public class DirectoryName : FileSystemPathSection<DirectoryName>
   /// <summary>
   /// Casts a string to a <see cref="DirectoryName"/>.
   /// </summary> 
-  public static explicit operator DirectoryName(string str) => 
+  public static explicit operator DirectoryName(string str) =>
     str != null ? new DirectoryName(str) : throw new ArgumentNullException(nameof(str));
 
   /// <summary>
   /// Casts a <see cref="DirectoryName"/> to a string.
   /// </summary>    
-  public static explicit operator string(DirectoryName directoryName) => 
-    directoryName?.Value ?? throw new ArgumentNullException(nameof (directoryName));
+  public static explicit operator string(DirectoryName directoryName) =>
+    directoryName?.Value ?? throw new ArgumentNullException(nameof(directoryName));
 
 }

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace PW.Collections;
+﻿namespace PW.Collections;
 
 /// <summary>
 /// Options for iteration direction or movement of cursor index in sequence.

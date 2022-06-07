@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace PW.Extensions;
+﻿namespace PW.Extensions;
 
 /// <summary>
 /// Extension methods for use with objects.
@@ -41,6 +39,6 @@ public static class NullSafeExtensions
   /// <param name="o">Object passed to <paramref name="func"/></param>
   /// <param name="func">Function to perform on <paramref name="o"/></param>
   /// <returns>Result of <paramref name="func"/>, or default</returns>
-  public static TR? IfNotNull<T, TR>(this T? o, Func<T, TR?> func) where T : class where TR : class => 
+  public static TR? IfNotNull<T, TR>(this T? o, Func<T, TR?> func) where T : class where TR : class =>
     func is null ? throw new ArgumentNullException(nameof(func)) : o != null ? func(o) : default;
 }

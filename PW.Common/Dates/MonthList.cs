@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace PW.Dates;
+﻿namespace PW.Dates;
 
 /// <summary>
 /// Singleton class providing an list of month names, in English.

@@ -1,15 +1,11 @@
-﻿ 
-
-// A simple SynchronizationContext that encapsulates it's own dedicated task queue and processing
+﻿// A simple SynchronizationContext that encapsulates it's own dedicated task queue and processing
 // thread for servicing Send() & Post() calls.  
 // Based upon http://blogs.msdn.com/b/pfxteam/archive/2012/01/20/10259049.aspx but uses it's own thread
 // rather than running on the thread that it's instantiated on
 
 // See: https://stackoverflow.com/questions/1882417/looking-for-an-example-of-a-custom-synchronizationcontext-required-for-unit-tes
 
-using System;
 using System.Collections.Concurrent;
-using System.Threading;
 
 namespace PW.Threading;
 
@@ -102,8 +98,8 @@ public sealed class ThreadSynchronizationContext : SynchronizationContext, IDisp
   private void WorkerThreadProc(object? data)
   {
     if (data is SynchronizationContext context)
-    { 
-      SetSynchronizationContext(context); 
+    {
+      SetSynchronizationContext(context);
     }
     else
     {

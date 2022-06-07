@@ -1,4 +1,4 @@
-﻿using System;
+﻿using static PW.Win32.SafeNativeMethods;
 using System.Runtime.InteropServices;
 
 namespace PW.IO;
@@ -14,13 +14,7 @@ public sealed class DisableFileSystemRedirection : IDisposable
   readonly IntPtr _wow64Value = IntPtr.Zero;
   bool _isDisabled;//= false;
 
-  // See: https://msdn.microsoft.com/en-us/library/windows/desktop/aa365743(v=vs.85).aspx
-  [DllImport("kernel32.dll", SetLastError = true)]
-  static extern bool Wow64DisableWow64FsRedirection(ref IntPtr ptr);
 
-  // See: https://msdn.microsoft.com/en-us/library/windows/desktop/aa365745(v=vs.85).aspx
-  [DllImport("kernel32.dll", SetLastError = true)]
-  static extern bool Wow64RevertWow64FsRedirection(IntPtr ptr);
 
   /// <summary>
   /// Creates a new instance which disables redirection until it is disposed.

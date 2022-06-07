@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-
-// See: https://msdn.microsoft.com/en-us/magazine/mt809121.aspx
+﻿// See: https://msdn.microsoft.com/en-us/magazine/mt809121.aspx
 // For possible simplification.
 
 namespace PW.Collections;

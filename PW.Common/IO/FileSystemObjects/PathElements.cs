@@ -1,6 +1,4 @@
-﻿using System.IO;
-
-namespace PW.IO.FileSystemObjects;
+﻿namespace PW.IO.FileSystemObjects;
 
 /// <summary>
 /// Replacement for <see cref="System.IO.Path"/> which returns 'FileSystemObjects' instead of strings.

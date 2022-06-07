@@ -1,6 +1,4 @@
-﻿using CSharpFunctionalExtensions;
-
-namespace PW.Interfaces;
+﻿namespace PW.Interfaces;
 
 /// <summary>
 /// Interface to perform an operation which returns a value of type <see cref="Maybe{T}"/>.

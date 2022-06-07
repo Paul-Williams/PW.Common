@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace PW.Flags;
+﻿namespace PW.Flags;
 
 
 /// <summary>

@@ -1,10 +1,5 @@
-﻿ 
-
-using PW.FailFast;
-using System;
-using System.Net;
+﻿using System.Net;
 using System.Net.NetworkInformation;
-using System.Threading;
 
 namespace PW.Net;
 
@@ -74,7 +69,7 @@ public sealed class PeriodicPing : IDisposable
     SynchronizationContext = synchronizationContext;
   }
 
-  
+
   private void Timer_Callback(object? state)
   {
     // NB: This code is running on the timer thread, not the client/UI thread.

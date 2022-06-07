@@ -1,13 +1,4 @@
-﻿ 
-
-using CSharpFunctionalExtensions;
-using PW.FailFast;
-using System;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Reflection;
-
-// TODO: Look at example on GitHub to see if it can replace this class.
+﻿// TODO: Look at example on GitHub to see if it can replace this class.
 
 // See: https://github.com/mcintyre321/ValueOf/blob/master/ValueOf/ValueOf.cs
 // This class is from version 'Commits on May 10, 2019'

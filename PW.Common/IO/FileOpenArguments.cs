@@ -1,6 +1,4 @@
-﻿using System.IO;
-
-namespace PW.IO;
+﻿namespace PW.IO;
 
 /// <summary>
 /// 
@@ -26,16 +24,16 @@ public class FileOpenArguments
   /// <summary>
   /// Open for read, write read/write access to the file.
   /// </summary>
-  public FileAccess Access { get;  }
+  public FileAccess Access { get; }
 
   /// <summary>
   /// The kind of access other <see cref="FileStream"/> objects can have to the same file.
   /// </summary>
-  public FileShare Share { get;  }
+  public FileShare Share { get; }
 
   /// <summary>
   /// Returns a new file open for shared read instance.
   /// </summary>
-  public static FileOpenArguments OpenForSharedRead  => new(FileMode.Open, FileAccess.Read,  FileShare.Read );
+  public static FileOpenArguments OpenForSharedRead => new(FileMode.Open, FileAccess.Read, FileShare.Read);
 
 }

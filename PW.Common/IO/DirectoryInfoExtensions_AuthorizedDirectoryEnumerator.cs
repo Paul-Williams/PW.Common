@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using PW.FailFast;
-
-namespace PW.IO;
+﻿namespace PW.IO;
 
 /// <summary>
 /// Extensions for the <see cref="DirectoryInfo"/> class.

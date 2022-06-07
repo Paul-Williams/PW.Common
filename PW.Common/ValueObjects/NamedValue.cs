@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using static PW.Helpers.Generic;
-
-namespace PW.ValueObjects;
+﻿namespace PW.ValueObjects;
 
 /// <summary>
 /// Represents a value which has a name.

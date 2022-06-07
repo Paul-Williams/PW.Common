@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace PW.Extensions;
+﻿namespace PW.Extensions;
 
 /// <summary>
 /// Extension methods for use with chars.
