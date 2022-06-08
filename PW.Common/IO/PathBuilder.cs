@@ -1,5 +1,5 @@
 ﻿using System.Text;
-using static PW.Helpers.PathHelper;
+using static PW.IO.Paths;
 
 namespace PW.IO;
 

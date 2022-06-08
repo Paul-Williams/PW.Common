@@ -3,7 +3,7 @@
 using PW.FailFast;
 using System;
 using System.IO;
-using static Helpers.PathHelper;
+using static PW.IO.Paths;
 
 #if NET48
 using static PW.Extensions.StringExtensions;

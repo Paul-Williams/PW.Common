@@ -24,7 +24,14 @@ public class DirectoryPath : FileSystemPath<DirectoryPath>
     {
       // Cheat and use DirectoryInfo to further validate and construct.
       // To avoid issues during comparison, normalize all directories to end with a path separator.
-      Value = Helpers.PathHelper.NormalizeDirectoryPath(new DirectoryInfo(directoryPath).FullName);
+
+/* Unmerged change from project 'PW.Common (net48)'
+Before:
+      Value = Helpers.Paths.NormalizeDirectoryPath(new DirectoryInfo(directoryPath).FullName);
+After:
+      Value = Paths.NormalizeDirectoryPath(new DirectoryInfo(directoryPath).FullName);
+*/
+      Value = IO.Paths.NormalizeDirectoryPath(new DirectoryInfo(directoryPath).FullName);
     }
     catch (Exception ex)
     {
@@ -40,7 +47,14 @@ public class DirectoryPath : FileSystemPath<DirectoryPath>
   /// </summary>    
   public DirectoryPath(DirectoryInfo directory!!)
   {
-    Value = Helpers.PathHelper.NormalizeDirectoryPath(directory.FullName);
+
+/* Unmerged change from project 'PW.Common (net48)'
+Before:
+    Value = Helpers.Paths.NormalizeDirectoryPath(directory.FullName);
+After:
+    Value = Paths.NormalizeDirectoryPath(directory.FullName);
+*/
+    Value = IO.Paths.NormalizeDirectoryPath(directory.FullName);
   }
 
   /// <summary>
@@ -50,7 +64,14 @@ public class DirectoryPath : FileSystemPath<DirectoryPath>
   public DirectoryPath(FilePath filePath)
   {
     Value = filePath is not null
-      ? Helpers.PathHelper.NormalizeDirectoryPath(Path.GetDirectoryName((string)filePath)!)
+
+/* Unmerged change from project 'PW.Common (net48)'
+Before:
+      ? Helpers.Paths.NormalizeDirectoryPath(Path.GetDirectoryName((string)filePath)!)
+After:
+      ? Paths.NormalizeDirectoryPath(Path.GetDirectoryName((string)filePath)!)
+*/
+      ? IO.Paths.NormalizeDirectoryPath(Path.GetDirectoryName((string)filePath)!)
       : throw new ArgumentNullException(nameof(filePath));
   }
 
@@ -64,7 +85,14 @@ public class DirectoryPath : FileSystemPath<DirectoryPath>
   /// </summary>
   private static DirectoryPath FromStringInternal(string value)
   {
-    return new() { Value = Helpers.PathHelper.NormalizeDirectoryPath(Path.GetDirectoryName(value)!) };
+
+/* Unmerged change from project 'PW.Common (net48)'
+Before:
+    return new() { Value = Helpers.Paths.NormalizeDirectoryPath(Path.GetDirectoryName(value)!) };
+After:
+    return new() { Value = Paths.NormalizeDirectoryPath(Path.GetDirectoryName(value)!) };
+*/
+    return new() { Value = IO.Paths.NormalizeDirectoryPath(Path.GetDirectoryName(value)!) };
   }
 
   #endregion

@@ -55,5 +55,11 @@ public class FilePathTests
 
   }
 
+  [TestMethod]
+  public void TestPathEquality()
+  {
+    Assert.IsTrue(new FilePath(@"C:\Temp\Test.txt").DirectoryPath == new FilePath(@"C:\temp\Test.txt").DirectoryPath);
+  }
+
 
 }

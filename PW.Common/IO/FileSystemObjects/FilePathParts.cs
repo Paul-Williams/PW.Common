@@ -11,7 +11,14 @@ public class FilePathParts
   /// <param name="filePath"></param>
   public FilePathParts(FilePath filePath!!)
   {
-    Directory = Helpers.PathHelper.NormalizeDirectoryPath(Path.GetDirectoryName(filePath.Value)!);
+
+/* Unmerged change from project 'PW.Common (net48)'
+Before:
+    Directory = Helpers.Paths.NormalizeDirectoryPath(Path.GetDirectoryName(filePath.Value)!);
+After:
+    Directory = Paths.NormalizeDirectoryPath(Path.GetDirectoryName(filePath.Value)!);
+*/
+    Directory = IO.Paths.NormalizeDirectoryPath(Path.GetDirectoryName(filePath.Value)!);
     FileNameWithoutExtension = Path.GetFileNameWithoutExtension(filePath.Value);
     Extension = Path.GetExtension(filePath.Value);
   }

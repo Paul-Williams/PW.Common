@@ -2257,16 +2257,6 @@
             <param name="objs"></param>
             <returns></returns>
         </member>
-        <member name="M:PW.Helpers.PathHelper.NormalizeFileExtension(System.String)">
-            <summary>
-            Unless empty, ensures it starts with a period.
-            </summary>
-        </member>
-        <member name="M:PW.Helpers.PathHelper.NormalizeDirectoryPath(System.String)">
-            <summary>
-            Unless empty, ensures the directory path string is terminated with a <see cref="F:System.IO.Path.DirectorySeparatorChar"/>
-            </summary>
-        </member>
         <member name="T:PW.Interfaces.ILoopable">
             <summary>
             Implemented by objects that support loping, such as certain enumerators.
@@ -2725,17 +2715,30 @@
         </member>
         <member name="M:PW.IO.FileInfoExtensions.WaitForAccess(System.IO.FileInfo,System.TimeSpan,PW.IO.FileOpenArguments,System.Int32)">
             <summary>
-            Attempts to open the file with a retrying timeout. 
-            Useful for files which may initially be locked. 
+            Attempts to open the file with a retrying timeout. Useful for accessing files which may initially be locked. 
             NB: Blocks thread for <paramref name="pollInterval"/> milliseconds during wait loop.
             </summary>
+            <param name="file">The file to open.</param>
+            <param name="timeout">Number of milliseconds to wait.</param>
+            <param name="arguments">Defaults to <see cref="P:PW.IO.FileOpenArguments.OpenExistingForSharedRead"/></param>
+            <param name="pollInterval">Interval, in milliseconds, at which to try to be opening the file.</param>
+            <returns>Either a stream or null if the file cannot be opened within the time-out period.</returns>
+        </member>
+        <member name="M:PW.IO.FileInfoExtensions.WaitForAccessAsync(System.IO.FileInfo,System.TimeSpan,PW.IO.FileOpenArguments)">
+            <summary>
+            Attempts to open the file with a retrying timeout.  Useful for accessing files which may initially be locked. 
+            </summary>
+            <param name="file">The file to open.</param>
+            <param name="timeout">Number of milliseconds to wait.</param>
+            <param name="arguments">Defaults to <see cref="P:PW.IO.FileOpenArguments.OpenExistingForSharedRead"/></param>
+            <returns>Either a stream or null if the file cannot be opened within the time-out period.</returns>
         </member>
         <member name="T:PW.IO.FileOpenArguments">
             <summary>
             
             </summary>
         </member>
-        <member name="M:PW.IO.FileOpenArguments.#ctor(System.IO.FileMode,System.IO.FileAccess,System.IO.FileShare)">
+        <member name="M:PW.IO.FileOpenArguments.#ctor(PW.Win32.FileMode,PW.Win32.FileAccess,PW.Win32.FileShare)">
             <summary>
             Constructor
             </summary>
@@ -2755,7 +2758,7 @@
             The kind of access other <see cref="T:System.IO.FileStream"/> objects can have to the same file.
             </summary>
         </member>
-        <member name="P:PW.IO.FileOpenArguments.OpenForSharedRead">
+        <member name="P:PW.IO.FileOpenArguments.OpenExistingForSharedRead">
             <summary>
             Returns a new file open for shared read instance.
             </summary>
@@ -3429,9 +3432,14 @@
             Creates a new instance.
             </summary>
         </member>
-        <member name="P:PW.IO.FileSystemObjects.FileSystemPath`1.Comparer">
+        <member name="P:PW.IO.FileSystemObjects.FileSystemPath`1.SortComparer">
             <summary>
-            Default comparer for sorting.
+            Used for sort-order comparison. E.g. CompareTo , greater/less than etc.
+            </summary>
+        </member>
+        <member name="P:PW.IO.FileSystemObjects.FileSystemPath`1.EqualityComparer">
+            <summary>
+            Used for equality comparison.
             </summary>
         </member>
         <member name="P:PW.IO.FileSystemObjects.FileSystemPath`1.Value">
@@ -3779,6 +3787,37 @@
             Appends the file name to the path
             </summary>
             <param name="fileExtension"></param>
+        </member>
+        <member name="M:PW.IO.Paths.NormalizeFileExtension(System.String)">
+            <summary>
+            Unless empty, ensures it starts with a period.
+            </summary>
+        </member>
+        <member name="M:PW.IO.Paths.NormalizeDirectoryPath(System.String)">
+            <summary>
+            Unless empty, ensures the directory path string is terminated with a <see cref="F:System.IO.Path.DirectorySeparatorChar"/>
+            </summary>
+        </member>
+        <member name="M:PW.IO.Paths.FilePathsAreEqual(System.String,System.String)">
+            <summary>
+            Compares the two file paths using <see cref="F:PW.IO.Paths.FileSystemPathComparison"/>.
+            </summary>
+        </member>
+        <member name="M:PW.IO.Paths.FilePathsAreEqual(System.IO.FileInfo,System.IO.FileInfo)">
+            <summary>
+            Compares the two file paths using <see cref="F:PW.IO.Paths.FileSystemPathComparison"/>.
+            </summary>
+        </member>
+        <member name="M:PW.IO.Paths.FilePathsAreEqual(System.IO.FileInfo,System.String)">
+            <summary>
+            Compares the two file paths using <see cref="F:PW.IO.Paths.FileSystemPathComparison"/>.
+            </summary>
+        </member>
+        <member name="M:PW.IO.Paths.DirectoryPathsMatch(System.String,System.String)">
+            <summary>
+            Tests if the directory paths are the same, other than in their casing. Before comparing, trailing back-slashes are normalized as required.
+            Comparison is made using <see cref="F:PW.IO.Paths.FileSystemPathComparison"/>
+            </summary>
         </member>
         <member name="T:PW.IO.StreamExtensions">
             <summary>
@@ -4469,33 +4508,59 @@
             </summary>
             <param name="value"></param>
         </member>
-        <member name="F:PW.Win32.CreationDisposition.New">
+        <member name="F:PW.Win32.FileMode.New">
             <summary>
             Creates a new file. The function fails if a specified file exists.
             </summary>
         </member>
-        <member name="F:PW.Win32.CreationDisposition.CreateAlways">
+        <member name="F:PW.Win32.FileMode.CreateAlways">
             <summary>
             Creates a new file, always.
             If a file exists, the function overwrites the file, clears the existing attributes, combines the specified file attributes,
-            and flags with FILE_ATTRIBUTE_ARCHIVE, but does not set the security descriptor that the SECURITY_ATTRIBUTES structure specifies.
+            and flags with <see cref="F:PW.Win32.FileAttributes.Archive"/>, but does not set the security descriptor that the SECURITY_ATTRIBUTES structure specifies.
             </summary>
         </member>
-        <member name="F:PW.Win32.CreationDisposition.OpenExisting">
+        <member name="F:PW.Win32.FileMode.OpenExisting">
             <summary>
             Opens a file. The function fails if the file does not exist.
             </summary>
         </member>
-        <member name="F:PW.Win32.CreationDisposition.OpenAlways">
+        <member name="F:PW.Win32.FileMode.OpenAlways">
             <summary>
             Opens a file, always.
-            If a file does not exist, the function creates a file as if dwCreationDisposition is CREATE_NEW.
+            If a file does not exist, the function creates a file as if <see cref="F:PW.Win32.FileMode.New"/> was used.
             </summary>
         </member>
-        <member name="F:PW.Win32.CreationDisposition.TruncateExisting">
+        <member name="F:PW.Win32.FileMode.TruncateExisting">
             <summary>
             Opens a file and truncates it so that its size is 0 (zero) bytes. The function fails if the file does not exist.
-            The calling process must open the file with the GENERIC_WRITE access right.
+            The calling process must open the file with the <see cref="F:PW.Win32.FileAccess.GenericWrite"/> access right.
+            </summary>
+        </member>
+        <member name="F:PW.Win32.FileShare.None">
+             <summary>
+            
+             </summary>
+        </member>
+        <member name="F:PW.Win32.FileShare.Read">
+            <summary>
+            Enables subsequent open operations on an object to request read access.
+            Otherwise, other processes cannot open the object if they request read access.
+            If this flag is not specified, but the object has been opened for read access, the function fails.
+            </summary>
+        </member>
+        <member name="F:PW.Win32.FileShare.Write">
+            <summary>
+            Enables subsequent open operations on an object to request write access.
+            Otherwise, other processes cannot open the object if they request write access.
+            If this flag is not specified, but the object has been opened for write access, the function fails.
+            </summary>
+        </member>
+        <member name="F:PW.Win32.FileShare.Delete">
+            <summary>
+            Enables subsequent open operations on an object to request delete access.
+            Otherwise, other processes cannot open the object if they request delete access.
+            If this flag is not specified, but the object has been opened for delete access, the function fails.
             </summary>
         </member>
         <member name="T:PW.Win32.SafeNativeMethods">
