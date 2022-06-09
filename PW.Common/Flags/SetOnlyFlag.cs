@@ -1,9 +1,13 @@
 ﻿namespace PW.Flags;
 
+// Don't make this a struct as that limits it to use as a field
+// because a property getter will otherwise pass a copy.
+
+
 /// <summary>
 /// A flag value, which can only be set.
 /// </summary>
-public struct SetOnlyFlag
+public class SetOnlyFlag
 {
   /// <summary>
   /// Whether the flag has been set.

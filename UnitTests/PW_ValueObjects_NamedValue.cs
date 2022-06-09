@@ -2,14 +2,14 @@
 using System;
 using PW.ValueObjects;
 
-namespace UnitTests;
+namespace PW.ValueObjects.UnitTests;
 
 [TestClass]
-public class PW_ValueObjects_NamedValue
+public class NamedValueTests
 {
 
   [TestMethod]
-  public void Test_PW_ValueObjects_NamedValue()
+  public void Various()
   {
     Assert.ThrowsException<ArgumentNullException>(() => { var r = new NamedValue<string>("Name", null); }, "null value");
     Assert.ThrowsException<ArgumentNullException>(() => { var r = new NamedValue<string>(null, "value"); }, "null name");
