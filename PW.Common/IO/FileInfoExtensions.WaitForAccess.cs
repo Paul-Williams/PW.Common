@@ -63,8 +63,11 @@ public static partial class FileInfoExtensions
 
     while (true)
     {
-      if (TryOpenPossiblyLockedFile(file, arguments) is FileStream retval) return retval;
+      var result = TryOpenFile(file, arguments);
 
+      if (result.IsT0) return result.AsT0;
+      else if (result.AsT1.HResult != Error.SharingViolation) throw result.AsT1;
+      
       // Return null if we have timed out on retries.
       if ((DateTime.Now - start) > timeout) return null;
 
@@ -87,7 +90,10 @@ public static partial class FileInfoExtensions
     if (arguments == null) arguments = FileOpenArguments.OpenExistingForSharedRead;
     while (true)
     {
-      if (TryOpenPossiblyLockedFile(file, arguments) is FileStream retval) return retval;
+      var result = TryOpenFile(file, arguments);
+
+      if (result.IsT0) return result.AsT0;
+      else if (result.AsT1.HResult != Error.SharingViolation) throw result.AsT1;
 
       // Return null if we have timed out on retries.
       if ((DateTime.Now - start) > timeout) return null;
@@ -96,14 +102,14 @@ public static partial class FileInfoExtensions
     }
   }
 
-  private static FileStream? TryOpenPossiblyLockedFile(this FileInfo file!!, FileOpenArguments arguments!!)
+  public static OneOf.OneOf<FileStream, IOException> TryOpenFile(this FileInfo file!!, FileOpenArguments arguments!!)
   {
     // WHAT : SafeHandle is not always disposed.
     // WHY  : FileStream disposes the SafeHandle when disposed.
     //        So we only dispose SafeHandle here if we are not returning a FileStream.
     // SEE  : https://referencesource.microsoft.com/#q=filestream -- Dispose() method, finally block.
 
-    var fileHandle = SafeNativeMethods.CreateFile(
+     var fileHandle = SafeNativeMethods.CreateFile(
       file.FullName,
       arguments.Access,
       arguments.Share,
@@ -111,18 +117,20 @@ public static partial class FileInfoExtensions
       arguments.Mode,
       Win32.FileAttributes.Normal,
       IntPtr.Zero);
+    
+    var win32Error = Marshal.GetLastWin32Error();
 
     // Return the file-stream if it opened OK.
-    if (!fileHandle.IsInvalid) return new FileStream(fileHandle, (System.IO.FileAccess)arguments.Access);
+    if (!fileHandle.IsInvalid) return new FileStream(fileHandle, arguments.Access.ToFileAccess());
     else
-    {
+    {      
       fileHandle.Dispose();
+      return new IOException(new Win32Exception(win32Error).Message, win32Error);
 
-      // If the failure to open the file was not due to a sharing violation, then throw an exception
-      var errorCode = Marshal.GetLastWin32Error();
-      return errorCode != Error.SharingViolation
-        ? throw new IOException(new Win32Exception(errorCode).Message, errorCode)
-        : null;
+      //// If the failure to open the file was not due to a sharing violation, then throw an exception      
+      //return win32Error != Error.SharingViolation
+      //  ? throw new IOException(new Win32Exception(win32Error).Message, win32Error)
+      //  : null;
     }
   }
 }

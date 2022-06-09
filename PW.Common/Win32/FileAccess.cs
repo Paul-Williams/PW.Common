@@ -1,6 +1,20 @@
 ﻿namespace PW.Win32;
 
 
+public static class ConvertFileAccess
+{
+  public static System.IO.FileAccess ToFileAccess(this FileAccess value)
+  {
+    return value switch
+    {
+      FileAccess.GenericRead => System.IO.FileAccess.Read,
+      FileAccess.GenericWrite => System.IO.FileAccess.Write,
+      FileAccess.GenericReadWrite => System.IO.FileAccess.ReadWrite,
+      _ => throw new Exception("Unknown value")
+    };
+  }
+}
+
 // Commented out unused declarations.
 
 [Flags]
@@ -49,7 +63,7 @@ public enum FileAccess : uint
   GenericWrite = 0x40000000,
   //GenericExecute = 0x20000000,
   //GenericAll = 0x10000000,
-  GenericReadWrite = GenericRead | GenericWrite,  
+  GenericReadWrite = GenericRead | GenericWrite,
 
   //SPECIFIC_RIGHTS_ALL = 0x00FFFF,
   //FILE_ALL_ACCESS =
