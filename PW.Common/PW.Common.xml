@@ -417,7 +417,7 @@
         </member>
         <member name="M:PW.Collections.StringNaturalComparer.Equals(System.String,System.String)">
             <summary>
-            
+            Compares two strings for equality
             </summary>
         </member>
         <member name="M:PW.Collections.StringNaturalComparer.GetHashCode(System.String)">
@@ -2845,7 +2845,8 @@
         </member>
         <member name="M:PW.IO.FileSystemObjects.DirectoryPath.#ctor(System.IO.DirectoryInfo)">
             <summary>
-            Creates an instance from an existing <see cref="T:System.IO.DirectoryInfo"/> object. Path validation skipped. <see cref="F:System.IO.Path.DirectorySeparatorChar"/> appended if missing.
+            Creates an instance from an existing <see cref="T:System.IO.DirectoryInfo"/> object. 
+            Path validation skipped. <see cref="F:System.IO.Path.DirectorySeparatorChar"/> appended if missing.
             </summary>    
         </member>
         <member name="M:PW.IO.FileSystemObjects.DirectoryPath.#ctor(PW.IO.FileSystemObjects.FilePath)">
@@ -3172,7 +3173,6 @@
         <member name="M:PW.IO.FileSystemObjects.FilePath.#ctor(System.String)">
             <summary>
             Creates a new instance using the specified file name or full path. 
-            If just the file name is supplied, then the current directory is prepended to create the full path.
             </summary>
         </member>
         <member name="M:PW.IO.FileSystemObjects.FilePath.#ctor(System.IO.FileInfo)">
@@ -3427,7 +3427,7 @@
             Base class for objects representing a file system path. E.g. DirectoryPath or FilePath.
             </summary>
         </member>
-        <member name="M:PW.IO.FileSystemObjects.FileSystemPath`1.#ctor">
+        <member name="M:PW.IO.FileSystemObjects.FileSystemPath`1.#ctor(System.String)">
             <summary>
             Creates a new instance.
             </summary>

@@ -9,70 +9,30 @@ public class DirectoryPath : FileSystemPath<DirectoryPath>
 {
   #region Constructors
 
-  private DirectoryPath() { }
+  //private DirectoryPath() { }
 
   /// <summary>
   /// Creates a new instance from a string. Basic validation performed. <see cref="Path.DirectorySeparatorChar"/> appended if missing.
   /// Supports relative paths. (e.g. . or ..) Path of just [Drive]: (e.g. C:) will return current directory for that drive.
   /// </summary>
-  public DirectoryPath(string directoryPath)
+  public DirectoryPath(string directoryPath!!) : base(Paths.NormalizeDirectoryPath(new DirectoryInfo(directoryPath).FullName))
   {
-    if (directoryPath is null) throw new ArgumentNullException(nameof(directoryPath), "Value cannot be null.");
-    if (string.IsNullOrWhiteSpace(directoryPath)) throw new ArgumentException("Value cannot be empty or white-space.", nameof(directoryPath));
-
-    try
-    {
-      // Cheat and use DirectoryInfo to further validate and construct.
-      // To avoid issues during comparison, normalize all directories to end with a path separator.
-
-/* Unmerged change from project 'PW.Common (net48)'
-Before:
-      Value = Helpers.Paths.NormalizeDirectoryPath(new DirectoryInfo(directoryPath).FullName);
-After:
-      Value = Paths.NormalizeDirectoryPath(new DirectoryInfo(directoryPath).FullName);
-*/
-      Value = IO.Paths.NormalizeDirectoryPath(new DirectoryInfo(directoryPath).FullName);
-    }
-    catch (Exception ex)
-    {
-      // Any exception from attempting to create a DirectoryInfo will be classed 
-      // as a argument exception, as the issue will have been caused by the 
-      // argument being invalid in some way.
-      throw new ArgumentException(ex.Message, nameof(directoryPath));
-    }
   }
 
   /// <summary>
-  /// Creates an instance from an existing <see cref="DirectoryInfo"/> object. Path validation skipped. <see cref="Path.DirectorySeparatorChar"/> appended if missing.
+  /// Creates an instance from an existing <see cref="DirectoryInfo"/> object. 
+  /// Path validation skipped. <see cref="Path.DirectorySeparatorChar"/> appended if missing.
   /// </summary>    
-  public DirectoryPath(DirectoryInfo directory!!)
+  public DirectoryPath(DirectoryInfo directory!!) : base(Paths.NormalizeDirectoryPath(directory.FullName))
   {
-
-/* Unmerged change from project 'PW.Common (net48)'
-Before:
-    Value = Helpers.Paths.NormalizeDirectoryPath(directory.FullName);
-After:
-    Value = Paths.NormalizeDirectoryPath(directory.FullName);
-*/
-    Value = IO.Paths.NormalizeDirectoryPath(directory.FullName);
   }
 
   /// <summary>
   /// Creates a new instance
   /// </summary>
   /// <param name="filePath"></param>
-  public DirectoryPath(FilePath filePath)
+  public DirectoryPath(FilePath filePath): base (Paths.NormalizeDirectoryPath(Path.GetDirectoryName(filePath.Value)!))
   {
-    Value = filePath is not null
-
-/* Unmerged change from project 'PW.Common (net48)'
-Before:
-      ? Helpers.Paths.NormalizeDirectoryPath(Path.GetDirectoryName((string)filePath)!)
-After:
-      ? Paths.NormalizeDirectoryPath(Path.GetDirectoryName((string)filePath)!)
-*/
-      ? IO.Paths.NormalizeDirectoryPath(Path.GetDirectoryName((string)filePath)!)
-      : throw new ArgumentNullException(nameof(filePath));
   }
 
   #endregion
@@ -85,14 +45,7 @@ After:
   /// </summary>
   private static DirectoryPath FromStringInternal(string value)
   {
-
-/* Unmerged change from project 'PW.Common (net48)'
-Before:
-    return new() { Value = Helpers.Paths.NormalizeDirectoryPath(Path.GetDirectoryName(value)!) };
-After:
-    return new() { Value = Paths.NormalizeDirectoryPath(Path.GetDirectoryName(value)!) };
-*/
-    return new() { Value = IO.Paths.NormalizeDirectoryPath(Path.GetDirectoryName(value)!) };
+    return new(Paths.NormalizeDirectoryPath(Path.GetDirectoryName(value)!));
   }
 
   #endregion

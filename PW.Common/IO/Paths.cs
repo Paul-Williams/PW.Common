@@ -13,9 +13,9 @@ public static class Paths
   /// <summary>
   /// Used for equality comparison.
   /// </summary>
-  public static StringComparer EqualityComparer { get; } = StringComparer.OrdinalIgnoreCase;
+  public static IEqualityComparer<string?> EqualityComparer { get; } = StringComparer.OrdinalIgnoreCase;
 
-  public static IComparer<string> NaturalSortComparer { get; } = StringNaturalComparer.AscendingComparer;
+  public static IComparer<string?> NaturalSortComparer { get; } = StringNaturalComparer.AscendingComparer;
 
 
 

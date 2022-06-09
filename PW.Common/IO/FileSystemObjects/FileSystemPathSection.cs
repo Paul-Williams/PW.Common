@@ -5,9 +5,6 @@
 /// </summary>
 public abstract class FileSystemPathSection<T> : IComparable, IComparable<FileSystemPathSection<T>>, IEquatable<FileSystemPathSection<T>>, IReadOnlyValue<string>
 {
-  //NB: Generic type T is used to ensure that only like sub-types can be compared.
-  private static StringNaturalComparer Comparer => StringNaturalComparer.AscendingComparer;
-
   private string? _value;
 
 
@@ -30,7 +27,7 @@ public abstract class FileSystemPathSection<T> : IComparable, IComparable<FileSy
   /// Performs equality comparison of the two instances
   /// </summary>
   public override bool Equals(object? obj) =>
-    Comparer.Equals(this, obj as FileSystemPathSection<T>);
+    Paths.EqualityComparer.Equals(Value, (obj as FileSystemPathSection<T>)?.Value);
 
   // See: https://stackoverflow.com/questions/11475737/gethashcode-for-ordinalignorecase-dependent-string-classes
 
@@ -38,7 +35,7 @@ public abstract class FileSystemPathSection<T> : IComparable, IComparable<FileSy
   /// Returns hash code.
   /// </summary>
   /// <returns></returns>
-  public override int GetHashCode() => Comparer.GetHashCode(this);
+  public override int GetHashCode() => Paths.EqualityComparer.GetHashCode(Value);
 
 
   /// <summary>
@@ -53,20 +50,20 @@ public abstract class FileSystemPathSection<T> : IComparable, IComparable<FileSy
   /// </summary>
   /// <param name="other"></param>
   /// <returns></returns>
-  public bool Equals(FileSystemPathSection<T>? other) => Comparer.Equals(this, other);
+  public bool Equals(FileSystemPathSection<T>? other) => Paths.EqualityComparer.Equals(Value, other?.Value);
 
   /// <summary>
   /// Compares two instances for sorting.
   /// </summary>
   /// <param name="other"></param>
   /// <returns></returns>
-  public int CompareTo(FileSystemPathSection<T>? other) => Comparer.Compare(this, other);
+  public int CompareTo(FileSystemPathSection<T>? other) => Paths.NaturalSortComparer.Compare(Value, other?.Value);
 
   /// <summary>
   /// Compares two instances for sorting.
   /// </summary>
   /// <returns></returns>
-  public int CompareTo(object? obj) => Comparer.Compare(this, obj as FileSystemPathSection<T>);
+  public int CompareTo(object? obj) => Paths.NaturalSortComparer.Compare(Value, (obj as FileSystemPathSection<T>)?.Value);
 
 
 

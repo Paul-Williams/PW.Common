@@ -8,23 +8,27 @@ public abstract class FileSystemPath<T> : IComparable<FileSystemPath<T>>, IEquat
   /// <summary>
   /// Creates a new instance.
   /// </summary>
-  protected FileSystemPath() { }
+  protected FileSystemPath(string value)
+  {
+    if (string.IsNullOrWhiteSpace(value)) throw new ArgumentException($"'{nameof(value)}' cannot be null or whitespace.", nameof(value));
+    _value = value;
+  }
 
-  private string? value;
+  private string _value;
 
   /// <summary>
   /// The path encapsulated by this <see cref="FileSystemPath{T}"/>
   /// </summary>
   public string Value
   {
-    get => value ?? throw new InvalidOperationException($"Implementation error: {nameof(Value)} was not set by the inherited class.");
-    protected set
-    {
-      if (this.value is not null) throw new InvalidOperationException($"{nameof(FileSystemPath<T>.Value)} cannot be changed once set.");
-      if (value is null) throw new ArgumentNullException(nameof(value), $"{nameof(Value)} cannot be null.");
-      if (string.IsNullOrWhiteSpace(value)) throw new ArgumentException($"{nameof(Value)} cannot be empty or white-space.", nameof(value));
-      this.value = value;
-    }
+    get => _value ?? throw new InvalidOperationException($"Implementation error: {nameof(Value)} was not set by the inherited class.");
+    //protected set
+    //{
+    //  if (this._value is not null) throw new InvalidOperationException($"{nameof(FileSystemPath<T>.Value)} cannot be changed once set.");
+    //  if (value is null) throw new ArgumentNullException(nameof(value), $"{nameof(Value)} cannot be null.");
+    //  if (string.IsNullOrWhiteSpace(value)) throw new ArgumentException($"{nameof(Value)} cannot be empty or white-space.", nameof(value));
+    //  this._value = value;
+    //}
   }
 
   public abstract bool Exists { get; }
@@ -82,13 +86,13 @@ public abstract class FileSystemPath<T> : IComparable<FileSystemPath<T>>, IEquat
   /// Performs equality comparison of the two instances
   /// </summary>
   /// <returns></returns>
-  public static bool operator ==(FileSystemPath<T> a, FileSystemPath<T> b) => Paths.EqualityComparer.Equals(a?.value, b?.value);
+  public static bool operator ==(FileSystemPath<T> a, FileSystemPath<T> b) => Paths.EqualityComparer.Equals(a?._value, b?._value);
 
   /// <summary>
   /// Performs negative-equality comparison of the two instances
   /// </summary>
   /// <returns></returns>
-  public static bool operator !=(FileSystemPath<T> a, FileSystemPath<T> b) => !Paths.EqualityComparer.Equals(a?.value, b?.value);
+  public static bool operator !=(FileSystemPath<T> a, FileSystemPath<T> b) => !Paths.EqualityComparer.Equals(a?._value, b?._value);
 
   /// <summary>
   /// 

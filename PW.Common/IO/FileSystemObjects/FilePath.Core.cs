@@ -10,37 +10,18 @@ public partial class FilePath : FileSystemPath<FilePath>
 
   #region Constructors
 
-  private FilePath() { }
 
   /// <summary>
   /// Creates a new instance using the specified file name or full path. 
-  /// If just the file name is supplied, then the current directory is prepended to create the full path.
   /// </summary>
-  public FilePath(string value)
+  public FilePath(string value!!) : base(new FileInfo(value).FullName)
   {
-    if (value is null) throw new(nameof(value));
-
-    // Cheat and use a FileInfo instance to further validate and construct.
-    try
-    {
-      Value = new FileInfo(value).FullName;
-    }
-    catch (Exception ex)
-    {
-      // Any exception from attempting to create a FileInfo will be classed 
-      // as a argument exception, as the issue will have been caused by the 
-      // argument being invalid in some way.
-      throw new ArgumentException(ex.Message, nameof(value));
-    }
   }
 
   /// <summary>
   /// Creates a new instance using an existing <see cref="FileInfo"/> object.
   /// </summary>    
-  public FilePath(FileInfo file)
-  {
-    Value = file is not null ? file.FullName : throw new(nameof(file));
-  }
+  public FilePath(FileInfo file!!) : base(file.FullName) { }
 
   #endregion
 

@@ -6,7 +6,7 @@ namespace PW.Collections;
 /// Performs 'natural' compare, sort and equality tests for strings and classes implementing <see cref="IReadOnlyValue{T}"/> of string
 /// Digits in the strings are considered as numerical content rather than text. Tests are not case-sensitive.
 /// </summary>
-public class StringNaturalComparer : IComparer<IReadOnlyValue<string>>, IEqualityComparer<IReadOnlyValue<string>>, IComparer, IEqualityComparer, IComparer<string>, IEqualityComparer<string>
+public class StringNaturalComparer : IComparer<IReadOnlyValue<string?>?>, IEqualityComparer<IReadOnlyValue<string?>?>, IComparer, IEqualityComparer, IComparer<string?>, IEqualityComparer<string?>
 {
 
   #region Constructors
@@ -75,7 +75,7 @@ public class StringNaturalComparer : IComparer<IReadOnlyValue<string>>, IEqualit
   }
 
   /// <summary>
-  /// 
+  /// Compares two strings for equality
   /// </summary>
   public bool Equals(string? x, string? y) => string.Equals(x, y, StringComparison.OrdinalIgnoreCase);
 
@@ -94,17 +94,17 @@ public class StringNaturalComparer : IComparer<IReadOnlyValue<string>>, IEqualit
   /// <summary>
   /// Compares two instances.
   /// </summary>
-  public int Compare(IReadOnlyValue<string>? x, IReadOnlyValue<string>? y) => Compare(x?.Value, y?.Value);
+  public int Compare(IReadOnlyValue<string?>? x, IReadOnlyValue<string?>? y) => Compare(x?.Value, y?.Value);
 
   /// <summary>
   /// Determines whether two instances are equal.
   /// </summary>
-  public bool Equals(IReadOnlyValue<string>? x, IReadOnlyValue<string>? y) => Equals(x?.Value, y?.Value);
+  public bool Equals(IReadOnlyValue<string?>? x, IReadOnlyValue<string?>? y) => Equals(x?.Value, y?.Value);
 
   /// <summary>
   /// Returns a hashcode for the instance.
   /// </summary>
-  public int GetHashCode(IReadOnlyValue<string>? obj) => GetHashCode(obj?.Value);
+  public int GetHashCode(IReadOnlyValue<string?>? obj) => GetHashCode(obj?.Value);
 
   #endregion
 
