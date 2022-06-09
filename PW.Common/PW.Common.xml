@@ -455,26 +455,6 @@
             
             </summary>
         </member>
-        <member name="T:PW.Collections.ReadonlyOneToMany`2">
-            <summary>
-            Represents a one-to-many associative grouping where 'One' and 'Many' are of different types.
-            </summary>
-        </member>
-        <member name="M:PW.Collections.ReadonlyOneToMany`2.#ctor(`0,System.Collections.Generic.IReadOnlyList{`1})">
-            <summary>
-            Represents a one-to-many associative grouping where 'One' and 'Many' are of different types.
-            </summary>
-        </member>
-        <member name="T:PW.Collections.OneToMany`2">
-            <summary>
-            Represents a one-to-many associative grouping where 'One' and 'Many' are of different types.
-            </summary>
-        </member>
-        <member name="M:PW.Collections.OneToMany`2.#ctor(`0,System.Collections.Generic.List{`1})">
-            <summary>
-            Represents a one-to-many associative grouping where 'One' and 'Many' are of different types.
-            </summary>
-        </member>
         <member name="T:PW.Collections.OscillatingRangeEnumerator">
             <summary>
             An enumerator that traverses a range, in both directions, as a loop. I.e. Loop(first -> last -> first)
@@ -1310,7 +1290,8 @@
         </member>
         <member name="M:PW.Extensions.IEnumerableExtensions.ForEach``1(System.Collections.Generic.IEnumerable{``0},System.Action{``0})">
             <summary>
-            Performs <paramref name="action"/> or each item in <paramref name="seq"/>.
+            Performs <paramref name="action"/> or each item in <paramref name="seq"/>.  
+            Returns <paramref name="seq"/> to enable fluent use. 
             </summary>
         </member>
         <member name="M:PW.Extensions.IEnumerableExtensions.Join(System.Collections.Generic.IEnumerable{System.String},System.String,System.Boolean)">
@@ -1678,6 +1659,21 @@
         <member name="M:PW.Extensions.StringExtensions.ContainsAny(System.String,System.Char[])">
             <summary>
             Returns true if <paramref name="str1"/> contains any of the characters in <paramref name="chars"/>.
+            </summary>
+        </member>
+        <member name="M:PW.Extensions.StringExtensions.ContainsChar(System.String,System.Char)">
+            <summary>
+            Determines whether the character is contained within the string.
+            </summary>
+        </member>
+        <member name="M:PW.Extensions.StringExtensions.StartsWith(System.String,System.Char)">
+            <summary>
+            Determines whether a specified char is a prefix of the current instance.
+            </summary>
+        </member>
+        <member name="M:PW.Extensions.StringExtensions.EndsWith(System.String,System.Char)">
+            <summary>
+            Determines whether a specified char is a suffix of the current instance.
             </summary>
         </member>
         <member name="M:PW.Extensions.StringExtensions.ContainsHyperlink(System.String)">
@@ -4627,9 +4623,12 @@
             Populates the lookup from font family name -> PrivateFontCollection.Families[index].
             </summary>
         </member>
-    </members>
-</doc>
-ew int[5] { 1, 2, 3, 4, 5 } ;
+        <member name="T:System.Index">
+            <summary>Represent a type can be used to index a collection either from the start or the end.</summary>
+            <remarks>
+            Index is used by the C# compiler to support the new index syntax
+            <code>
+            int[] someArray = new int[5] { 1, 2, 3, 4, 5 } ;
             int lastElement = someArray[^1]; // lastElement = 5
             </code>
             </remarks>

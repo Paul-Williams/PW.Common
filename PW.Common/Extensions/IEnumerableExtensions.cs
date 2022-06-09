@@ -40,10 +40,12 @@ public static class IEnumerableExtensions
 
   /// <summary>
   /// Performs <paramref name="action"/> or each item in <paramref name="seq"/>.  
+  /// Returns <paramref name="seq"/> to enable fluent use. 
   /// </summary>
-  public static void ForEach<T>(this IEnumerable<T> seq!!, Action<T> action!!)
+  public static IEnumerable<T> ForEach<T>(this IEnumerable<T> seq!!, Action<T> action!!)
   {
     foreach (var x in seq) action(x);
+    return seq;
   }
 
   /* ---------------------------------------------------------------------------------------- */
