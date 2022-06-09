@@ -1313,16 +1313,6 @@
             Performs <paramref name="action"/> or each item in <paramref name="seq"/>.
             </summary>
         </member>
-        <member name="M:PW.Extensions.IEnumerableExtensions.ForEach``1(System.Collections.Generic.IEnumerable{``0},System.Func{``0,``0})">
-            <summary>
-            Performs <paramref name="f"/> for each item in <paramref name="seq"/>
-            </summary>
-        </member>
-        <member name="M:PW.Extensions.IEnumerableExtensions.ForEach``2(System.Collections.Generic.IEnumerable{``0},System.Func{``0,``1})">
-            <summary>
-            Performs <paramref name="f"/> for each item in <paramref name="seq"/>
-            </summary>
-        </member>
         <member name="M:PW.Extensions.IEnumerableExtensions.Join(System.Collections.Generic.IEnumerable{System.String},System.String,System.Boolean)">
             <summary>
             Returns a single string containing each string in the sequence separated by the specified separator.

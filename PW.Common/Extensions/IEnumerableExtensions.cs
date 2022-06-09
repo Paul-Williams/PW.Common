@@ -39,28 +39,34 @@ public static class IEnumerableExtensions
     => list.FirstOrDefault(predicate) ?? defaultValue;
 
   /// <summary>
-  /// Performs <paramref name="action"/> or each item in <paramref name="seq"/>.
+  /// Performs <paramref name="action"/> or each item in <paramref name="seq"/>.  
   /// </summary>
   public static void ForEach<T>(this IEnumerable<T> seq!!, Action<T> action!!)
   {
     foreach (var x in seq) action(x);
   }
 
-  /// <summary>
-  /// Performs <paramref name="f"/> for each item in <paramref name="seq"/>
-  /// </summary>
-  public static IEnumerable<T> ForEach<T>(this IEnumerable<T> seq!!, Func<T, T> f!!)
-  {
-    foreach (var x in seq) yield return f.Invoke(x);
-  }
+  /* ---------------------------------------------------------------------------------------- */
+  /* This is the same as a select and is causing ambiguity with void returning Action version */
+  /* ---------------------------------------------------------------------------------------- */
+  ///// <summary>
+  ///// Performs <paramref name="f"/> for each item in <paramref name="seq"/>
+  ///// </summary>
+  //public static IEnumerable<T> ForEach<T>(this IEnumerable<T> seq!!, Func<T, T> f!!)
+  //{
+  //  foreach (var x in seq) yield return f.Invoke(x);
+  //}
 
+  /* ---------------------------------------------------------------------------------------- */
+  /* This is the same as a select and is causing ambiguity with void returning Action version */
+  /* ---------------------------------------------------------------------------------------- */
   /// <summary>
   /// Performs <paramref name="f"/> for each item in <paramref name="seq"/>
   /// </summary>
-  public static IEnumerable<TR> ForEach<T, TR>(this IEnumerable<T> seq!!, Func<T, TR> f!!)
-  {
-    foreach (var x in seq) yield return f.Invoke(x);
-  }
+  //public static IEnumerable<TR> ForEach<T, TR>(this IEnumerable<T> seq!!, Func<T, TR> f!!)
+  //{
+  //  foreach (var x in seq) yield return f.Invoke(x);
+  //}
 
 
   /// <summary>
