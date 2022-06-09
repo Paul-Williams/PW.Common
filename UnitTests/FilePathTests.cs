@@ -1,5 +1,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PW.Extensions;
+using System.Linq;
 
 namespace PW.IO.FileSystemObjects.UnitTests;
 
@@ -59,6 +60,18 @@ public class FilePathTests
   public void TestPathEquality()
   {
     Assert.IsTrue(new FilePath(@"C:\Temp\Test.txt").DirectoryPath == new FilePath(@"C:\temp\Test.txt").DirectoryPath);
+  }
+
+  [TestMethod]
+  public void TestDirectoryPathToHashTable()
+  {
+    var d = new DirectoryPath[] { new DirectoryPath(@"c:\temp") };
+
+    var h = d[0].GetHashCode();
+    var h1 = System.StringComparer.OrdinalIgnoreCase.GetHashCode(d[0].Value);
+    var h2 = System.StringComparer.OrdinalIgnoreCase.GetHashCode(@"c:\temp\");
+
+    var Directories = d.ToHashSet();
   }
 
 

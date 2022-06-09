@@ -10,17 +10,6 @@ public abstract class FileSystemPath<T> : IComparable<FileSystemPath<T>>, IEquat
   /// </summary>
   protected FileSystemPath() { }
 
-  /// <summary>
-  /// Used for sort-order comparison. E.g. CompareTo , greater/less than etc.
-  /// </summary>
-  protected static StringNaturalComparer SortComparer { get; } = StringNaturalComparer.AscendingComparer;
-
-  /// <summary>
-  /// Used for equality comparison.
-  /// </summary>
-  protected static StringComparer EqualityComparer { get; } = StringComparer.OrdinalIgnoreCase;
-
-
   private string? value;
 
   /// <summary>
@@ -43,7 +32,7 @@ public abstract class FileSystemPath<T> : IComparable<FileSystemPath<T>>, IEquat
   /// <summary>
   /// Performs equality comparison.
   /// </summary>
-  public override bool Equals(object? obj) => EqualityComparer.Equals(this, obj as FileSystemPath<T>);
+  public override bool Equals(object? obj) => Paths.EqualityComparer.Equals(Value, (obj as FileSystemPath<T>)?.Value);
 
 
   private int _hashCode;
@@ -53,7 +42,7 @@ public abstract class FileSystemPath<T> : IComparable<FileSystemPath<T>>, IEquat
   /// Returns hash code. Cached after first call.
   /// </summary>
 
-  public override int GetHashCode() => _hashCode != 0 ? _hashCode : _hashCode = EqualityComparer.GetHashCode(this);
+  public override int GetHashCode() => _hashCode != 0 ? _hashCode : _hashCode = Paths.EqualityComparer.GetHashCode(Value);
 
 
   /// <summary>
@@ -68,21 +57,21 @@ public abstract class FileSystemPath<T> : IComparable<FileSystemPath<T>>, IEquat
   /// </summary>
   /// <param name="other"></param>
   /// <returns></returns>
-  public bool Equals(FileSystemPath<T>? other) => EqualityComparer.Equals(this, other);
+  public bool Equals(FileSystemPath<T>? other) => Paths.EqualityComparer.Equals(Value, other?.Value);
 
   /// <summary>
   /// Compares two instances for sorting.
   /// </summary>
   /// <param name="other"></param>
   /// <returns></returns>
-  public int CompareTo(FileSystemPath<T>? other) => SortComparer.Compare(this, other);
+  public int CompareTo(FileSystemPath<T>? other) => Paths.NaturalSortComparer.Compare(Value, other?.Value);
 
   /// <summary>
   /// Compares two instances for sorting.
   /// </summary>
   /// <param name="other"></param>
   /// <returns></returns>
-  public int CompareTo(object other) => SortComparer.Compare(this, other as FileSystemPath<T>);
+  public int CompareTo(object other) => Paths.NaturalSortComparer.Compare(Value, (other as FileSystemPath<T>)?.Value);
 
   #endregion
 
@@ -93,13 +82,13 @@ public abstract class FileSystemPath<T> : IComparable<FileSystemPath<T>>, IEquat
   /// Performs equality comparison of the two instances
   /// </summary>
   /// <returns></returns>
-  public static bool operator ==(FileSystemPath<T> a, FileSystemPath<T> b) => EqualityComparer.Equals(a, b);
+  public static bool operator ==(FileSystemPath<T> a, FileSystemPath<T> b) => Paths.EqualityComparer.Equals(a?.value, b?.value);
 
   /// <summary>
   /// Performs negative-equality comparison of the two instances
   /// </summary>
   /// <returns></returns>
-  public static bool operator !=(FileSystemPath<T> a, FileSystemPath<T> b) => !EqualityComparer.Equals(a, b);
+  public static bool operator !=(FileSystemPath<T> a, FileSystemPath<T> b) => !Paths.EqualityComparer.Equals(a?.value, b?.value);
 
   /// <summary>
   /// 

@@ -212,7 +212,7 @@ After:
   {
     return directory is null
         ? throw new ArgumentNullException(nameof(directory))
-        : directory.Value.StartsWith(Value, StringComparison.InvariantCultureIgnoreCase);
+        : directory.Value.StartsWith(Value, StringComparison.OrdinalIgnoreCase);
   }
 
   /// <summary>

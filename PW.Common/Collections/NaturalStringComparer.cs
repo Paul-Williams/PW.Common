@@ -82,10 +82,10 @@ public class StringNaturalComparer : IComparer<IReadOnlyValue<string>>, IEqualit
   /// <summary>
   /// Gets the hash code for the specified string
   /// </summary>
-  public int GetHashCode(string? obj) =>
-    obj is null
-    ? throw new ArgumentNullException(nameof(obj))
-    : StringComparer.InvariantCultureIgnoreCase.GetHashCode(obj);
+  public int GetHashCode(string? str) =>
+    str is null
+    ? throw new ArgumentNullException(nameof(str))
+    : StringComparer.OrdinalIgnoreCase.GetHashCode(str);
 
   #endregion
 

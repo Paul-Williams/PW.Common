@@ -3432,16 +3432,6 @@
             Creates a new instance.
             </summary>
         </member>
-        <member name="P:PW.IO.FileSystemObjects.FileSystemPath`1.SortComparer">
-            <summary>
-            Used for sort-order comparison. E.g. CompareTo , greater/less than etc.
-            </summary>
-        </member>
-        <member name="P:PW.IO.FileSystemObjects.FileSystemPath`1.EqualityComparer">
-            <summary>
-            Used for equality comparison.
-            </summary>
-        </member>
         <member name="P:PW.IO.FileSystemObjects.FileSystemPath`1.Value">
             <summary>
             The path encapsulated by this <see cref="T:PW.IO.FileSystemObjects.FileSystemPath`1"/>
@@ -3788,6 +3778,16 @@
             </summary>
             <param name="fileExtension"></param>
         </member>
+        <member name="F:PW.IO.Paths.EqualityComparison">
+            <summary>
+            Used for equality comparison.
+            </summary>
+        </member>
+        <member name="P:PW.IO.Paths.EqualityComparer">
+            <summary>
+            Used for equality comparison.
+            </summary>
+        </member>
         <member name="M:PW.IO.Paths.NormalizeFileExtension(System.String)">
             <summary>
             Unless empty, ensures it starts with a period.
@@ -3800,23 +3800,23 @@
         </member>
         <member name="M:PW.IO.Paths.FilePathsAreEqual(System.String,System.String)">
             <summary>
-            Compares the two file paths using <see cref="F:PW.IO.Paths.FileSystemPathComparison"/>.
+            Compares the two file paths using <see cref="F:PW.IO.Paths.EqualityComparison"/>.
             </summary>
         </member>
         <member name="M:PW.IO.Paths.FilePathsAreEqual(System.IO.FileInfo,System.IO.FileInfo)">
             <summary>
-            Compares the two file paths using <see cref="F:PW.IO.Paths.FileSystemPathComparison"/>.
+            Compares the two file paths using <see cref="F:PW.IO.Paths.EqualityComparison"/>.
             </summary>
         </member>
         <member name="M:PW.IO.Paths.FilePathsAreEqual(System.IO.FileInfo,System.String)">
             <summary>
-            Compares the two file paths using <see cref="F:PW.IO.Paths.FileSystemPathComparison"/>.
+            Compares the two file paths using <see cref="F:PW.IO.Paths.EqualityComparison"/>.
             </summary>
         </member>
         <member name="M:PW.IO.Paths.DirectoryPathsMatch(System.String,System.String)">
             <summary>
             Tests if the directory paths are the same, other than in their casing. Before comparing, trailing back-slashes are normalized as required.
-            Comparison is made using <see cref="F:PW.IO.Paths.FileSystemPathComparison"/>
+            Comparison is made using <see cref="F:PW.IO.Paths.EqualityComparison"/>
             </summary>
         </member>
         <member name="T:PW.IO.StreamExtensions">
