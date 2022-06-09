@@ -88,6 +88,13 @@ public static partial class FileInfoExtensions
   {
     var start = DateTime.Now;
     if (arguments == null) arguments = FileOpenArguments.OpenExistingForSharedRead;
+
+    // Attempts to open file, if it:
+    //  opens, great, return the file stream.
+    //  does not open, due to a sharing violation (i.e. is in use), keep trying until we time out.
+    //  does not open with any other exception, throw that exception.
+    //  times out return null.
+
     while (true)
     {
       var result = TryOpenFile(file, arguments);
@@ -120,17 +127,11 @@ public static partial class FileInfoExtensions
     
     var win32Error = Marshal.GetLastWin32Error();
 
-    // Return the file-stream if it opened OK.
     if (!fileHandle.IsInvalid) return new FileStream(fileHandle, arguments.Access.ToFileAccess());
     else
     {      
       fileHandle.Dispose();
       return new IOException(new Win32Exception(win32Error).Message, win32Error);
-
-      //// If the failure to open the file was not due to a sharing violation, then throw an exception      
-      //return win32Error != Error.SharingViolation
-      //  ? throw new IOException(new Win32Exception(win32Error).Message, win32Error)
-      //  : null;
     }
   }
 }
