@@ -15,7 +15,7 @@ public class DirectoryPath : FileSystemPath<DirectoryPath>
   /// Creates a new instance from a string. Basic validation performed. <see cref="Path.DirectorySeparatorChar"/> appended if missing.
   /// Supports relative paths. (e.g. . or ..) Path of just [Drive]: (e.g. C:) will return current directory for that drive.
   /// </summary>
-  public DirectoryPath(string directoryPath!!) : base(Paths.NormalizeDirectoryPath(new DirectoryInfo(directoryPath).FullName))
+  public DirectoryPath(string directoryPath) : base(Paths.NormalizeDirectoryPath(new DirectoryInfo(directoryPath).FullName))
   {
   }
 
@@ -23,7 +23,7 @@ public class DirectoryPath : FileSystemPath<DirectoryPath>
   /// Creates an instance from an existing <see cref="DirectoryInfo"/> object. 
   /// Path validation skipped. <see cref="Path.DirectorySeparatorChar"/> appended if missing.
   /// </summary>    
-  public DirectoryPath(DirectoryInfo directory!!) : base(Paths.NormalizeDirectoryPath(directory.FullName))
+  public DirectoryPath(DirectoryInfo directory) : base(Paths.NormalizeDirectoryPath(directory.FullName))
   {
   }
 

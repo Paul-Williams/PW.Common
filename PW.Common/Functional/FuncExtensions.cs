@@ -75,7 +75,7 @@ public static class FuncExtensions
   /// <summary>
   /// Returns the result of <paramref name="func"/> or default, if it fails.
   /// </summary>
-  public static T? ValueOrDefault<T>(this Func<T> func!!) where T : class
+  public static T? ValueOrDefault<T>(this Func<T> func) where T : class
   {
     try { return func(); }
     catch { return default; }
@@ -84,7 +84,7 @@ public static class FuncExtensions
   /// <summary>
   /// Returns the result of <paramref name="func"/> or default, if it fails.
   /// </summary>
-  public static TR? ValueOrDefault<T, TR>(this Func<T, TR> func!!, T arg) where TR : class
+  public static TR? ValueOrDefault<T, TR>(this Func<T, TR> func, T arg) where TR : class
   {
     try { return func(arg); }
     catch { return default; }
@@ -94,7 +94,7 @@ public static class FuncExtensions
   /// <summary>
   /// Returns the result of <paramref name="func"/> or default, if it fails.
   /// </summary>
-  public static TR? ValueOrDefault<T, TR>(T arg, Func<T, TR> func!!) where TR : class
+  public static TR? ValueOrDefault<T, TR>(T arg, Func<T, TR> func) where TR : class
   {
     try { return func(arg); }
     catch { return default; }
@@ -109,7 +109,7 @@ public static class FuncExtensions
   /// If <paramref name="func"/> returns null, this returns <see cref="OneOf.Types.None"/>. 
   /// If <paramref name="func"/> throws an exception, this returns <see cref="Exception"/>.
   /// </summary>
-  public static ValueOrNoneOrException<T> ValueOrNoneOrException<T>(this Func<T> func!!)
+  public static ValueOrNoneOrException<T> ValueOrNoneOrException<T>(this Func<T> func)
   {
     try
     {
@@ -129,7 +129,7 @@ public static class FuncExtensions
   /// <summary>
   /// Returns the value from <paramref name="func"/>, or <see cref="Exception"/>.
   /// </summary>
-  public static ValueOrException<T> ValueOrException<T>(this Func<T> func!!)
+  public static ValueOrException<T> ValueOrException<T>(this Func<T> func)
   {
     try
     {

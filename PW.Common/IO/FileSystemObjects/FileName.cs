@@ -19,7 +19,7 @@ public class FileName : FileSystemPathSection<FileName>
   /// <summary>
   /// Creates a new instance from the existing <see cref="FilePath"/>.
   /// </summary>
-  public FileName(FilePath file!!)
+  public FileName(FilePath file)
   {
     Value = Path.GetFileName((string)file);
   }
@@ -27,7 +27,7 @@ public class FileName : FileSystemPathSection<FileName>
   /// <summary>
   /// Creates a new instance from the existing <see cref="FilePath"/>.
   /// </summary>
-  public FileName(FileInfo file!!)
+  public FileName(FileInfo file)
   {
     Value = file.Name;
   }

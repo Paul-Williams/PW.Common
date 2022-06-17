@@ -31,7 +31,7 @@ public static class ArrayExtensions
   /// </summary>
   /// <exception cref="ArgumentNullException">The input vector is null.</exception>
   /// <exception cref="AssertionException">The input vector length does not have a perfect square-root.</exception>
-  public static byte[,] ToMatrix(this byte[] vector!!)
+  public static byte[,] ToMatrix(this byte[] vector)
   {
     var (success, root) = Maths.GetPerfectRoot(vector.Length);
     Assert.IsTrue(success, "Vector's length must be the root of a square.");
@@ -44,7 +44,7 @@ public static class ArrayExtensions
   /// <summary>
   /// Transforms (flattens) the input matrix (2D array) into a vector (1D array).
   /// </summary>
-  public static byte[] ToVector(this byte[,] matrix!!)
+  public static byte[] ToVector(this byte[,] matrix)
   {
     var len = (matrix.GetUpperBound(0) + 1) * (matrix.GetUpperBound(1) + 1);
     var vector = new byte[len];
@@ -55,12 +55,12 @@ public static class ArrayExtensions
   /// <summary>
   /// Returns both the dimensions of a matrix (2D array) as a size.
   /// </summary>
-  public static Size Dimensions<T>(this T[,] matrix!!) => new(matrix.GetUpperBound(0) + 1, matrix.GetUpperBound(1) + 1);
+  public static Size Dimensions<T>(this T[,] matrix) => new(matrix.GetUpperBound(0) + 1, matrix.GetUpperBound(1) + 1);
 
   /// <summary>
   /// Returns the upper bound of both dimensions of a matrix (2D array) as a size.
   /// </summary>
-  public static Size Bounds<T>(this T[,] matrix!!) => new(matrix.GetUpperBound(0), matrix.GetUpperBound(1));
+  public static Size Bounds<T>(this T[,] matrix) => new(matrix.GetUpperBound(0), matrix.GetUpperBound(1));
 
 
   /// <summary>
@@ -72,7 +72,7 @@ public static class ArrayExtensions
   /// <param name="item">Item to prepend.</param>
   /// <param name="maxItems">Maximum length of resulting array. -1 (default) means all items.</param>
   /// <returns></returns>
-  public static T[] Prepend<T>(this T[] source!!, T item!!, int maxItems = Constants.NotFound)
+  public static T[] Prepend<T>(this T[] source, T item, int maxItems = Constants.NotFound)
   {
     Guard.GreaterThanOrEqualTo(maxItems, -1, nameof(maxItems));
 
@@ -94,7 +94,7 @@ public static class ArrayExtensions
   /// <param name="array">The array to split.</param>
   /// <param name="segmentSize">The size of the smaller arrays.</param>
   /// <returns>An array containing smaller arrays.</returns>
-  public static IEnumerable<IEnumerable<T>> Segment<T>(this T[] array!!, int segmentSize)
+  public static IEnumerable<IEnumerable<T>> Segment<T>(this T[] array, int segmentSize)
   {
     if (segmentSize < 1) throw new ArgumentException("Size must be at least one.", nameof(segmentSize));
 

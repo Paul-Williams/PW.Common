@@ -62,7 +62,7 @@ public sealed class PeriodicPing : IDisposable
   /// <summary>
   /// Creates a new <see cref="PeriodicPing"/> instance to ping the specified IP address.
   /// </summary>
-  public PeriodicPing(IPAddress ipAddress!!, SynchronizationContext? synchronizationContext)
+  public PeriodicPing(IPAddress ipAddress, SynchronizationContext? synchronizationContext)
   {
     IPAddress = ipAddress;
     Timer = new Timer(Timer_Callback);

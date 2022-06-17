@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFrameworks>net6.0;net48</TargetFrameworks>
-    <LangVersion>preview</LangVersion>
+    <LangVersion>latest</LangVersion>
     <UseWindowsForms>false</UseWindowsForms>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <Version>4.0.12</Version>

@@ -14,14 +14,14 @@ public partial class FilePath : FileSystemPath<FilePath>
   /// <summary>
   /// Creates a new instance using the specified file name or full path. 
   /// </summary>
-  public FilePath(string value!!) : base(new FileInfo(value).FullName)
+  public FilePath(string value) : base(new FileInfo(value).FullName)
   {
   }
 
   /// <summary>
   /// Creates a new instance using an existing <see cref="FileInfo"/> object.
   /// </summary>    
-  public FilePath(FileInfo file!!) : base(file.FullName) { }
+  public FilePath(FileInfo file) : base(file.FullName) { }
 
   #endregion
 

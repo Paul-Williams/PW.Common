@@ -37,7 +37,7 @@ public sealed class DelimitedFieldFileWriter : IDisposable
   /// <param name="fieldSeparator">The separator used to delimit fields in the file.</param>
   /// <param name="fieldNames">The names of the fields. Used as a file header.</param>
   /// <param name="fileMode">Either truncate (overwrite) or append to the file, if it already exists.</param>
-  public DelimitedFieldFileWriter(FileInfo outputFile!!, char fieldSeparator, string[] fieldNames, FileMode fileMode)
+  public DelimitedFieldFileWriter(FileInfo outputFile, char fieldSeparator, string[] fieldNames, FileMode fileMode)
   {
     if (outputFile.Directory is not DirectoryInfo di) throw new Exception("Output file does not have a directory.");
 

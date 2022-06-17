@@ -11,7 +11,7 @@ public static class EnumExtensions
   /// <summary>
   /// Returns the <see cref="DescriptionAttribute.Description"/> value for the supplied <see cref="Enum"/>, or <see cref="string.Empty"/> if none is found.
   /// </summary>
-  public static string Description(this Enum enumMember!!)
+  public static string Description(this Enum enumMember)
   {
     return enumMember
       .GetType()
@@ -40,5 +40,5 @@ public static class EnumExtensions
   /// <summary>
   /// Formats enum string for display by inserting a space before each upper-case character.
   /// </summary>
-  public static string DisplayName(this Enum enumMember!!) => enumMember.ToString().SpaceDelimitCapitals();
+  public static string DisplayName(this Enum enumMember) => enumMember.ToString().SpaceDelimitCapitals();
 }

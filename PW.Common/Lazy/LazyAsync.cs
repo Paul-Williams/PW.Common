@@ -5,7 +5,7 @@
 // Note: 
 // Both constructors on this class originally used 'Task.Factory.StartNew'.
 // This was causing the warning 'CA2008	Do not create tasks without passing a TaskScheduler'
-// Have not tested this class since changing to Task.Run() !!!
+// Have not tested this class since changing to Task.Run() !
 
 // Original constructors:
 // public AsyncLazy(Func<T> valueFactory) : base(() => Task.Factory.StartNew(valueFactory)) { }

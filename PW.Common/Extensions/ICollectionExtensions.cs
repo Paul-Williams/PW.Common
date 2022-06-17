@@ -15,12 +15,12 @@ public static class ICollectionExtensions
   /// <summary>
   /// Removes all elements from <paramref name="first"/> that are in <paramref name="second"/> and returns the number of elements removed.
   /// </summary>
-  public static int RemoveAll<T>(this ICollection<T> first!!, IEnumerable<T> second!!) => RemoveAll(first, second, null);
+  public static int RemoveAll<T>(this ICollection<T> first, IEnumerable<T> second) => RemoveAll(first, second, null);
 
   /// <summary>
   /// Removes all elements from <paramref name="first"/> that are in <paramref name="second"/> and returns the number of elements removed.
   /// </summary>
-  public static int RemoveAll<T>(this ICollection<T> first!!, IEnumerable<T> second!!, IEqualityComparer<T>? comparer)
+  public static int RemoveAll<T>(this ICollection<T> first, IEnumerable<T> second, IEqualityComparer<T>? comparer)
   {
     var intersect = first.Intersect(second, comparer).ToArray();
     if (intersect.Length != 0)

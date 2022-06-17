@@ -42,8 +42,10 @@ public static class IEnumerableExtensions
   /// Performs <paramref name="action"/> or each item in <paramref name="seq"/>.  
   /// Returns <paramref name="seq"/> to enable fluent use. 
   /// </summary>
-  public static IEnumerable<T> ForEach<T>(this IEnumerable<T> seq!!, Action<T> action!!)
+  public static IEnumerable<T> ForEach<T>(this IEnumerable<T> seq, Action<T> action)
   {
+    if (seq is null) throw new ArgumentNullException(nameof(seq));
+    if (action is null) throw new ArgumentNullException(nameof(action));
     foreach (var x in seq) action(x);
     return seq;
   }
@@ -54,7 +56,7 @@ public static class IEnumerableExtensions
   ///// <summary>
   ///// Performs <paramref name="f"/> for each item in <paramref name="seq"/>
   ///// </summary>
-  //public static IEnumerable<T> ForEach<T>(this IEnumerable<T> seq!!, Func<T, T> f!!)
+  //public static IEnumerable<T> ForEach<T>(this IEnumerable<T> seq, Func<T, T> f)
   //{
   //  foreach (var x in seq) yield return f.Invoke(x);
   //}
@@ -65,7 +67,7 @@ public static class IEnumerableExtensions
   /// <summary>
   /// Performs <paramref name="f"/> for each item in <paramref name="seq"/>
   /// </summary>
-  //public static IEnumerable<TR> ForEach<T, TR>(this IEnumerable<T> seq!!, Func<T, TR> f!!)
+  //public static IEnumerable<TR> ForEach<T, TR>(this IEnumerable<T> seq, Func<T, TR> f)
   //{
   //  foreach (var x in seq) yield return f.Invoke(x);
   //}
@@ -138,7 +140,7 @@ public static class IEnumerableExtensions
   /// <summary>
   /// Returns a new sequence where each element in <paramref name="seq"/> is repeated <paramref name="count"/> times.
   /// </summary>
-  public static IEnumerable<T> RepeatEach<T>(this IEnumerable<T> seq!!, int count)
+  public static IEnumerable<T> RepeatEach<T>(this IEnumerable<T> seq, int count)
   {
     if (count < 1) throw new ArgumentException($"Argument '{nameof(count)}' must be greater than zero.");
 
@@ -160,7 +162,7 @@ public static class IEnumerableExtensions
   /// <summary>
   /// Trims white-space from each string in the enumeration. Employs Deferred Execution with Lazy Evaluation
   /// </summary>
-  public static IEnumerable<string> Trim(this IEnumerable<string> strings!!)
+  public static IEnumerable<string> Trim(this IEnumerable<string> strings)
   {
     foreach (var str in strings) yield return str.Trim();
   }
@@ -168,14 +170,14 @@ public static class IEnumerableExtensions
   /// <summary>
   /// Trims trailing white-space from each string in the enumeration. Employs Deferred Execution with Lazy Evaluation
   /// </summary>
-  public static IEnumerable<string> TrimEnd(this IEnumerable<string> strings!!)
+  public static IEnumerable<string> TrimEnd(this IEnumerable<string> strings)
   {
     foreach (var str in strings) yield return str.TrimEnd();
   }
   /// <summary>
   /// Trims leading white-space from each string in the enumeration. Employs Deferred Execution with Lazy Evaluation
   /// </summary>
-  public static IEnumerable<string> TrimStart(this IEnumerable<string> strings!!)
+  public static IEnumerable<string> TrimStart(this IEnumerable<string> strings)
   {
     foreach (var str in strings) yield return str.TrimStart();
   }

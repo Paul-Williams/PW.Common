@@ -10,7 +10,7 @@ public static class IListExtensions
   /// </summary>
   /// <typeparam name="T"></typeparam>
   /// <param name="list"></param>
-  public static void Shuffle<T>(this IList<T> list!!)
+  public static void Shuffle<T>(this IList<T> list)
   {
     // See: https://stackoverflow.com/questions/273313/randomize-a-listt
 
@@ -51,7 +51,7 @@ public static class IListExtensions
   /// <param name="item">Item to be replaced.</param>
   /// <param name="replacement">Replacement item.</param>
   /// <returns>Returns the index of the replaced item, if found, otherwise -1.</returns>
-  public static int Replace<T>(this IList<T> list!!, T item!!, T replacement)
+  public static int Replace<T>(this IList<T> list, T item, T replacement)
   {
     if (list.IndexOf(item) is int i & i != -1) list[i] = replacement;
     return i;

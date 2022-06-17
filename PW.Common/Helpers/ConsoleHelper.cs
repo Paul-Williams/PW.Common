@@ -31,7 +31,7 @@ public static class ConsoleHelper
   /// <summary>
   /// Displays prompt message and returns response text as <see cref="string"/>.
   /// </summary>
-  public static string? PromptForInput(string prompt!!)
+  public static string? PromptForInput(string prompt)
   {
     Write(prompt.EnsureEndsWithSpace());
     return ReadLine();

@@ -26,7 +26,7 @@ public static class FileSystem
   /// <summary>
   /// Sends a file to the recycle bin.
   /// </summary>
-  public static void SendToRecycleBin(this FilePath file!!)
+  public static void SendToRecycleBin(this FilePath file)
   {
     Microsoft.VisualBasic.FileIO.FileSystem.DeleteFile(file.Value, UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin);
   }
@@ -34,7 +34,7 @@ public static class FileSystem
   /// <summary>
   /// Sends a directory to the recycle bin.
   /// </summary>
-  public static void SendToRecycleBin(this DirectoryPath directory!!)
+  public static void SendToRecycleBin(this DirectoryPath directory)
   {
     Microsoft.VisualBasic.FileIO.FileSystem.DeleteDirectory(directory.Value, UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin);
   }
@@ -48,7 +48,7 @@ public static class FileSystem
   /// Opens explorer and selects the specified file.
   /// </summary>
   /// <param name="filePath"></param>
-  public static void SelectInExplorer(this FilePath filePath!!)
+  public static void SelectInExplorer(this FilePath filePath)
   {
     if (!filePath.Exists) throw new FileNotFoundException("File not found:" + (string)filePath);
 
@@ -58,7 +58,7 @@ public static class FileSystem
   /// <summary>
   /// Moves a file on disk.
   /// </summary>
-  public static FilePath Move(this FilePath file!!, DirectoryPath directory!!)
+  public static FilePath Move(this FilePath file, DirectoryPath directory)
   {
     var r = file.ChangeDirectory(directory);
     File.Move(file.Value, r.Value);
@@ -74,7 +74,7 @@ public static class FileSystem
   /// <exception cref="UnauthorizedAccessException">The caller does not have the required permission.</exception>
   ///<exception cref="IOException">The specified file is in use.</exception>
   ///<exception cref="PathTooLongException">The specified path, file name, or both exceed the system-defined maximum length.</exception>
-  public static bool Unblock(this FilePath file!!)
+  public static bool Unblock(this FilePath file)
   {
     if (!file.Exists) throw Exceptions.Exceptions.FileNotFoundException(file);
 
@@ -122,7 +122,7 @@ public static class FileSystem
   /// <summary>
   /// Renames the file on disk and returns a new <see cref="FilePath"/> instance for the renamed file.
   /// </summary>
-  public static FilePath Rename(this FilePath file!!, FileName newName!!)
+  public static FilePath Rename(this FilePath file, FileName newName)
   {
     if (!file.Exists) throw new FileNotFoundException("File not found: " + file.Value, file.Value);
 
@@ -138,7 +138,7 @@ public static class FileSystem
   /// <summary>
   /// Moves the file on disk and returns the renamed file path.
   /// </summary>
-  public static FilePath Move(this FilePath file!!, FilePath newFile!!)
+  public static FilePath Move(this FilePath file, FilePath newFile)
   {
 
     // This prevents changing the casing of a file name, as Exists() will return true.
@@ -181,7 +181,7 @@ public static class FileSystem
   /// <summary>
   /// Moves the directory on disk.
   /// </summary>
-  public static DirectoryPath Move(this DirectoryPath path!!, DirectoryPath newPath!!)
+  public static DirectoryPath Move(this DirectoryPath path, DirectoryPath newPath)
   {
     var r = Win32.SafeNativeMethods.MoveFile(path.Value, newPath.Value);
 
@@ -197,7 +197,7 @@ public static class FileSystem
   /// <summary>
   /// Creates all directories and subdirectories in the specified path, unless they already exist.
   /// </summary>
-  public static DirectoryPath Create(this DirectoryPath directory!!)
+  public static DirectoryPath Create(this DirectoryPath directory)
   {
     _ = Directory.CreateDirectory(directory.Value);
     return directory;
@@ -208,7 +208,7 @@ public static class FileSystem
   /// <summary>
   /// Creates sub-directories within the existing directory. Skips any sub-directory that already exist.
   /// </summary>
-  public static List<DirectoryPath> CreateSubdirectories(this DirectoryPath directory!!, IEnumerable<DirectoryName> subDirectories!!)
+  public static List<DirectoryPath> CreateSubdirectories(this DirectoryPath directory, IEnumerable<DirectoryName> subDirectories)
   {
     var newDirectoryPaths = subDirectories
       .Where(x => x is not null)  // Ensure no nulls
@@ -225,7 +225,7 @@ public static class FileSystem
   /// <summary>
   /// Enumerates a directory on disk and returns a <see cref="FilePath"/> object for each file which matches <paramref name="searchPattern"/>.
   /// </summary>
-  public static IEnumerable<FilePath> EnumerateFiles(this DirectoryPath directory!!, string searchPattern!!, System.IO.SearchOption searchOption)
+  public static IEnumerable<FilePath> EnumerateFiles(this DirectoryPath directory, string searchPattern, System.IO.SearchOption searchOption)
   {
     if (!directory.Exists) throw new DirectoryNotFoundException("Directory not found: " + directory.Value);
 
@@ -238,7 +238,7 @@ public static class FileSystem
   /// <summary>
   /// Enumerates a directory on disk and returns a <see cref="DirectoryPath"/> object for each sub-directory which matches <paramref name="searchPattern"/>.
   /// </summary>
-  public static IEnumerable<DirectoryPath> EnumerateDirectories(this DirectoryPath directory!!, string searchPattern, System.IO.SearchOption searchOption)
+  public static IEnumerable<DirectoryPath> EnumerateDirectories(this DirectoryPath directory, string searchPattern, System.IO.SearchOption searchOption)
   {
     if (string.IsNullOrEmpty(searchPattern)) throw new ArgumentException("message", nameof(searchPattern));
     if (!directory.Exists) throw new DirectoryNotFoundException("Directory not found: " + directory.Value);
@@ -253,7 +253,7 @@ public static class FileSystem
   /// <summary>
   /// Enumerates a directory on disk and returns a <see cref="DirectoryPath"/> object for each sub-directory./>.
   /// </summary>
-  public static IEnumerable<DirectoryPath> EnumerateDirectories(this DirectoryPath directory!!, System.IO.SearchOption searchOption)
+  public static IEnumerable<DirectoryPath> EnumerateDirectories(this DirectoryPath directory, System.IO.SearchOption searchOption)
   {
     if (!directory.Exists) throw new DirectoryNotFoundException("Directory not found: " + directory.Value);
 
@@ -268,7 +268,7 @@ public static class FileSystem
   /// <summary>
   /// Enumerates a directory on disk and returns a <see cref="FilePath"/> object for each file.
   /// </summary>
-  public static IEnumerable<FilePath> EnumerateFiles(this DirectoryPath directory!!, System.IO.SearchOption searchOption)
+  public static IEnumerable<FilePath> EnumerateFiles(this DirectoryPath directory, System.IO.SearchOption searchOption)
   {
     if (!directory.Exists) throw new DirectoryNotFoundException("Directory not found: " + directory.Value);
 
@@ -296,7 +296,7 @@ public static class FileSystem
   /// <summary>
   /// Enumerates a directory on disk and returns a <see cref="FilePath"/> object for each file.
   /// </summary>
-  public static IEnumerable<FilePath> EnumerateFiles(this DirectoryPath directory!!)
+  public static IEnumerable<FilePath> EnumerateFiles(this DirectoryPath directory)
   {
     if (!directory.Exists) throw new DirectoryNotFoundException("Directory not found: " + directory.Value);
 

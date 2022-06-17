@@ -18,7 +18,7 @@ public static partial class FileInfoExtensions
   /// <param name="file">File to open.</param>
   /// <param name="timeout">Time-out period to wait, when file is locked.</param>
   /// <returns>Open <see cref="FileStream"/> on success or null if the time-out expires.</returns>
-  public static FileStream? WaitForAccess(this FileInfo file!!, TimeSpan timeout) =>
+  public static FileStream? WaitForAccess(this FileInfo file, TimeSpan timeout) =>
     WaitForAccess(file, timeout, FileOpenArguments.OpenExistingForSharedRead);
 
 
@@ -26,7 +26,7 @@ public static partial class FileInfoExtensions
   /// Determines whether a file can be opened for shared-read access. 
   /// Returns false if it can be opened, or if file or does not exist. Otherwise returns true.
   /// </summary>
-  public static bool IsReadLocked(this FileInfo file!!)
+  public static bool IsReadLocked(this FileInfo file)
     => file.Exists
         && file.OpenFileSharedRead().DisposeAfter(handle => handle.IsInvalid)
         && Marshal.GetLastWin32Error() == Error.SharingViolation;
@@ -35,7 +35,7 @@ public static partial class FileInfoExtensions
   /// Determines whether an existing file can be opened for shared-read access. 
   /// Returns true if it exists and is not locked to prevent shared-read. Otherwise returns false.
   /// </summary>
-  public static bool IsReadable(this FileInfo file!!)
+  public static bool IsReadable(this FileInfo file)
     => file.Exists && file.OpenFileSharedRead().DisposeAfter(handle => !handle.IsInvalid);
 
   private static SafeFileHandle OpenFileSharedRead(this FileInfo file)
@@ -56,7 +56,7 @@ public static partial class FileInfoExtensions
   /// <param name="arguments">Defaults to <see cref="FileOpenArguments.OpenExistingForSharedRead"/></param>
   /// <param name="pollInterval">Interval, in milliseconds, at which to try to be opening the file.</param>
   /// <returns>Either a stream or null if the file cannot be opened within the time-out period.</returns>
-  public static FileStream? WaitForAccess(this FileInfo file!!, TimeSpan timeout, FileOpenArguments? arguments = null, int pollInterval = 200)
+  public static FileStream? WaitForAccess(this FileInfo file, TimeSpan timeout, FileOpenArguments? arguments = null, int pollInterval = 200)
   {
     var start = DateTime.Now;
     if (arguments == null) arguments = FileOpenArguments.OpenExistingForSharedRead;
@@ -84,7 +84,7 @@ public static partial class FileInfoExtensions
   /// <param name="timeout">Number of milliseconds to wait.</param>
   /// <param name="arguments">Defaults to <see cref="FileOpenArguments.OpenExistingForSharedRead"/></param>
   /// <returns>Either a stream or null if the file cannot be opened within the time-out period.</returns>
-  public static async Task<FileStream?> WaitForAccessAsync(this FileInfo file!!, TimeSpan timeout, FileOpenArguments? arguments = null)
+  public static async Task<FileStream?> WaitForAccessAsync(this FileInfo file, TimeSpan timeout, FileOpenArguments? arguments = null)
   {
     var start = DateTime.Now;
     if (arguments == null) arguments = FileOpenArguments.OpenExistingForSharedRead;
@@ -109,7 +109,7 @@ public static partial class FileInfoExtensions
     }
   }
 
-  public static OneOf.OneOf<FileStream, IOException> TryOpenFile(this FileInfo file!!, FileOpenArguments arguments!!)
+  public static OneOf.OneOf<FileStream, IOException> TryOpenFile(this FileInfo file, FileOpenArguments arguments)
   {
     // WHAT : SafeHandle is not always disposed.
     // WHY  : FileStream disposes the SafeHandle when disposed.

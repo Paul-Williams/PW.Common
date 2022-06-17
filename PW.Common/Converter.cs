@@ -18,7 +18,7 @@ public class Converter<TInput, TOutput>
   /// <param name="inputProvider">A function delegate which provides the input to be converted</param>
   /// <param name="convertionCallback">A function delegate which performs the conversion from <typeparamref name="TInput"/> to  <typeparamref name="TOutput"/></param>
 
-  public Converter(Func<TInput> inputProvider!!, Func<TInput, TOutput> convertionCallback!!)
+  public Converter(Func<TInput> inputProvider, Func<TInput, TOutput> convertionCallback)
   {
     _convertionCallback = convertionCallback;
     _inputProvider = inputProvider;

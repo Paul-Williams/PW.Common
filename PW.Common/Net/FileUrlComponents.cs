@@ -35,7 +35,7 @@ public class FileUrlComponents : CSharpFunctionalExtensions.ValueObject
   /// <summary>
   /// Creates a new instance from a complete file url.
   /// </summary>
-  public FileUrlComponents(string fileUrl!!)
+  public FileUrlComponents(string fileUrl)
   {
     var lastSlash = fileUrl.LastIndexOf('/');
 

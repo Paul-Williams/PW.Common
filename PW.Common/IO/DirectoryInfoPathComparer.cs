@@ -21,7 +21,7 @@ public class DirectoryInfoPathEqualityComparer : IEqualityComparer<DirectoryInfo
   /// <summary>
   /// Returns the hash code for FullName.
   /// </summary>
-  public int GetHashCode(DirectoryInfo obj!!)
+  public int GetHashCode(DirectoryInfo obj)
   {
 
     // Added the .ToLower() as a bug fix. (Could also have used .ToUpper(), no difference)

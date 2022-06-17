@@ -57,7 +57,7 @@ public class AssertionException : Exception
   /// <summary>
   /// Implementation of <see cref="Exception.GetObjectData(SerializationInfo, StreamingContext)"/>.
   /// </summary>
-  public override void GetObjectData(SerializationInfo info!!, StreamingContext context)
+  public override void GetObjectData(SerializationInfo info, StreamingContext context)
   {
     //info.AddValue(nameof(MyCustomProperty), MyCustomProperty);
     base.GetObjectData(info, context);

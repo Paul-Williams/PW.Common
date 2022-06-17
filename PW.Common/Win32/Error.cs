@@ -2,7 +2,7 @@
 
 // See: http://www.pinvoke.net/default.aspx/Constants/WINERROR.html
 
-// Having all these constants defined caused the DLL size to increase by ~150K !!
+// Having all these constants defined caused the DLL size to increase by ~150K 
 // Just uncomment those required by Win32 calls made by this library.
 
 internal static class Error

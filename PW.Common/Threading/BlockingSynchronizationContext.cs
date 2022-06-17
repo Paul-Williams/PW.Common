@@ -16,7 +16,7 @@ public sealed class BlockingSynchronizationContext : SynchronizationContext, IDi
   /// <summary>Dispatches an asynchronous message to the synchronization context.</summary>
   /// <param name="d">The System.Threading.SendOrPostCallback delegate to call.</param>
   /// <param name="state">The object passed to the delegate.</param>
-  public override void Post(SendOrPostCallback d!!, object? state)
+  public override void Post(SendOrPostCallback d, object? state)
   {
     Queue.Add(new KeyValuePair<SendOrPostCallback, object>(d, state!));
   }

@@ -10,7 +10,7 @@ public static class EnumHelper
   /// <summary>
   /// Returns an array of values for the enumeration <typeparamref name="T"/>.
   /// </summary>
-  /// <typeparam name="T">MUST BE AN ENUM !!</typeparam>
+  /// <typeparam name="T">MUST BE AN ENUM </typeparam>
   public static T[] GetValues<T>() where T : Enum => (T[])Enum.GetValues(typeof(T));
 
   /// <summary>
@@ -27,7 +27,7 @@ public static class EnumHelper
     var list = new Dictionary<string, T>();
 
     // Changed for .NET 5 upgrade -- many methods now return nullable.
-    // This seems really hacky now !!
+    // This seems really hacky now 
 
     //var type = typeof(T);
 

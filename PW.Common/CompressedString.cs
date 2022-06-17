@@ -26,13 +26,13 @@ public class CompressedString : ISerializable
   /// Creates a new instance from a previously compressed byte-data. For use by deserializers.
   /// </summary>
   /// <param name="bytes">Previously compressed string's byte-data.</param>
-  public CompressedString(byte[] bytes!!) => Bytes = bytes;
+  public CompressedString(byte[] bytes) => Bytes = bytes;
 
   /// <summary>
   /// Creates a new instance by compressing the supplied string.
   /// </summary>
   /// <param name="str">String to compress.</param>
-  public CompressedString(string str!!) => Bytes = str.Compress();
+  public CompressedString(string str) => Bytes = str.Compress();
 
 
   /// <summary>

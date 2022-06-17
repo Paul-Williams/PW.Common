@@ -13,7 +13,7 @@ public class FileRenameOperation : IResultOperation<FileInfo>
   /// </summary>
   /// <param name="file">File to be renamed</param>
   /// <param name="newName">New name for the file</param>
-  public FileRenameOperation(FileInfo file!!, string newName)
+  public FileRenameOperation(FileInfo file, string newName)
   {
     Guard.NotNullOrWhitespace(newName, nameof(newName));
 

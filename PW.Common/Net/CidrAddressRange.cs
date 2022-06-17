@@ -33,7 +33,7 @@ public class CidrAddressRange : ValueOf<string, CidrAddressRange>
   /// <summary>
   /// 
   /// </summary>
-  public static CidrAddressRange From(IP4Address address!!, Range range)
+  public static CidrAddressRange From(IP4Address address, Range range)
   {
     var octets = address.Octets;
 

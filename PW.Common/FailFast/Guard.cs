@@ -27,12 +27,12 @@ public static partial class Guard
   /// <exception cref="ArgumentNullException"></exception>
   public static void NotNull<T>([ValidatedNotNull] T? argument, [ValidatedNotNull] string argumentName) where T : class
   {
-    if (argument is null) throw new ArgumentNullException(argumentName ?? "<-- ARGUMENT NAME IS NULL !! -->");
+    if (argument is null) throw new ArgumentNullException(argumentName ?? "<-- ARGUMENT NAME IS NULL  -->");
   }
 
   //internal static void NullGuard<T>([ValidatedNotNull] this T? argument, string argumentName) where T : class
   //{
-  //  if (argument is null) throw new ArgumentNullException(argumentName ?? "<-- ARGUMENT NAME IS NULL !! -->");
+  //  if (argument is null) throw new ArgumentNullException(argumentName ?? "<-- ARGUMENT NAME IS NULL  -->");
   //}
 
   // NB: Changed from IEnumerable<T> for safety. Otherwise could cause multiple-execution side-effects or performance issues.
@@ -41,7 +41,7 @@ public static partial class Guard
   /// </summary>
   public static void NoNulls<T>([ValidatedNotNull] ICollection<T>? argument, [ValidatedNotNull] string argumentName) where T : class
   {
-    if (argumentName is null) argumentName = "<-- ARGUMENT NAME IS NULL !! -->";
+    if (argumentName is null) argumentName = "<-- ARGUMENT NAME IS NULL  -->";
     if (argument is null) throw new ArgumentNullException(argumentName);
     if (argument.ContainsNulls()) throw new Exception($"Collection '{argumentName}' contains one or more null elements.");
   }
@@ -50,7 +50,7 @@ public static partial class Guard
   /// <summary>
   /// Throws <see cref="ArgumentException"/> if <paramref name="argumentTest"/> is true.
   /// </summary>
-  public static void False(bool argumentTest, string argumentName!!, string failureMessage!!)
+  public static void False(bool argumentTest, string argumentName, string failureMessage)
   {
     if (argumentTest) throw new ArgumentException(failureMessage, argumentName);
   }
@@ -70,7 +70,7 @@ public static partial class Guard
   /// <summary>
   /// Throws <see cref="ArgumentException"/> if <paramref name="argumentTest"/> is false.
   /// </summary>
-  public static void True(bool argumentTest, string argumentName!!, string failureMessage!!)
+  public static void True(bool argumentTest, string argumentName, string failureMessage)
   {
     if (!argumentTest) throw new ArgumentException(failureMessage, argumentName);
   }
@@ -78,7 +78,7 @@ public static partial class Guard
   /// <summary>
   /// Throws <see cref="ArgumentException"/> if <paramref name="argumentTest"/> is false.
   /// </summary>
-  public static void True(bool argumentTest, string failureMessage!!)
+  public static void True(bool argumentTest, string failureMessage)
   {
     if (!argumentTest) throw new ArgumentException(failureMessage);
   }
@@ -129,7 +129,7 @@ public static partial class Guard
   /// <summary>
   /// Ensures that <paramref name="directory"/> is not null and that it exists.
   /// </summary>
-  public static void MustExist(DirectoryInfo directory!!, string argumentName!!)
+  public static void MustExist(DirectoryInfo directory, string argumentName)
   {
     if (!directory.Exists) throw new DirectoryNotFoundException($"The directory '{directory.FullName}' supplied as argument '{argumentName}' does not exist.");
   }
@@ -137,7 +137,7 @@ public static partial class Guard
   /// <summary>
   /// Ensures that <paramref name="directory"/> is not null and that it exists.
   /// </summary>
-  public static void MustExist(DirectoryPath directory!!, string argumentName!!)
+  public static void MustExist(DirectoryPath directory, string argumentName)
   {
     if (!directory.Exists) throw new DirectoryNotFoundException($"The directory '{directory.Value}' supplied as argument '{argumentName}' does not exist.");
   }
@@ -145,7 +145,7 @@ public static partial class Guard
   /// <summary>
   /// Ensures that <paramref name="file"/> is not null and that it exists.
   /// </summary>
-  public static void MustExist(FileInfo file!!, string argumentName!!)
+  public static void MustExist(FileInfo file, string argumentName)
   {
     if (!file.Exists) throw new FileNotFoundException($"The directory '{file.FullName}' supplied as argument '{argumentName}' does not exist.");
   }
@@ -153,7 +153,7 @@ public static partial class Guard
   /// <summary>
   /// Ensures that <see cref="FilePath"/> is not null and that the file it exists on disk.
   /// </summary>
-  public static void MustExist(FilePath file!!, string argumentName!!)
+  public static void MustExist(FilePath file, string argumentName)
   {
     if (!file.Exists) throw new FileNotFoundException($"The directory '{file.Value}' supplied as argument '{argumentName}' does not exist.");
   }
@@ -162,7 +162,7 @@ public static partial class Guard
   /// <summary>
   /// Ensures that <paramref name="o"/> is not null and that it exists.
   /// </summary>
-  public static void MustExist(FileSystemInfo o!!, string argumentName!!)
+  public static void MustExist(FileSystemInfo o, string argumentName)
   {
     if (!o.Exists) throw new FileNotFoundException($"The file system object '{o.FullName}' supplied as argument '{argumentName}' does not exist.");
   }
@@ -170,7 +170,7 @@ public static partial class Guard
   /// <summary>
   /// Ensures that <paramref name="o"/> is not null and that it exists.
   /// </summary>
-  public static void MustExist(IFileSystemPath o!!, string argumentName!!)
+  public static void MustExist(IFileSystemPath o, string argumentName)
   {
     if (!o.Exists) throw new FileNotFoundException($"The file system object '{o.Value}' supplied as argument '{argumentName}' does not exist.");
   }

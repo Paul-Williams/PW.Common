@@ -30,7 +30,7 @@ public static class BackingField
   /// <param name="field">The value to be returned, or set then returned.</param>
   /// <param name="factory">A <see cref="Func{TResult}"/> used to populate <paramref name="field"/>, as required</param>
   /// <returns>The value <paramref name="field"/></returns>
-  public static T? GetLazy<T>(ref T? field, Func<T?> factory!!) where T : class
+  public static T? GetLazy<T>(ref T? field, Func<T?> factory) where T : class
     => field ??= factory();
 
   /// <summary>
@@ -42,7 +42,7 @@ public static class BackingField
   /// <param name="field">The value to be returned, or set then returned.</param>
   /// <param name="factory">A <see cref="Func{TResult}"/> used to populate <paramref name="field"/>, as required</param>
   /// <returns>The value <paramref name="field"/></returns>
-  public static T GetLazyValue<T>(ref T? field, Func<T> factory!!) where T : struct
+  public static T GetLazyValue<T>(ref T? field, Func<T> factory) where T : struct
   {
     if (!field.HasValue) field = factory();
     return field.Value;

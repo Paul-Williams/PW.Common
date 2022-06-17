@@ -18,11 +18,11 @@ public class PathBuilder
   /// <summary>
   /// ctor
   /// </summary>
-  public PathBuilder(string path!!) => StringBuilder.Append(path);
+  public PathBuilder(string path) => StringBuilder.Append(path);
   /// <summary>
   /// ctor
   /// </summary>
-  public PathBuilder(IEnumerable<string> directoryNames!!) => AppendDirectorNames(directoryNames);
+  public PathBuilder(IEnumerable<string> directoryNames) => AppendDirectorNames(directoryNames);
 
   /// <summary>
   /// Returns the full path.
@@ -35,13 +35,13 @@ public class PathBuilder
   /// Appends the directory name to the path
   /// </summary>
   /// <param name="directoryName"></param>
-  public PathBuilder AppendDirectory(string directoryName!!)
+  public PathBuilder AppendDirectory(string directoryName)
   {
     StringBuilder.Append(NormalizeDirectoryPath(directoryName));
     return this;
   }
 
-  public PathBuilder AppendDirectorNames(IEnumerable<string> directoryNames!!)
+  public PathBuilder AppendDirectorNames(IEnumerable<string> directoryNames)
   {
     StringBuilder.Append(NormalizeDirectoryPath(Path.Combine(directoryNames as string[] ?? directoryNames.ToArray())));
     return this;
@@ -51,7 +51,7 @@ public class PathBuilder
   /// Appends the file name to the path
   /// </summary>
   /// <param name="fileName"></param>
-  public PathBuilder AppendFilename(string fileName!!)
+  public PathBuilder AppendFilename(string fileName)
   {
     StringBuilder.Append(fileName);
     return this;
@@ -61,7 +61,7 @@ public class PathBuilder
   /// Appends the file name to the path
   /// </summary>
   /// <param name="fileExtension"></param>
-  public PathBuilder AppendFileExtension(string fileExtension!!)
+  public PathBuilder AppendFileExtension(string fileExtension)
   {
     StringBuilder.Append(fileExtension.StartsWith('.') ? fileExtension : '.' + fileExtension);
     return this;

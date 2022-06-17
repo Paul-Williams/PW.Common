@@ -6,7 +6,7 @@ using System.Reflection;
 
 // https://github.com/mcintyre321/ValueOf/issues/5
 
-// NB !!!! DO NOT implement implicit conversion operator, back to  type TValue.
+// NB  DO NOT implement implicit conversion operator, back to  type TValue.
 // Otherwise it is possible to inadvertently compare equality for two different ValueOf types.
 // This occurs because the compiler will call the implicit operator.
 

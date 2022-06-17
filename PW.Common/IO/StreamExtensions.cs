@@ -13,7 +13,7 @@ public static class StreamExtensions
   /// <returns>New instance of <seealso cref="MemoryStream"/></returns>
   /// <exception cref="ArgumentNullException"></exception>
   /// <exception cref="ArgumentException"></exception>
-  public static MemoryStream CopyToMemory(this Stream source!!)
+  public static MemoryStream CopyToMemory(this Stream source)
   {
     Guard.True(source.CanRead, $"Stream {nameof(source)} does not support reading.");
 
@@ -43,7 +43,7 @@ public static class StreamExtensions
   /// <exception cref="ArgumentNullException"></exception>
   /// <exception cref="ArgumentException"></exception>
 
-  public static void CopyTo(this Stream source!!, Action<byte[]> consumer!!, int start, int length)
+  public static void CopyTo(this Stream source, Action<byte[]> consumer, int start, int length)
   {
     Guard.GreaterThanZero(length, nameof(length));
     Guard.ZeroOrGreater(start, nameof(start));

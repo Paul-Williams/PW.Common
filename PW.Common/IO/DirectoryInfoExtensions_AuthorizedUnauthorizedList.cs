@@ -6,7 +6,7 @@ public static partial class DirectoryInfoExtensions
   /// <summary>
   /// Returns a list of subdirectories to which access is authorized.
   /// </summary>
-  public static List<DirectoryInfo> GetAuthorizedDirectories(this DirectoryInfo directory!!)
+  public static List<DirectoryInfo> GetAuthorizedDirectories(this DirectoryInfo directory)
   {
 
     // We will not catch UnauthorizedAccessException on the initial directory.
@@ -29,7 +29,7 @@ public static partial class DirectoryInfoExtensions
   /// <summary>
   /// Returns lists of subdirectories to which access is authorized and unauthorized.
   /// </summary>
-  public static (List<DirectoryInfo> Authorized, List<DirectoryInfo> Unauthorized) GetAuthorizedAndUnauthorizedDirectories(this DirectoryInfo directory!!)
+  public static (List<DirectoryInfo> Authorized, List<DirectoryInfo> Unauthorized) GetAuthorizedAndUnauthorizedDirectories(this DirectoryInfo directory)
   {
     var wd = new WalkData { TrackUnAuthorized = true };
 
@@ -53,7 +53,7 @@ public static partial class DirectoryInfoExtensions
   /// Recursive walk down the directory tree structure.
   /// </summary>
   /// <param name="wd"></param>
-  private static void WalkInternal(WalkData wd!!)
+  private static void WalkInternal(WalkData wd)
   {
     try
     {

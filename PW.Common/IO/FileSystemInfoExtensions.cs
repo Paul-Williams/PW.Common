@@ -11,7 +11,7 @@ public static class FileSystemInfoExtensions
   /// Deletes the <see cref="FileSystemInfo"/> entry from disk, if it exists. Otherwise does nothing.
   /// </summary>
   /// <param name="fso"></param>
-  public static void DeleteIfExists(this FileSystemInfo fso!!)
+  public static void DeleteIfExists(this FileSystemInfo fso)
   {
     if (fso.Exists) fso.Delete();
   }
@@ -19,6 +19,6 @@ public static class FileSystemInfoExtensions
   /// <summary>
   /// Launches the <see cref="FileSystemInfo"/> in a new process and returns the new process.
   /// </summary>
-  public static Process Launch(this FileSystemInfo fso!!) => Process.Start(fso.FullName);
+  public static Process Launch(this FileSystemInfo fso) => Process.Start(fso.FullName);
 
 }

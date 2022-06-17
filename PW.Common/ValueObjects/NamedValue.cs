@@ -10,7 +10,7 @@ public class NamedValue<T> : CSharpFunctionalExtensions.ValueObject
   /// Creates a new instance.
   /// </summary>
   /// <exception cref="ArgumentNullException"></exception>
-  public NamedValue(string name!!, T value!!)
+  public NamedValue(string name, T value)
   {
     Name = name;
     Value = value;  //value.OrIfNullThrow(() => new ArgumentNullException(nameof(value)));

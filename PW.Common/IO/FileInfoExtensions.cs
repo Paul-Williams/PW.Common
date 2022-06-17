@@ -59,7 +59,7 @@ public static partial class FileInfoExtensions
   /// <summary>
   /// Deletes the file to the recycle bin.
   /// </summary>    
-  public static void SendToRecycleBin(this FileInfo file!!)
+  public static void SendToRecycleBin(this FileInfo file)
   {
 
     Microsoft.VisualBasic.FileIO.FileSystem.DeleteFile(file.FullName,
@@ -71,7 +71,7 @@ public static partial class FileInfoExtensions
   /// Opens explorer and selects the specified file.
   /// </summary>
   /// <param name="file"></param>
-  public static void SelectInExplorer(this FileInfo file!!)
+  public static void SelectInExplorer(this FileInfo file)
   {
     Guard.MustExist(file, nameof(file));
     System.Diagnostics.Process.Start("explorer.exe", "/select, \"" + file.FullName + "\"");
@@ -82,25 +82,25 @@ public static partial class FileInfoExtensions
   /// </summary>
   /// <param name="file"></param>
   /// <returns></returns>
-  public static string NameWithoutExtension(this FileInfo file!!) => Path.GetFileNameWithoutExtension(file.Name);
+  public static string NameWithoutExtension(this FileInfo file) => Path.GetFileNameWithoutExtension(file.Name);
 
 
   /// <summary>
   /// Changes the name of the file to that specified by <paramref name="newName"/>
   /// </summary>
-  public static void Rename(this FileInfo file!!, string newName!!)
+  public static void Rename(this FileInfo file, string newName)
     => file.MoveTo(Path.Combine(file.DirectoryName ?? throw new Exception($"{nameof(file)}.DirectoryName returned null."), newName));
 
   /// <summary>
   /// Checks whether the <see cref="FileInfo"/> has the specified extension.
   /// </summary>
-  public static bool HasExtensionOf(this FileInfo file!!, string extension!!)
+  public static bool HasExtensionOf(this FileInfo file, string extension)
     => string.Equals(file.Extension, NormalizeFileExtension(extension), StringComparison.OrdinalIgnoreCase);
 
   /// <summary>
   /// Returns true if the file has an extension.
   /// </summary>
-  public static bool HasExtension(this FileInfo file!!) => file.Extension.Length != 0;
+  public static bool HasExtension(this FileInfo file) => file.Extension.Length != 0;
 
 
   ///// <summary>
@@ -115,7 +115,7 @@ public static partial class FileInfoExtensions
   /// Moves the file to a new directory. The file name will remain the same. The directory will be created if it does not exist.
   /// To both move and rename a file use  <see cref="MoveTo(FileInfo, FileInfo)"/> or <see cref="FileInfo.MoveTo(string)"/>
   /// </summary>
-  public static void MoveTo(this FileInfo file!!, DirectoryInfo newLocation!!)
+  public static void MoveTo(this FileInfo file, DirectoryInfo newLocation)
   {
     newLocation.Create();
     var newFile = new FileInfo(Path.Combine(newLocation.FullName, file.Name));
@@ -125,6 +125,6 @@ public static partial class FileInfoExtensions
   /// <summary>
   /// Moves the file new a new location.
   /// </summary>
-  public static void MoveTo(this FileInfo file!!, FileInfo newLocation!!)
+  public static void MoveTo(this FileInfo file, FileInfo newLocation)
     => file.MoveTo(newLocation?.Directory ?? throw new Exception($"{nameof(newLocation)}.Directory returned null."));
 }

@@ -158,7 +158,7 @@ public partial class CursoredList<T> : IReadOnlyList<T>
   /// </summary>
   /// <param name="selector">Predicate to determine <see cref="Position"/>.</param>
   /// <returns><typeparamref name="T"/> at new <see cref="Position"/>, or default(<typeparamref name="T"/>) if <paramref name="selector"/> never returns true.</returns>
-  public T MoveTo(Func<T, bool> selector!!)
+  public T MoveTo(Func<T, bool> selector)
   {
     if (IsEmpty) throw new InvalidOperationException("List is empty.");
     for (int i = 0; i < List.Count; i++)

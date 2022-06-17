@@ -50,7 +50,7 @@ public class NullableReferenceNotInstantiatedException : Exception
   /// </summary>
   /// <param name="info"></param>
   /// <param name="streamingContext"></param>
-  protected NullableReferenceNotInstantiatedException(SerializationInfo info!!, StreamingContext streamingContext)
+  protected NullableReferenceNotInstantiatedException(SerializationInfo info, StreamingContext streamingContext)
   {
     ReferenceName = info.GetString(nameof(ReferenceName)) ?? NullReferenceNameString;
     base.GetObjectData(info, streamingContext);
@@ -59,7 +59,7 @@ public class NullableReferenceNotInstantiatedException : Exception
   /// <summary>
   /// GetObjectData
   /// </summary>
-  public override void GetObjectData(SerializationInfo info!!, StreamingContext context)
+  public override void GetObjectData(SerializationInfo info, StreamingContext context)
   {
     info.AddValue(nameof(ReferenceName), ReferenceName);
     base.GetObjectData(info, context);

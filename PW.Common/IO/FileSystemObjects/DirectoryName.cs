@@ -25,7 +25,7 @@ public class DirectoryName : FileSystemPathSection<DirectoryName>
   /// <summary>
   /// Creates a new instance from an existing <see cref="DirectoryPath"/>. Skips validation.
   /// </summary>
-  public DirectoryName(DirectoryPath directoryPath!!)
+  public DirectoryName(DirectoryPath directoryPath)
   {
 
     // ASSUMES: DirectoryPath values are always normalized to be terminated with a trailing back-slash.
@@ -36,7 +36,7 @@ public class DirectoryName : FileSystemPathSection<DirectoryName>
   /// <summary>
   /// Creates a new instance from an existing <see cref="FilePath"/>. Skips validation.
   /// </summary>
-  public DirectoryName(FilePath filePath!!)
+  public DirectoryName(FilePath filePath)
   {
     Value = filePath.ToFileInfo().Directory!.Name;
   }

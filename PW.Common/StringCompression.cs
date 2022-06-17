@@ -14,10 +14,10 @@ namespace PW;
 
 public static class StringCompression
 {
-  public static byte[] Compress(this string inputStr!!, CompressionLevel compressionLevel = CompressionLevel.Optimal)
+  public static byte[] Compress(this string inputStr, CompressionLevel compressionLevel = CompressionLevel.Optimal)
     => CompressToStream(inputStr, compressionLevel).DisposeAfter(stream => stream.ToArray());
 
-  public static MemoryStream CompressToStream(this string inputStr!!, CompressionLevel compressionLevel = CompressionLevel.Optimal)
+  public static MemoryStream CompressToStream(this string inputStr, CompressionLevel compressionLevel = CompressionLevel.Optimal)
   {
     byte[] inputBytes = Encoding.UTF8.GetBytes(inputStr);
 
@@ -29,10 +29,10 @@ public static class StringCompression
   }
 
 
-  public static string Decompress(this byte[] data!!) => Decompress(new MemoryStream(data));
+  public static string Decompress(this byte[] data) => Decompress(new MemoryStream(data));
 
 
-  public static string Decompress(Stream data!!)
+  public static string Decompress(Stream data)
   {
     using var deflateStream = new DeflateStream(data, CompressionMode.Decompress);
     using var streamReader = new StreamReader(deflateStream);

@@ -30,7 +30,7 @@ public static partial class DirectoryInfoExtensions
   /// <summary>
   /// Enumerates all subdirectories to which access is authorized.
   /// </summary>
-  public static IEnumerable<DirectoryInfo> EnumerateAuthorizedDirectories(this DirectoryInfo startDirectory!!, bool includeStartDirectory)
+  public static IEnumerable<DirectoryInfo> EnumerateAuthorizedDirectories(this DirectoryInfo startDirectory, bool includeStartDirectory)
   {
     // We will not catch UnauthorizedAccessException on the initial directory
     // The initial directory will not be returned. It is not a subdirectory of itself!

@@ -20,7 +20,7 @@ public class FileNameWithoutExtension : FileSystemPathSection<FileNameWithoutExt
   /// <summary>
   /// Creates a new instance.
   /// </summary>
-  public FileNameWithoutExtension(FilePath filePath!!)
+  public FileNameWithoutExtension(FilePath filePath)
   {
     Value = Path.GetFileNameWithoutExtension((string)filePath);
   }
@@ -28,7 +28,7 @@ public class FileNameWithoutExtension : FileSystemPathSection<FileNameWithoutExt
   /// <summary>
   /// Creates a new instance.
   /// </summary>
-  public FileNameWithoutExtension(FileName fileName!!)
+  public FileNameWithoutExtension(FileName fileName)
   {
     Value = Path.GetFileNameWithoutExtension((string)fileName);
   }
@@ -36,7 +36,7 @@ public class FileNameWithoutExtension : FileSystemPathSection<FileNameWithoutExt
   /// <summary>
   /// Creates a new instance.
   /// </summary>
-  public FileNameWithoutExtension(FileInfo fileInfo!!)
+  public FileNameWithoutExtension(FileInfo fileInfo)
   {
     Value = Path.GetFileNameWithoutExtension(fileInfo.FullName);
   }

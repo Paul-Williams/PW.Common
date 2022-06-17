@@ -32,7 +32,7 @@ public struct FuncPipe<T>
 /// </summary>
 public struct FuncPipe<T, TR>
 {
-  public FuncPipe(Func<T, TR> func!!) => Func = func;
+  public FuncPipe(Func<T, TR> func) => Func = func;
 
   public Func<T, TR> Func { get; }
 
@@ -50,7 +50,7 @@ public struct FuncPipe<T, TR>
 /// </summary>
 public struct FuncPipeS<T>
 {
-  public FuncPipeS(Func<T, T> func!!) => Func = func;
+  public FuncPipeS(Func<T, T> func) => Func = func;
 
   public Func<T, T> Func { get; }
 
@@ -61,7 +61,7 @@ public struct FuncPipeS<T>
 
   public T Invoke(T x) => Func.Invoke(x);
 
-  public FuncPipeS(IEnumerable<Func<T, T>> seq!!)
+  public FuncPipeS(IEnumerable<Func<T, T>> seq)
   {
     var f = seq.FirstOrDefault();
     if (f == null) throw new ArgumentException("Enumeration contains no elements.");
@@ -95,7 +95,7 @@ public class FunctionPipeline<T> //: List<Func<T, T>>
   /// <param name="seq"></param>
   /// <exception cref="ArgumentNullException"></exception>
   /// <exception cref="ArgumentException">Thrown if there is a null in <paramref name="seq"/></exception>
-  public FunctionPipeline(IEnumerable<Func<T, T>> seq!!)
+  public FunctionPipeline(IEnumerable<Func<T, T>> seq)
   {
     Funcs = new List<Func<T, T>>(seq);
     Guard.NoNulls(Funcs, nameof(seq));
@@ -104,7 +104,7 @@ public class FunctionPipeline<T> //: List<Func<T, T>>
   /// <summary>
   /// Static method to link together a series of functions.
   /// </summary>
-  public static Func<T, T> Compose(IList<Func<T, T>> funcs!!)
+  public static Func<T, T> Compose(IList<Func<T, T>> funcs)
   {
     // Handle stupid case of single function pipe-line ;)
     if (funcs.Count == 1) return funcs[0];

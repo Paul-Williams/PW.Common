@@ -9,7 +9,7 @@ public class FilePathParts
   /// Creates a new instance.
   /// </summary>
   /// <param name="filePath"></param>
-  public FilePathParts(FilePath filePath!!)
+  public FilePathParts(FilePath filePath)
   {
 
 /* Unmerged change from project 'PW.Common (net48)'

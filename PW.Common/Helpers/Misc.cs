@@ -18,7 +18,7 @@ public static class Misc
   /// <summary>
   /// Creates a composite hash code from for multiple objects.
   /// </summary>
-  public static int GetCompositeHashCode(params object[] objs!!)
+  public static int GetCompositeHashCode(params object[] objs)
   {
     unchecked // Overflow is fine, just wrap
     {
@@ -36,7 +36,7 @@ public static class Misc
   /// </summary>
   /// <param name="objs"></param>
   /// <returns></returns>
-  public static int CreateHashcode(params object[] objs!!)
+  public static int CreateHashcode(params object[] objs)
   {
 
     // See: https://stackoverflow.com/questions/263400/what-is-the-best-algorithm-for-overriding-gethashcode

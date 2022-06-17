@@ -1853,6 +1853,13 @@
             <summary>
             Extension methods for working with disposable objects in a functional manor.
             </summary>
+        </mem           </summary>
+            <param name="flag"></param>
+        </member>
+        <member name="T:PW.Functional.Disposable">
+            <summary>
+            Extension methods for working with disposable objects in a functional manor.
+            </summary>
         </member>
         <member name="M:PW.Functional.Disposable.DisposeAfter``2(``0,System.Func{``0,``1})">
             <summary>
@@ -1920,14 +1927,7 @@
             Pipes the output of a function into the input of the next function.
             </summary>
         </member>
-        <member name="M:PW.Functional.FuncExtensions.Pipe``4(System.Func{``0,``1,``2},System.Func{``2,``3})">
-            <summary>
-            Pipes the output of a function into the input of the next function.
-            </summary>
-        </member>
-        <member name="M:PW.Functional.FuncExtensions.ValueOrDefault``1(System.Func{``0})">
-            <summary>
-            Returns the result of <paramref name="func"/> or default, if it fails.
+        <member name="M:PW.Functional.FuncExtensions.Pipe``4(System.Func{``0,``1,``2},System.Func{``2,``3})"the result of <paramref name="func"/> or default, if it fails.
             </summary>
         </member>
         <member name="M:PW.Functional.FuncExtensions.ValueOrDefault``2(System.Func{``0,``1},``0)">
@@ -1999,6 +1999,13 @@
             <exception cref="T:System.ArgumentException">Thrown if there is a null in <paramref name="seq"/></exception>
         </member>
         <member name="M:PW.Functional.FunctionPipeline`1.Compose(System.Collections.Generic.IList{System.Func{`0,`0}})">
+            <summary>
+            Static method to link together a series of functions.
+            </summary>
+        </member>
+        <member name="M:PW.Functional.FunctionPipeline`1.Execute(`0)">
+            <summary>
+            Execut.Generic.IList{System.Func{`0,`0}})">
             <summary>
             Static method to link together a series of functions.
             </summary>
@@ -2094,12 +2101,7 @@
         </member>
         <member name="T:PW.Functional.WithStatement">
             <summary>
-            Extension methods equivalent to the Visual Basic 'With...End With' Statement block.
-            </summary>
-        </member>
-        <member name="M:PW.Functional.WithStatement.With``1(System.Func{``0},System.Action{``0})">
-            <summary>
-            Equivalent to the Visual Basic 'With...End With' Statement block.
+            Extension methods equivalent atement block.
             </summary>
             <typeparam name="T">The type returned by <paramref name="objectExpression"/>.</typeparam>
             <param name="objectExpression">An expression that evaluates to an object of type <typeparamref name="T"/>. The expression may be arbitrarily complex and is evaluated only once. The expression can evaluate to any data type, including elementary types.</param>
@@ -2182,7 +2184,7 @@
             <summary>
             Returns an array of values for the enumeration <typeparamref name="T"/>.
             </summary>
-            <typeparam name="T">MUST BE AN ENUM !!</typeparam>
+            <typeparam name="T">MUST BE AN ENUM </typeparam>
         </member>
         <member name="M:PW.Helpers.EnumHelper.Count``1">
             <summary>
@@ -2362,6 +2364,10 @@
         </member>
         <member name="M:PW.IO.DelimitedFieldFileWriter.#ctor(System.IO.FileInfo,System.Char,System.String[],PW.IO.DelimitedFieldFileWriter.FileMode)">
             <summary>
+            Creates a new instance of the <see cref="T:PW.IO.DelimitedFieldFileWriummary>
+        </member>
+        <member name="M:PW.IO.DelimitedFieldFileWriter.#ctor(System.IO.FileInfo,System.Char,System.String[],PW.IO.DelimitedFieldFileWriter.FileMode)">
+            <summary>
             Creates a new instance of the <see cref="T:PW.IO.DelimitedFieldFileWriter"/> class.
             </summary>
             <param name="outputFile">Path to/for the delimited file.</param>
@@ -2495,11 +2501,7 @@
             Returns a new <seealso cref="T:System.IO.DirectoryInfo"/> instance representing the named sub-directory. 
             Does not check if the directory or sub-directory exist or create them.
             </summary>
-            <param name="directory">The parent directory</param>
-            <param name="subDirectoryName">The short-name of the sub-directory. Not the full path to it!"</param>
-            <returns></returns>
-        </member>
-        <member name="M:PW.IO.DirectoryInfoExtensions.RecursiveDeleteEmptySubDirectories(System.IO.DirectoryInfo)">
+            <param name="directory">The parenO.DirectoryInfo)">
             <summary>
             Recursively deletes all sub-directories that are either empty or only contain empty sub-directories.
             Returns an list of <see cref="T:System.IO.DirectoryInfo"/> containing an entry for each directory deleted.
@@ -2576,6 +2578,12 @@
             </summary>
         </member>
         <member name="M:PW.IO.FileGrouperBase.#ctor(System.IO.DirectoryInfo,System.String)">
+            <summary>
+            Creates a new instance. Called from the sub-class
+            </summary>
+        </member>
+        <member name="M:PW.IO.FileGrouperBase.#ctor(System.IO.DirectoryInfo)">
+            FileGrouperBase.#ctor(System.IO.DirectoryInfo,System.String)">
             <summary>
             Creates a new instance. Called from the sub-class
             </summary>
@@ -2665,12 +2673,7 @@
         </member>
         <member name="M:PW.IO.FileInfoExtensions.HasExtension(System.IO.FileInfo)">
             <summary>
-            Returns true if the file has an extension.
-            </summary>
-        </member>
-        <member name="M:PW.IO.FileInfoExtensions.MoveTo(System.IO.FileInfo,System.IO.DirectoryInfo)">
-            <summary>
-            Moves the file to a new directory. The file name will remain the same. The directory will be created if it does not exist.
+            Returns true e directory will be created if it does not exist.
             To both move and rename a file use  <see cref="M:PW.IO.FileInfoExtensions.MoveTo(System.IO.FileInfo,System.IO.FileInfo)"/> or <see cref="M:System.IO.FileInfo.MoveTo(System.String)"/>
             </summary>
         </member>
@@ -3292,6 +3295,11 @@
             </summary>
         </member>
         <member name="M:PW.IO.FileSystemObjects.FileSystem.SendDirectoryToRecycleBin(System.String)">
+            <summary>
+            Sends a directory to the recycle bin.
+            </summary>
+        </member>
+        <member name="M:PW.IO.FileSystemObjects.FileSystem.SendToRecycleBin(mber name="M:PW.IO.FileSystemObjects.FileSystem.SendDirectoryToRecycleBin(System.String)">
             <summary>
             Sends a directory to the recycle bin.
             </summary>
@@ -4095,17 +4103,7 @@
             String for each octet of the array.
             </summary>
         </member>
-        <member name="M:PW.Net.IP4Address.Validate">
-            <summary>
-            Validates that the value represents an IP4 address.
-            </summary>
-        </member>
-        <member name="T:PW.Net.IP4AddressMask">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="T:PW.Net.PeriodicPing">
+        <member name="M:PW.Net.IP4Address.er name="T:PW.Net.PeriodicPing">
             <summary>
             Pings an IP address at a specified interval. Instances should be disposed after use.
             </summary>
@@ -4381,6 +4379,8 @@
         </member>
         <member name="M:PW.ValueObjects.ValidationResult.op_Implicit(PW.ValueObjects.ErrorMessage)~PW.ValueObjects.ValidationResult">
             <summary>
+            Implicitly convert <see cref="T:PW.ValueObjects.ErrorMessage"/> into a new instance of <see cref="M:PW.ValueObjects.ValidationRber name="M:PW.ValueObjects.ValidationResult.op_Implicit(PW.ValueObjects.ErrorMessage)~PW.ValueObjects.ValidationResult">
+            <summary>
             Implicitly convert <see cref="T:PW.ValueObjects.ErrorMessage"/> into a new instance of <see cref="M:PW.ValueObjects.ValidationResult.Fail(PW.ValueObjects.ErrorMessage)"/>
             </summary>
         </member>
@@ -4620,13 +4620,7 @@
         </member>
         <member name="M:MouseProfiles.FontResources.PopulateLookup">
             <summary>
-            Populates the lookup from font family name -> PrivateFontCollection.Families[index].
-            </summary>
-        </member>
-        <member name="T:System.Index">
-            <summary>Represent a type can be used to index a collection either from the start or the end.</summary>
-            <remarks>
-            Index is used by the C# compiler to support the new index syntax
+            Populates the lookup from font family name -> PrivateFontCollection.Families[index] new index syntax
             <code>
             int[] someArray = new int[5] { 1, 2, 3, 4, 5 } ;
             int lastElement = someArray[^1]; // lastElement = 5

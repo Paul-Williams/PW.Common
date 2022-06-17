@@ -7,7 +7,7 @@ public static partial class DirectoryInfoExtensions
   /// <summary>
   /// Returns the named sub-directory, creates it if it does not exist.
   /// </summary>
-  public static DirectoryInfo GetOrCreateSubdirectory(this DirectoryInfo directory!!, string subdirectoryName)
+  public static DirectoryInfo GetOrCreateSubdirectory(this DirectoryInfo directory, string subdirectoryName)
   {
     Guard.NotNullOrWhitespace(subdirectoryName, nameof(subdirectoryName));
 
@@ -49,7 +49,7 @@ public static partial class DirectoryInfoExtensions
   /// Returns a new <see cref="DirectoryInfo"/> instance with the sub-directories appended.
   /// If no arguments or a zero-length array are passed to <paramref name="subDirectories"/>, the original directory is returned.
   /// </summary>
-  public static DirectoryInfo Append(this DirectoryInfo directory!!, params DirectoryName[] subDirectories!!)
+  public static DirectoryInfo Append(this DirectoryInfo directory, params DirectoryName[] subDirectories)
   {
 
 
@@ -68,7 +68,7 @@ public static partial class DirectoryInfoExtensions
   /// Returns a new <see cref="DirectoryInfo"/> instance with the sub-directories appended.
   /// If no arguments or a zero-length array are passed to <paramref name="subDirectories"/>, the original directory is returned.
   /// </summary>
-  public static DirectoryInfo Append(this DirectoryInfo directory!!, params string[] subDirectories!!)
+  public static DirectoryInfo Append(this DirectoryInfo directory, params string[] subDirectories)
   {
 
     // If no arguments are passed via 'params' the length of the params list is zero.
@@ -86,7 +86,7 @@ public static partial class DirectoryInfoExtensions
   /// <summary>
   /// Creates sub-directories within the existing directory. Skips any sub-directory that already exist.
   /// </summary>
-  public static void CreateSubdirectories(this DirectoryInfo directory!!, IEnumerable<DirectoryName> subDirectories!!)
+  public static void CreateSubdirectories(this DirectoryInfo directory, IEnumerable<DirectoryName> subDirectories)
   {
     subDirectories
       .Distinct()
@@ -99,7 +99,7 @@ public static partial class DirectoryInfoExtensions
   /// <summary>
   /// Walks up the directory path from this directory to the root. Returns each directory on that path.
   /// </summary>
-  public static IEnumerable<DirectoryInfo> WalkPathToRoot(this DirectoryInfo directory!!, bool includeSelf = true)
+  public static IEnumerable<DirectoryInfo> WalkPathToRoot(this DirectoryInfo directory, bool includeSelf = true)
   {
     var current = includeSelf ? directory : directory.Parent;
 
@@ -124,7 +124,7 @@ public static partial class DirectoryInfoExtensions
   /// <param name="directory"></param>
   /// <returns>The original directory, for fluent-chaining etc.
   /// An exception will be thrown if the directory cannot be created or is null.</returns>
-  public static DirectoryInfo EnsureExists(this DirectoryInfo directory!!)
+  public static DirectoryInfo EnsureExists(this DirectoryInfo directory)
   {
     if (!directory.Exists) directory.Create();
     return directory;
@@ -138,7 +138,7 @@ public static partial class DirectoryInfoExtensions
   /// <returns>Returns (true, null), if the directory already exists or it is created successfully. 
   /// If an exception occurs creating the directory, returns (false,error) where 'error' is the exception message.</returns>
   /// <exception cref="ArgumentNullException"> If <paramref name="directory"/> is null.</exception>
-  public static Result<DirectoryInfo> TryEnsureExists(this DirectoryInfo directory!!)
+  public static Result<DirectoryInfo> TryEnsureExists(this DirectoryInfo directory)
   {
     try
     {
@@ -153,7 +153,7 @@ public static partial class DirectoryInfoExtensions
   /// <summary>
   /// Returns a list of files from the directory which have file extensions as specified by <paramref name="extensions"/>
   /// </summary>
-  public static IEnumerable<FileInfo> GetFiles(this DirectoryInfo directory!!, IEnumerable<string> extensions!!, SearchOption searchOption)
+  public static IEnumerable<FileInfo> GetFiles(this DirectoryInfo directory, IEnumerable<string> extensions, SearchOption searchOption)
   {
 
     var set = new HashSet<string>(extensions, StringComparer.OrdinalIgnoreCase);
@@ -167,7 +167,7 @@ public static partial class DirectoryInfoExtensions
   /// <summary>
   /// Enumerates files from the directory which have file extensions as specified by <paramref name="extensions"/>
   /// </summary>
-  public static IEnumerable<FileInfo> EnumerateFiles(this DirectoryInfo directory!!, IEnumerable<string> extensions!!, SearchOption searchOption)
+  public static IEnumerable<FileInfo> EnumerateFiles(this DirectoryInfo directory, IEnumerable<string> extensions, SearchOption searchOption)
   {
     var set = new HashSet<string>(extensions, StringComparer.OrdinalIgnoreCase);
     // TODO: Use - Enumerable.SelectMany(directory.EnumerateAuthorizedDirectories(true), x =>
@@ -201,7 +201,7 @@ public static partial class DirectoryInfoExtensions
   /// Returns an list of <see cref="DirectoryInfo"/> containing an entry for each directory deleted.
   /// If the initial directory does not exist, an empty list is returned.
   /// </summary>
-  public static List<DirectoryInfo> RecursiveDeleteEmptySubDirectories(this DirectoryInfo initialDirectory!!)
+  public static List<DirectoryInfo> RecursiveDeleteEmptySubDirectories(this DirectoryInfo initialDirectory)
   {
     var deletedDirectories = new List<DirectoryInfo>();
     if (!initialDirectory.Exists) return deletedDirectories;

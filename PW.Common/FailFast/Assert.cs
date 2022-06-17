@@ -18,7 +18,7 @@ public static class Assert
   /// <summary>
   /// Throws exception if the file does not exist
   /// </summary>    
-  public static void Exists(FileInfo file!!)
+  public static void Exists(FileInfo file)
   {
     if (!file.Exists) throw new AssertionException(ClassMethodName(), "File not found: " + file.FullName, new FileNotFoundException());
   }
@@ -26,7 +26,7 @@ public static class Assert
   /// <summary>
   /// Throws exception if the directory does not exist
   /// </summary>    
-  public static void Exists(DirectoryInfo directory!!)
+  public static void Exists(DirectoryInfo directory)
   {
     if (!directory.Exists) throw new AssertionException(ClassMethodName(), "Directory not found: " + directory.FullName, new DirectoryNotFoundException());
   }
