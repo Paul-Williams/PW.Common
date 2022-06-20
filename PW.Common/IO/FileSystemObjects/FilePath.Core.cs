@@ -5,7 +5,7 @@
 /// </summary>
 [System.Diagnostics.DebuggerDisplay("{ToString}")]
 
-public partial class FilePath : FileSystemPath<FilePath>
+public partial class FilePath : FileSystemPath
 {
 
   #region Constructors
@@ -45,7 +45,7 @@ public partial class FilePath : FileSystemPath<FilePath>
   /// Casts a <see cref="FilePath"/> to a <see cref="string"/>.
   /// </summary>    
   public static explicit operator string(FilePath filePath) =>
-    filePath is not null ? filePath.Value : throw new(nameof(filePath));
+    filePath is not null ? filePath.Path : throw new(nameof(filePath));
 
   /// <summary>
   /// Casts a <see cref="FileInfo"/> to a <see cref="FilePath"/>.
@@ -57,7 +57,7 @@ public partial class FilePath : FileSystemPath<FilePath>
   /// Casts a <see cref="FilePath"/> to a <see cref="FileInfo"/>.
   /// </summary>    
   public static explicit operator FileInfo(FilePath filePath) =>
-    filePath is not null ? new FileInfo(filePath.Value) : throw new(nameof(filePath));
+    filePath is not null ? new FileInfo(filePath.Path) : throw new(nameof(filePath));
 
 
   #endregion
@@ -65,7 +65,7 @@ public partial class FilePath : FileSystemPath<FilePath>
   /// <summary>
   /// Creates a new instance of <see cref="FileInfo"/> for this <see cref="FilePath"/>.
   /// </summary>
-  public FileInfo ToFileInfo() => new(Value);
+  public FileInfo ToFileInfo() => new(Path);
 
   #region Instance methods to return parts of the FilePath
   /// <summary>
@@ -101,6 +101,6 @@ public partial class FilePath : FileSystemPath<FilePath>
   /// <summary>
   /// Determines whether the path refers to an existing file on disk. Not cached.
   /// </summary>
-  public override bool Exists => File.Exists(Value);
+  public override bool Exists => File.Exists(Path);
 
 }

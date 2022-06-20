@@ -3,40 +3,28 @@
 /// <summary>
 /// Base class for objects representing a file system path. E.g. DirectoryPath or FilePath.
 /// </summary>
-public abstract class FileSystemPath<T> : IComparable<FileSystemPath<T>>, IEquatable<FileSystemPath<T>>, IFileSystemPath
+public class FileSystemPath : IComparable<FileSystemPath>, IEquatable<FileSystemPath>, IFileSystemPath
 {
   /// <summary>
   /// Creates a new instance.
   /// </summary>
-  protected FileSystemPath(string value)
+  public FileSystemPath(string path)
   {
-    if (string.IsNullOrWhiteSpace(value)) throw new ArgumentException($"'{nameof(value)}' cannot be null or whitespace.", nameof(value));
-    _value = value;
+    if (string.IsNullOrWhiteSpace(path)) throw new ArgumentException($"'{nameof(path)}' cannot be null or whitespace.", nameof(path));
+    Path = path;
   }
-
-  private string _value;
 
   /// <summary>
-  /// The path encapsulated by this <see cref="FileSystemPath{T}"/>
+  /// The path encapsulated by this <see cref="FileSystemPath"/>
   /// </summary>
-  public string Value
-  {
-    get => _value ?? throw new InvalidOperationException($"Implementation error: {nameof(Value)} was not set by the inherited class.");
-    //protected set
-    //{
-    //  if (this._value is not null) throw new InvalidOperationException($"{nameof(FileSystemPath<T>.Value)} cannot be changed once set.");
-    //  if (value is null) throw new ArgumentNullException(nameof(value), $"{nameof(Value)} cannot be null.");
-    //  if (string.IsNullOrWhiteSpace(value)) throw new ArgumentException($"{nameof(Value)} cannot be empty or white-space.", nameof(value));
-    //  this._value = value;
-    //}
-  }
+  public string Path { get; }
 
-  public abstract bool Exists { get; }
+  public virtual bool Exists => Directory.Exists(Path) || File.Exists(Path);
 
   /// <summary>
   /// Performs equality comparison.
   /// </summary>
-  public override bool Equals(object? obj) => Paths.EqualityComparer.Equals(Value, (obj as FileSystemPath<T>)?.Value);
+  public override bool Equals(object? obj) => Paths.EqualityComparer.Equals(Path, (obj as FileSystemPath)?.Path);
 
 
   private int _hashCode;
@@ -46,13 +34,13 @@ public abstract class FileSystemPath<T> : IComparable<FileSystemPath<T>>, IEquat
   /// Returns hash code. Cached after first call.
   /// </summary>
 
-  public override int GetHashCode() => _hashCode != 0 ? _hashCode : _hashCode = Paths.EqualityComparer.GetHashCode(Value);
+  public override int GetHashCode() => _hashCode != 0 ? _hashCode : _hashCode = Paths.EqualityComparer.GetHashCode(Path);
 
 
   /// <summary>
   /// This instance's path as a string.
   /// </summary>
-  public override string ToString() => Value;
+  public override string ToString() => Path;
 
   #region IEquatable<FileSystemPath>
 
@@ -61,21 +49,21 @@ public abstract class FileSystemPath<T> : IComparable<FileSystemPath<T>>, IEquat
   /// </summary>
   /// <param name="other"></param>
   /// <returns></returns>
-  public bool Equals(FileSystemPath<T>? other) => Paths.EqualityComparer.Equals(Value, other?.Value);
+  public bool Equals(FileSystemPath? other) => Paths.EqualityComparer.Equals(Path, other?.Path);
 
   /// <summary>
   /// Compares two instances for sorting.
   /// </summary>
   /// <param name="other"></param>
   /// <returns></returns>
-  public int CompareTo(FileSystemPath<T>? other) => Paths.NaturalSortComparer.Compare(Value, other?.Value);
+  public int CompareTo(FileSystemPath? other) => Paths.NaturalSortComparer.Compare(Path, other?.Path);
 
   /// <summary>
   /// Compares two instances for sorting.
   /// </summary>
   /// <param name="other"></param>
   /// <returns></returns>
-  public int CompareTo(object other) => Paths.NaturalSortComparer.Compare(Value, (other as FileSystemPath<T>)?.Value);
+  public int CompareTo(object other) => Paths.NaturalSortComparer.Compare(Path, (other as FileSystemPath)?.Path);
 
   #endregion
 
@@ -86,37 +74,40 @@ public abstract class FileSystemPath<T> : IComparable<FileSystemPath<T>>, IEquat
   /// Performs equality comparison of the two instances
   /// </summary>
   /// <returns></returns>
-  public static bool operator ==(FileSystemPath<T> a, FileSystemPath<T> b) => Paths.EqualityComparer.Equals(a?._value, b?._value);
+  public static bool operator ==(FileSystemPath a, FileSystemPath b) => Paths.EqualityComparer.Equals(a?.Path, b?.Path);
 
   /// <summary>
   /// Performs negative-equality comparison of the two instances
   /// </summary>
   /// <returns></returns>
-  public static bool operator !=(FileSystemPath<T> a, FileSystemPath<T> b) => !Paths.EqualityComparer.Equals(a?._value, b?._value);
+  public static bool operator !=(FileSystemPath a, FileSystemPath b) => !Paths.EqualityComparer.Equals(a?.Path, b?.Path);
 
   /// <summary>
   /// 
   /// </summary>
-  public static bool operator <(FileSystemPath<T> left, FileSystemPath<T> right) =>
+  public static bool operator <(FileSystemPath left, FileSystemPath right) =>
     left is null ? right is not null : left.CompareTo(right) < 0;
 
   /// <summary>
   /// 
   /// </summary>
-  public static bool operator <=(FileSystemPath<T> left, FileSystemPath<T> right) =>
+  public static bool operator <=(FileSystemPath left, FileSystemPath right) =>
     left is null || left.CompareTo(right) <= 0;
 
   /// <summary>
   /// 
   /// </summary>
-  public static bool operator >(FileSystemPath<T> left, FileSystemPath<T> right) =>
+  public static bool operator >(FileSystemPath left, FileSystemPath right) =>
     left is not null && left.CompareTo(right) > 0;
 
   /// <summary>
   /// 
   /// </summary>
-  public static bool operator >=(FileSystemPath<T> left, FileSystemPath<T> right) =>
+  public static bool operator >=(FileSystemPath left, FileSystemPath right) =>
     left is null ? right is null : left.CompareTo(right) >= 0;
+
+
+  public static implicit operator string (FileSystemPath path) => path.Path;
 
   #endregion
 

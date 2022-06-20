@@ -16,10 +16,10 @@ public class DirectoryName : FileSystemPathSection<DirectoryName>
     if (string.IsNullOrWhiteSpace(value))
       throw new ArgumentException("Value cannot be empty or white-space.", nameof(value));
 
-    if (value.ContainsAny(Path.GetInvalidFileNameChars()))
+    if (value.ContainsAny(System.IO.Path.GetInvalidFileNameChars()))
       throw new ArgumentException("Value contains invalid characters.", nameof(value));
 
-    Value = value;
+    Path = value;
   }
 
   /// <summary>
@@ -30,7 +30,7 @@ public class DirectoryName : FileSystemPathSection<DirectoryName>
 
     // ASSUMES: DirectoryPath values are always normalized to be terminated with a trailing back-slash.
     // This needs to be removed before calling Path.GetFileName(), otherwise an empty string will be returned.
-    Value = Path.GetFileName(directoryPath.ToString(false));
+    Path = System.IO.Path.GetFileName(directoryPath.ToString(false));
   }
 
   /// <summary>
@@ -38,7 +38,7 @@ public class DirectoryName : FileSystemPathSection<DirectoryName>
   /// </summary>
   public DirectoryName(FilePath filePath)
   {
-    Value = filePath.ToFileInfo().Directory!.Name;
+    Path = filePath.ToFileInfo().Directory!.Name;
   }
 
   /// <summary>
@@ -51,6 +51,6 @@ public class DirectoryName : FileSystemPathSection<DirectoryName>
   /// Casts a <see cref="DirectoryName"/> to a string.
   /// </summary>    
   public static explicit operator string(DirectoryName directoryName) =>
-    directoryName?.Value ?? throw new ArgumentNullException(nameof(directoryName));
+    directoryName?.Path ?? throw new ArgumentNullException(nameof(directoryName));
 
 }

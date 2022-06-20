@@ -13,7 +13,7 @@ public class FileName : FileSystemPathSection<FileName>
   public FileName(string value)
   {
     Validation.ValidateFileName(value);
-    Value = value;
+    Path = value;
   }
 
   /// <summary>
@@ -21,7 +21,7 @@ public class FileName : FileSystemPathSection<FileName>
   /// </summary>
   public FileName(FilePath file)
   {
-    Value = Path.GetFileName((string)file);
+    Path = System.IO.Path.GetFileName((string)file);
   }
 
   /// <summary>
@@ -29,7 +29,7 @@ public class FileName : FileSystemPathSection<FileName>
   /// </summary>
   public FileName(FileInfo file)
   {
-    Value = file.Name;
+    Path = file.Name;
   }
 
   #endregion
@@ -53,7 +53,7 @@ public class FileName : FileSystemPathSection<FileName>
   /// <summary>
   /// Casts a file name to a string.
   /// </summary>    
-  public static explicit operator string(FileName fileName) => fileName is not null ? fileName.Value : throw new ArgumentNullException(nameof(fileName));
+  public static explicit operator string(FileName fileName) => fileName is not null ? fileName.Path : throw new ArgumentNullException(nameof(fileName));
 
   #endregion
 

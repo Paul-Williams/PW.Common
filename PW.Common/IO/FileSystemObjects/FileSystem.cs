@@ -28,7 +28,7 @@ public static class FileSystem
   /// </summary>
   public static void SendToRecycleBin(this FilePath file)
   {
-    Microsoft.VisualBasic.FileIO.FileSystem.DeleteFile(file.Value, UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin);
+    Microsoft.VisualBasic.FileIO.FileSystem.DeleteFile(file.Path, UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin);
   }
 
   /// <summary>
@@ -36,7 +36,7 @@ public static class FileSystem
   /// </summary>
   public static void SendToRecycleBin(this DirectoryPath directory)
   {
-    Microsoft.VisualBasic.FileIO.FileSystem.DeleteDirectory(directory.Value, UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin);
+    Microsoft.VisualBasic.FileIO.FileSystem.DeleteDirectory(directory.Path, UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin);
   }
 
   #endregion
@@ -61,7 +61,7 @@ public static class FileSystem
   public static FilePath Move(this FilePath file, DirectoryPath directory)
   {
     var r = file.ChangeDirectory(directory);
-    File.Move(file.Value, r.Value);
+    File.Move(file.Path, r.Path);
     return r;
   }
 
@@ -78,7 +78,7 @@ public static class FileSystem
   {
     if (!file.Exists) throw Exceptions.Exceptions.FileNotFoundException(file);
 
-    var ziFile = file.Value + ":Zone.Identifier";
+    var ziFile = file.Path + ":Zone.Identifier";
     if (!File.Exists(ziFile)) return false;
     File.Delete(ziFile);
     return true;
@@ -124,14 +124,14 @@ public static class FileSystem
   /// </summary>
   public static FilePath Rename(this FilePath file, FileName newName)
   {
-    if (!file.Exists) throw new FileNotFoundException("File not found: " + file.Value, file.Value);
+    if (!file.Exists) throw new FileNotFoundException("File not found: " + file.Path, file.Path);
 
     var newFilePath = file.ChangeName(newName);
 
     // This prevents changing the casing of a file name, as Exists() will return true.
     // if (Exists(newFilePath)) throw new Exception("File already exists: " + newFilePath.Value);
 
-    File.Move(file.Value, newFilePath.Value);
+    File.Move(file.Path, newFilePath.Path);
     return newFilePath;
   }
 
@@ -144,7 +144,7 @@ public static class FileSystem
     // This prevents changing the casing of a file name, as Exists() will return true.
     // if (Exists(newFile)) throw new Exception("File already exists: " + newFile.Value);
 
-    File.Move(file.Value, newFile.Value);
+    File.Move(file.Path, newFile.Path);
     return newFile;
   }
 
@@ -183,7 +183,7 @@ public static class FileSystem
   /// </summary>
   public static DirectoryPath Move(this DirectoryPath path, DirectoryPath newPath)
   {
-    var r = Win32.SafeNativeMethods.MoveFile(path.Value, newPath.Value);
+    var r = Win32.SafeNativeMethods.MoveFile(path.Path, newPath.Path);
 
     return r == false ? throw new Win32Exception() : newPath;
   }
@@ -199,7 +199,7 @@ public static class FileSystem
   /// </summary>
   public static DirectoryPath Create(this DirectoryPath directory)
   {
-    _ = Directory.CreateDirectory(directory.Value);
+    _ = Directory.CreateDirectory(directory.Path);
     return directory;
   }
 
@@ -227,7 +227,7 @@ public static class FileSystem
   /// </summary>
   public static IEnumerable<FilePath> EnumerateFiles(this DirectoryPath directory, string searchPattern, System.IO.SearchOption searchOption)
   {
-    if (!directory.Exists) throw new DirectoryNotFoundException("Directory not found: " + directory.Value);
+    if (!directory.Exists) throw new DirectoryNotFoundException("Directory not found: " + directory.Path);
 
     foreach (var file in directory.ToDirectoryInfo().EnumerateFiles(searchPattern, searchOption))
     {
@@ -241,7 +241,7 @@ public static class FileSystem
   public static IEnumerable<DirectoryPath> EnumerateDirectories(this DirectoryPath directory, string searchPattern, System.IO.SearchOption searchOption)
   {
     if (string.IsNullOrEmpty(searchPattern)) throw new ArgumentException("message", nameof(searchPattern));
-    if (!directory.Exists) throw new DirectoryNotFoundException("Directory not found: " + directory.Value);
+    if (!directory.Exists) throw new DirectoryNotFoundException("Directory not found: " + directory.Path);
 
     foreach (var dir in directory.ToDirectoryInfo().EnumerateDirectories(searchPattern, searchOption))
     {
@@ -255,7 +255,7 @@ public static class FileSystem
   /// </summary>
   public static IEnumerable<DirectoryPath> EnumerateDirectories(this DirectoryPath directory, System.IO.SearchOption searchOption)
   {
-    if (!directory.Exists) throw new DirectoryNotFoundException("Directory not found: " + directory.Value);
+    if (!directory.Exists) throw new DirectoryNotFoundException("Directory not found: " + directory.Path);
 
     foreach (var dir in directory.ToDirectoryInfo().EnumerateDirectories("*", searchOption))
     {
@@ -270,7 +270,7 @@ public static class FileSystem
   /// </summary>
   public static IEnumerable<FilePath> EnumerateFiles(this DirectoryPath directory, System.IO.SearchOption searchOption)
   {
-    if (!directory.Exists) throw new DirectoryNotFoundException("Directory not found: " + directory.Value);
+    if (!directory.Exists) throw new DirectoryNotFoundException("Directory not found: " + directory.Path);
 
     foreach (var file in directory.ToDirectoryInfo().EnumerateFiles("*.*", searchOption))
     {
@@ -298,7 +298,7 @@ public static class FileSystem
   /// </summary>
   public static IEnumerable<FilePath> EnumerateFiles(this DirectoryPath directory)
   {
-    if (!directory.Exists) throw new DirectoryNotFoundException("Directory not found: " + directory.Value);
+    if (!directory.Exists) throw new DirectoryNotFoundException("Directory not found: " + directory.Path);
 
     foreach (var file in directory.ToDirectoryInfo().EnumerateFiles())
     {

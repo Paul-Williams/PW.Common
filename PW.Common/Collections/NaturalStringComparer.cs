@@ -94,17 +94,17 @@ public class StringNaturalComparer : IComparer<IReadOnlyValue<string?>?>, IEqual
   /// <summary>
   /// Compares two instances.
   /// </summary>
-  public int Compare(IReadOnlyValue<string?>? x, IReadOnlyValue<string?>? y) => Compare(x?.Value, y?.Value);
+  public int Compare(IReadOnlyValue<string?>? x, IReadOnlyValue<string?>? y) => Compare(x?.Path, y?.Path);
 
   /// <summary>
   /// Determines whether two instances are equal.
   /// </summary>
-  public bool Equals(IReadOnlyValue<string?>? x, IReadOnlyValue<string?>? y) => Equals(x?.Value, y?.Value);
+  public bool Equals(IReadOnlyValue<string?>? x, IReadOnlyValue<string?>? y) => Equals(x?.Path, y?.Path);
 
   /// <summary>
   /// Returns a hashcode for the instance.
   /// </summary>
-  public int GetHashCode(IReadOnlyValue<string?>? obj) => GetHashCode(obj?.Value);
+  public int GetHashCode(IReadOnlyValue<string?>? obj) => GetHashCode(obj?.Path);
 
   #endregion
 
@@ -118,7 +118,7 @@ public class StringNaturalComparer : IComparer<IReadOnlyValue<string?>?>, IEqual
   {
     if (ReferenceEquals(x, y)) return 0;
     if (x is string sx && y is string sy) return Compare(sx, sy);
-    if (x is IReadOnlyValue<string> vx && y is IReadOnlyValue<string> vy) return Compare(vx.Value, vy.Value);
+    if (x is IReadOnlyValue<string> vx && y is IReadOnlyValue<string> vy) return Compare(vx.Path, vy.Path);
 
     // Invert x and y for descending comparison.
     if (SortOrder == SortOrder.Descending) Helpers.Misc.Swap(ref x, ref y);
@@ -140,7 +140,7 @@ public class StringNaturalComparer : IComparer<IReadOnlyValue<string?>?>, IEqual
     return x is string sx && y is string sy
         ? Equals(sx, sy)
         : x is IReadOnlyValue<string> vx && y is IReadOnlyValue<string> vy
-          ? Equals(vx.Value, vy.Value)
+          ? Equals(vx.Path, vy.Path)
           : object.Equals(x, y);
   }
 
@@ -153,7 +153,7 @@ public class StringNaturalComparer : IComparer<IReadOnlyValue<string?>?>, IEqual
     // See: https://referencesource.microsoft.com/#mscorlib/system/stringcomparer.cs,65a413891296af3a
     return obj is null
         ? throw new ArgumentNullException(nameof(obj))
-        : obj is string s ? GetHashCode(s) : obj is IReadOnlyValue<string> vs ? GetHashCode(vs.Value) : obj.GetHashCode();
+        : obj is string s ? GetHashCode(s) : obj is IReadOnlyValue<string> vs ? GetHashCode(vs.Path) : obj.GetHashCode();
   }
 
   #endregion

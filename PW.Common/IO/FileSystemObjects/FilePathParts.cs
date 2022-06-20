@@ -18,9 +18,9 @@ Before:
 After:
     Directory = Paths.NormalizeDirectoryPath(Path.GetDirectoryName(filePath.Value)!);
 */
-    Directory = IO.Paths.NormalizeDirectoryPath(Path.GetDirectoryName(filePath.Value)!);
-    FileNameWithoutExtension = Path.GetFileNameWithoutExtension(filePath.Value);
-    Extension = Path.GetExtension(filePath.Value);
+    Directory = IO.Paths.NormalizeDirectoryPath(Path.GetDirectoryName(filePath.Path)!);
+    FileNameWithoutExtension = Path.GetFileNameWithoutExtension(filePath.Path);
+    Extension = Path.GetExtension(filePath.Path);
   }
 
   /// <summary>

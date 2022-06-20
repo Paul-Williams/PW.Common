@@ -13,7 +13,7 @@ public partial class FilePath
   {
     return directory is null
         ? throw new ArgumentNullException(nameof(directory))
-        : new FilePath(Path.Combine(directory.Value, Name.Value));
+        : new FilePath(System.IO.Path.Combine(directory.Path, Name.Path));
   }
 
   /// <summary>
@@ -33,7 +33,7 @@ public partial class FilePath
   {
     return newName is null
         ? throw new ArgumentNullException(nameof(newName))
-        : From(Path.Combine(Path.GetDirectoryName(Value)!, newName.Value));
+        : From(System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Path)!, newName.Path));
   }
 
   /// <summary>
@@ -43,7 +43,7 @@ public partial class FilePath
   {
     return f is null
       ? throw new ArgumentNullException(nameof(f))
-      : ChangeName((FileName)f.Invoke(Path.GetFileName(Value)));
+      : ChangeName((FileName)f.Invoke(System.IO.Path.GetFileName(Path)));
   }
 
 

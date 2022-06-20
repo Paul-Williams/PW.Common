@@ -5,7 +5,7 @@ namespace PW.IO.FileSystemObjects;
 /// <summary>
 /// Represents a file system directory path.
 /// </summary>
-public class DirectoryPath : FileSystemPath<DirectoryPath>
+public class DirectoryPath : FileSystemPath
 {
   #region Constructors
 
@@ -31,7 +31,7 @@ public class DirectoryPath : FileSystemPath<DirectoryPath>
   /// Creates a new instance
   /// </summary>
   /// <param name="filePath"></param>
-  public DirectoryPath(FilePath filePath): base (Paths.NormalizeDirectoryPath(Path.GetDirectoryName(filePath.Value)!))
+  public DirectoryPath(FilePath filePath): base (Paths.NormalizeDirectoryPath(System.IO.Path.GetDirectoryName(filePath.Path)!))
   {
   }
 
@@ -45,7 +45,7 @@ public class DirectoryPath : FileSystemPath<DirectoryPath>
   /// </summary>
   private static DirectoryPath FromStringInternal(string value)
   {
-    return new(Paths.NormalizeDirectoryPath(Path.GetDirectoryName(value)!));
+    return new(Paths.NormalizeDirectoryPath(System.IO.Path.GetDirectoryName(value)!));
   }
 
   #endregion
@@ -67,13 +67,13 @@ public class DirectoryPath : FileSystemPath<DirectoryPath>
   /// Casts a <see cref="DirectoryPath"/> to a <see cref="string"/>.
   /// </summary>    
   public static explicit operator string(DirectoryPath value) =>
-    value is not null ? value.Value : throw new ArgumentNullException(nameof(value));
+    value is not null ? value.Path : throw new ArgumentNullException(nameof(value));
 
   /// <summary>
   /// Casts a <see cref="DirectoryPath"/> to a <see cref="DirectoryInfo"/>.
   /// </summary>    
   public static explicit operator DirectoryInfo(DirectoryPath value) =>
-    value is not null ? new DirectoryInfo(value.Value) : throw new ArgumentNullException(nameof(value));
+    value is not null ? new DirectoryInfo(value.Path) : throw new ArgumentNullException(nameof(value));
 
   /// <summary>
   /// Casts a <see cref="FilePath"/> to a <see cref="DirectoryPath"/>.
@@ -90,7 +90,7 @@ public class DirectoryPath : FileSystemPath<DirectoryPath>
   /// </summary>
   public static FilePath operator +(DirectoryPath directoryPath, FileName fileName)
   {
-    return directoryPath is null ? throw new ArgumentNullException(nameof(directoryPath)) : fileName is null ? throw new ArgumentNullException(nameof(fileName)) : (FilePath)(directoryPath.Value + fileName.Value);
+    return directoryPath is null ? throw new ArgumentNullException(nameof(directoryPath)) : fileName is null ? throw new ArgumentNullException(nameof(fileName)) : (FilePath)(directoryPath.Path + fileName.Path);
   }
 
   /// <summary>
@@ -102,7 +102,7 @@ public class DirectoryPath : FileSystemPath<DirectoryPath>
         ? throw new ArgumentNullException(nameof(directoryPath))
         : directoryName is null
           ? throw new ArgumentNullException(nameof(directoryName))
-          : (DirectoryPath)(directoryPath.Value + directoryName.Value);
+          : (DirectoryPath)(directoryPath.Path + directoryName.Path);
   }
 
 
@@ -142,14 +142,14 @@ public class DirectoryPath : FileSystemPath<DirectoryPath>
   {
     return subDirectory is null
         ? throw new ArgumentNullException(nameof(subDirectory))
-        : (DirectoryPath)(System.IO.Path.Combine(Value, subDirectory.ToString()));
+        : (DirectoryPath)(System.IO.Path.Combine(Path, subDirectory.ToString()));
   }
 
   /// <summary>
   /// Returns a new <see cref="DirectoryPath"/> instance with the specified file name appended.
   /// </summary>
   public FilePath Append(FileName file) =>
-    file is null ? throw new ArgumentNullException(nameof(file)) : (FilePath)(Value + file.ToString());
+    file is null ? throw new ArgumentNullException(nameof(file)) : (FilePath)(Path + file.ToString());
 
 
   /// <summary>
@@ -165,13 +165,13 @@ public class DirectoryPath : FileSystemPath<DirectoryPath>
   {
     return directory is null
         ? throw new ArgumentNullException(nameof(directory))
-        : directory.Value.StartsWith(Value, StringComparison.OrdinalIgnoreCase);
+        : directory.Path.StartsWith(Path, StringComparison.OrdinalIgnoreCase);
   }
 
   /// <summary>
   /// Returns the parent directory or null if the directory does not have a parent. Value is cached after initial call.
   /// </summary>
-  public DirectoryPath? Parent => GetLazy(ref _Parent, () => Path.GetDirectoryName(Value) is string parent ? FromStringInternal(parent) : null);
+  public DirectoryPath? Parent => GetLazy(ref _Parent, () => System.IO.Path.GetDirectoryName(Path) is string parent ? FromStringInternal(parent) : null);
 
   /// <summary>
   /// Returns the name of the last directory in the path. Value is cached after initial call.
@@ -183,7 +183,7 @@ public class DirectoryPath : FileSystemPath<DirectoryPath>
   /// </summary>
   /// <returns></returns>
   internal string ToString(bool includeTerminatingSlash) =>
-    includeTerminatingSlash ? Value : Value[0..^1];
+    includeTerminatingSlash ? Path : Path[0..^1];
 
 
 
@@ -197,7 +197,7 @@ public class DirectoryPath : FileSystemPath<DirectoryPath>
   /// <summary>
   /// Determines whether the path refers to an existing directory on disk.
   /// </summary>
-  public override bool Exists => Directory.Exists(Value);
+  public override bool Exists => Directory.Exists(Path);
 
   #endregion
 

@@ -11,7 +11,8 @@ public class OneDriveDirectory : DirectoryPath
   /// </summary>
   /// <exception cref="DirectoryNotFoundException">OneDrive environmental variable is not set.</exception>
   public OneDriveDirectory() :
-    base(Environment.GetEnvironmentVariable("ONEDRIVE")
+    base(Environment.GetEnvironmentVariable("OneDrive")
+      ?? Environment.GetEnvironmentVariable("OneDriveConsumer")
       ?? throw new DirectoryNotFoundException("The OneDrive environmental variable is not set."))
   {
   }

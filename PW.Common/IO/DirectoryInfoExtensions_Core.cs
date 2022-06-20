@@ -29,7 +29,7 @@ public static partial class DirectoryInfoExtensions
       ? throw new ArgumentNullException(nameof(directory))
       : subDirectory is null
         ? throw new ArgumentNullException(nameof(subDirectory))
-        : new DirectoryInfo(Path.Combine(directory.FullName, subDirectory.Value));
+        : new DirectoryInfo(Path.Combine(directory.FullName, subDirectory.Path));
   }
 
   /// <summary>
@@ -60,7 +60,7 @@ public static partial class DirectoryInfoExtensions
     // Ensure none of the sub-directory objects are null.
     Guard.NoNulls(subDirectories, nameof(subDirectories));
 
-    var strings = subDirectories.Select(x => x.Value).Prepend(directory.FullName);
+    var strings = subDirectories.Select(x => x.Path).Prepend(directory.FullName);
     return new DirectoryInfo(Path.Combine(strings.ToArray()));
   }
 
@@ -90,7 +90,7 @@ public static partial class DirectoryInfoExtensions
   {
     subDirectories
       .Distinct()
-      .Select(subdirectory => Path.Combine(directory.FullName, subdirectory.Value))
+      .Select(subdirectory => Path.Combine(directory.FullName, subdirectory.Path))
       .Where(fullPath => !Directory.Exists(fullPath))
       .ForEach(fullPath => Directory.CreateDirectory(fullPath));
   }

@@ -14,7 +14,7 @@ public class FileNameWithoutExtension : FileSystemPathSection<FileNameWithoutExt
   public FileNameWithoutExtension(string value)
   {
     Validation.ValidateFileName(value);
-    Value = value;
+    Path = value;
   }
 
   /// <summary>
@@ -22,7 +22,7 @@ public class FileNameWithoutExtension : FileSystemPathSection<FileNameWithoutExt
   /// </summary>
   public FileNameWithoutExtension(FilePath filePath)
   {
-    Value = Path.GetFileNameWithoutExtension((string)filePath);
+    Path = System.IO.Path.GetFileNameWithoutExtension((string)filePath);
   }
 
   /// <summary>
@@ -30,7 +30,7 @@ public class FileNameWithoutExtension : FileSystemPathSection<FileNameWithoutExt
   /// </summary>
   public FileNameWithoutExtension(FileName fileName)
   {
-    Value = Path.GetFileNameWithoutExtension((string)fileName);
+    Path = System.IO.Path.GetFileNameWithoutExtension((string)fileName);
   }
 
   /// <summary>
@@ -38,7 +38,7 @@ public class FileNameWithoutExtension : FileSystemPathSection<FileNameWithoutExt
   /// </summary>
   public FileNameWithoutExtension(FileInfo fileInfo)
   {
-    Value = Path.GetFileNameWithoutExtension(fileInfo.FullName);
+    Path = System.IO.Path.GetFileNameWithoutExtension(fileInfo.FullName);
   }
 
   #endregion
@@ -56,7 +56,7 @@ public class FileNameWithoutExtension : FileSystemPathSection<FileNameWithoutExt
   /// Casts a <see cref="FileNameWithoutExtension"/> to a <see cref="String"/>.
   /// </summary>    
   public static explicit operator string(FileNameWithoutExtension value) =>
-    value is not null ? value.Value : throw new ArgumentNullException(nameof(value));
+    value is not null ? value.Path : throw new ArgumentNullException(nameof(value));
 
   /// <summary>
   /// 
@@ -108,13 +108,13 @@ public class FileNameWithoutExtension : FileSystemPathSection<FileNameWithoutExt
     ? throw new ArgumentNullException(nameof(fileNameWithoutExtension))
     : fileExtension is null
     ? throw new ArgumentNullException(nameof(fileExtension))
-    : (FileName)(fileNameWithoutExtension.Value + fileExtension.Value);
+    : (FileName)(fileNameWithoutExtension.Path + fileExtension.Path);
 
   #endregion
 
   /// <summary>
   /// Creates a mask for all files of the same name but any extension.
   /// </summary>    
-  public string CreateMask() => Value + ".*";
+  public string CreateMask() => Path + ".*";
 
 }

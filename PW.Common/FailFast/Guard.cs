@@ -139,7 +139,7 @@ public static partial class Guard
   /// </summary>
   public static void MustExist(DirectoryPath directory, string argumentName)
   {
-    if (!directory.Exists) throw new DirectoryNotFoundException($"The directory '{directory.Value}' supplied as argument '{argumentName}' does not exist.");
+    if (!directory.Exists) throw new DirectoryNotFoundException($"The directory '{directory.Path}' supplied as argument '{argumentName}' does not exist.");
   }
 
   /// <summary>
@@ -155,7 +155,7 @@ public static partial class Guard
   /// </summary>
   public static void MustExist(FilePath file, string argumentName)
   {
-    if (!file.Exists) throw new FileNotFoundException($"The directory '{file.Value}' supplied as argument '{argumentName}' does not exist.");
+    if (!file.Exists) throw new FileNotFoundException($"The directory '{file.Path}' supplied as argument '{argumentName}' does not exist.");
   }
 
 
@@ -172,7 +172,7 @@ public static partial class Guard
   /// </summary>
   public static void MustExist(IFileSystemPath o, string argumentName)
   {
-    if (!o.Exists) throw new FileNotFoundException($"The file system object '{o.Value}' supplied as argument '{argumentName}' does not exist.");
+    if (!o.Exists) throw new FileNotFoundException($"The file system object '{o.Path}' supplied as argument '{argumentName}' does not exist.");
   }
 
 }

@@ -9,12 +9,12 @@ public class Accumulator : IReadOnlyValue<int>
   /// <summary>
   /// Creates a new instance with an initial value of 1.
   /// </summary>
-  public Accumulator() => Value = 1;
+  public Accumulator() => Path = 1;
 
   /// <summary>
   /// Creates a new instance with the specified initial value.
   /// </summary>
-  public Accumulator(int initialValue) => Value = initialValue;
+  public Accumulator(int initialValue) => Path = initialValue;
 
 
   /// <summary>
@@ -25,11 +25,11 @@ public class Accumulator : IReadOnlyValue<int>
   /// <summary>
   /// Increments the accumulator and returns the new value.
   /// </summary>
-  public int Increment() => Value += IncrementBy;
+  public int Increment() => Path += IncrementBy;
 
   /// <summary>
   /// The current value of the accumulator.
   /// </summary>
-  public int Value { get; private set; }
+  public int Path { get; private set; }
 
 }

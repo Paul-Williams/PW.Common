@@ -68,7 +68,7 @@ public class FilePathTests
     var d = new DirectoryPath[] { new DirectoryPath(@"c:\temp") };
 
     var h = d[0].GetHashCode();
-    var h1 = System.StringComparer.OrdinalIgnoreCase.GetHashCode(d[0].Value);
+    var h1 = System.StringComparer.OrdinalIgnoreCase.GetHashCode(d[0].Path);
     var h2 = System.StringComparer.OrdinalIgnoreCase.GetHashCode(@"c:\temp\");
 
     var Directories = d.ToHashSet();

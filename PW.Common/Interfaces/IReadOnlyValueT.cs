@@ -9,6 +9,6 @@ public interface IReadOnlyValue<T>
   /// <summary>
   /// The value represented by this interface.
   /// </summary>
-  T Value { get; }
+  T Path { get; }
 }
 
