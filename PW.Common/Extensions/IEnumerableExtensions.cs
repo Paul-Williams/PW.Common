@@ -64,9 +64,10 @@ public static class IEnumerableExtensions
   /* ---------------------------------------------------------------------------------------- */
   /* This is the same as a select and is causing ambiguity with void returning Action version */
   /* ---------------------------------------------------------------------------------------- */
-  /// <summary>
-  /// Performs <paramref name="f"/> for each item in <paramref name="seq"/>
-  /// </summary>
+  
+  ///// <summary>
+  ///// Performs <paramref name="f"/> for each item in <paramref name="seq"/>
+  ///// </summary>
   //public static IEnumerable<TR> ForEach<T, TR>(this IEnumerable<T> seq, Func<T, TR> f)
   //{
   //  foreach (var x in seq) yield return f.Invoke(x);
