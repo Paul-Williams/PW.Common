@@ -56,9 +56,15 @@ public static class Paths
   /// Tests if the directory paths are the same, other than in their casing. Before comparing, trailing back-slashes are normalized as required.
   /// Comparison is made using <see cref="EqualityComparison"/>
   /// </summary>
-  public static bool DirectoryPathsMatch(string path1, string path2)
+  public static bool DirectoryPathsAreEqual(string path1, string path2)
   {
     return path1.Length == 0 && path2.Length == 0
       || string.Equals(NormalizeDirectoryPath(path1), NormalizeDirectoryPath(path2), EqualityComparison);
   }
+
+  /// <summary>
+  /// Returns true if <paramref name="path"/> is an existing directory or file.
+  /// </summary>
+  public static bool PathExists(string path) => path is not null || Directory.Exists(path) || File.Exists(path);
+
 }
