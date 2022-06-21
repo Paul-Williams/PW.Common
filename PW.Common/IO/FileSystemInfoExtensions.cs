@@ -19,6 +19,6 @@ public static class FileSystemInfoExtensions
   /// <summary>
   /// Launches the <see cref="FileSystemInfo"/> in a new process and returns the new process.
   /// </summary>
-  public static Process Launch(this FileSystemInfo fso) => Process.Start(fso.FullName);
-
+  public static Process? Launch(this FileSystemInfo fso) => 
+    Process.Start(new ProcessStartInfo(fso.FullName) { UseShellExecute = true });
 }
