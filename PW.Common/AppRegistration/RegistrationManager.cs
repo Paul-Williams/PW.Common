@@ -1,5 +1,6 @@
 ﻿using Microsoft.Win32;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 
 namespace PW.AppRegistration;
 
@@ -25,12 +26,14 @@ public static class RegistrationManager
   /// <summary>
   /// Registers the current application with LaunchPad. 
   /// </summary>
-  public static void Register() => Register(GetProductName(), Assembly.GetExecutingAssembly().Location);
+  [MethodImpl(MethodImplOptions.NoInlining)] // See: Remarks in https://bit.ly/3NeO7Sq
+  public static void Register() => Register(GetProductName(), ParentAssembly().Location);
 
   /// <summary>
   /// Registers the current application with LaunchPad using a custom title. 
   /// </summary>
-  public static void Register(string title) => Register(title, Assembly.GetExecutingAssembly().Location);
+  [MethodImpl(MethodImplOptions.NoInlining)] // See: Remarks in https://bit.ly/3NeO7Sq
+  public static void Register(string title) => Register(title, ParentAssembly().Location);
 
 
 
@@ -67,10 +70,20 @@ public static class RegistrationManager
   /// </summary>   
   private static RegistryKey GetAppRegKey() => Registry.CurrentUser.CreateSubKey(RegPath);
 
+
   private static string GetProductName()
   {
-    return Attribute.GetCustomAttribute(Assembly.GetExecutingAssembly(), typeof(AssemblyProductAttribute)) is AssemblyProductAttribute t
+    return Attribute.GetCustomAttribute(ParentAssembly(), typeof(AssemblyProductAttribute)) is AssemblyProductAttribute t
       ? t.Product
       : throw new Exception("AssemblyProductAttribute is null.");
   }
+
+  /// <summary>
+  /// Returns the assembly that is normally the main EXE that was launched. (Can return null when called from unmanaged code).
+  /// Falls back to the calling assemble in the event that <see cref="Assembly.GetEntryAssembly"/> returns null.
+  /// 
+  /// </summary>
+  private static Assembly ParentAssembly() => Assembly.GetEntryAssembly() ?? Assembly.GetCallingAssembly();
+
+
 }
