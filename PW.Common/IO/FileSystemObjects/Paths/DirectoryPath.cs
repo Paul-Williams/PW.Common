@@ -5,7 +5,7 @@ namespace PW.IO.FileSystemObjects;
 /// <summary>
 /// Represents a file system directory path.
 /// </summary>
-public class DirectoryPath : FileSystemPath
+public class DirectoryPath : FileSystemPath, IDirectoryPath
 {
   #region Constructors
 
@@ -31,7 +31,7 @@ public class DirectoryPath : FileSystemPath
   /// Creates a new instance
   /// </summary>
   /// <param name="filePath"></param>
-  public DirectoryPath(FilePath filePath): base (Paths.NormalizeDirectoryPath(System.IO.Path.GetDirectoryName(filePath.Path)!))
+  public DirectoryPath(FilePath filePath) : base(Paths.NormalizeDirectoryPath(System.IO.Path.GetDirectoryName(filePath.Path)!))
   {
   }
 

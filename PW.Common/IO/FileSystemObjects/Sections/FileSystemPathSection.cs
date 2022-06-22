@@ -23,6 +23,8 @@ public abstract class FileSystemPathSection<T> : IComparable, IComparable<FileSy
     }
   }
 
+  string IReadOnlyValue<string>.Value => Path;
+
   /// <summary>
   /// Performs equality comparison of the two instances
   /// </summary>

@@ -1,6 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace PW.Flags.UnitTests;
+namespace PW.Flags.Tests;
 
 [TestClass]
 public class SetOnlyFlagTests

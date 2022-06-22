@@ -29,7 +29,7 @@
             Increments the accumulator and returns the new value.
             </summary>
         </member>
-        <member name="P:PW.Accumulator.Path">
+        <member name="P:PW.Accumulator.Value">
             <summary>
             The current value of the accumulator.
             </summary>
@@ -73,6 +73,13 @@
             <summary>
             Opens the registry key used by LaunchPad.
             </summary>   
+        </member>
+        <member name="M:PW.AppRegistration.RegistrationManager.ParentAssembly">
+            <summary>
+            Returns the assembly that is normally the main EXE that was launched. (Can return null when called from unmanaged code).
+            Falls back to the calling assemble in the event that <see cref="M:System.Reflection.Assembly.GetEntryAssembly"/> returns null.
+            
+            </summary>
         </member>
         <member name="T:PW.BackingField">
             <summary>
@@ -1070,6 +1077,32 @@
         <member name="M:PW.Exceptions.Exceptions.Win32Exception">
             <summary>
             Creates a new <see cref="T:System.ComponentModel.Win32Exception"/> using the error code from the last Win32 error.
+            </summary>
+        </member>
+        <member name="T:PW.Exceptions.InvalidFileExtensionException">
+            <summary>
+            File extension is invalid.
+            </summary>
+        </member>
+        <member name="M:PW.Exceptions.InvalidFileExtensionException.#ctor(System.String)">
+            <summary>
+            Creates a new instance.
+            </summary>
+            <param name="message"></param>
+        </member>
+        <member name="M:PW.Exceptions.InvalidFileExtensionException.#ctor(System.String,System.Exception)">
+            <summary>
+            Creates a new instance.
+            </summary>
+        </member>
+        <member name="M:PW.Exceptions.InvalidFileExtensionException.#ctor">
+            <summary>
+            Creates a new instance.
+            </summary>
+        </member>
+        <member name="M:PW.Exceptions.InvalidFileExtensionException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            Not implemented
             </summary>
         </member>
         <member name="T:PW.Exceptions.InvalidFileNameException">
@@ -2304,7 +2337,7 @@
             Use for equality comparison, sorting etc.
             </summary>
         </member>
-        <member name="P:PW.Interfaces.IReadOnlyValue`1.Path">
+        <member name="P:PW.Interfaces.IReadOnlyValue`1.Value">
             <summary>
             The value represented by this interface.
             </summary>
@@ -2793,35 +2826,142 @@
             Launches the <see cref="T:System.IO.FileSystemInfo"/> in a new process and returns the new process.
             </summary>
         </member>
-        <member name="T:PW.IO.FileSystemObjects.DirectoryName">
+        <member name="T:PW.IO.FileSystemObjects.FileSystem">
             <summary>
-            Represents a single directory name, without the rest of the directory path.
+            Static method for operating with file system directories and files.
             </summary>
         </member>
-        <member name="M:PW.IO.FileSystemObjects.DirectoryName.#ctor(System.String)">
+        <member name="M:PW.IO.FileSystemObjects.FileSystem.SendFileToRecycleBin(System.String)">
             <summary>
-            ctor -- Throws exceptions if invalid <paramref name="value"/> is passed.
-            </summary>    
-        </member>
-        <member name="M:PW.IO.FileSystemObjects.DirectoryName.#ctor(PW.IO.FileSystemObjects.DirectoryPath)">
-            <summary>
-            Creates a new instance from an existing <see cref="T:PW.IO.FileSystemObjects.DirectoryPath"/>. Skips validation.
+            Sends a file to the recycle bin.
             </summary>
         </member>
-        <member name="M:PW.IO.FileSystemObjects.DirectoryName.#ctor(PW.IO.FileSystemObjects.FilePath)">
+        <member name="M:PW.IO.FileSystemObjects.FileSystem.SendDirectoryToRecycleBin(System.String)">
             <summary>
-            Creates a new instance from an existing <see cref="T:PW.IO.FileSystemObjects.FilePath"/>. Skips validation.
+            Sends a directory to the recycle bin.
             </summary>
         </member>
-        <member name="M:PW.IO.FileSystemObjects.DirectoryName.op_Explicit(System.String)~PW.IO.FileSystemObjects.DirectoryName">
+        <member name="M:PW.IO.FileSystemObjects.FileSystem.SendToRecycleBin(PW.IO.FileSystemObjects.FilePath)">
             <summary>
-            Casts a string to a <see cref="T:PW.IO.FileSystemObjects.DirectoryName"/>.
-            </summary> 
+            Sends a file to the recycle bin.
+            </summary>
         </member>
-        <member name="M:PW.IO.FileSystemObjects.DirectoryName.op_Explicit(PW.IO.FileSystemObjects.DirectoryName)~System.String">
+        <member name="M:PW.IO.FileSystemObjects.FileSystem.SendToRecycleBin(PW.IO.FileSystemObjects.DirectoryPath)">
             <summary>
-            Casts a <see cref="T:PW.IO.FileSystemObjects.DirectoryName"/> to a string.
-            </summary>    
+            Sends a directory to the recycle bin.
+            </summary>
+        </member>
+        <member name="M:PW.IO.FileSystemObjects.FileSystem.SelectInExplorer(PW.IO.FileSystemObjects.FilePath)">
+            <summary>
+            Opens explorer and selects the specified file.
+            </summary>
+            <param name="filePath"></param>
+        </member>
+        <member name="M:PW.IO.FileSystemObjects.FileSystem.Move(PW.IO.FileSystemObjects.FilePath,PW.IO.FileSystemObjects.DirectoryPath)">
+            <summary>
+            Moves a file on disk.
+            </summary>
+        </member>
+        <member name="M:PW.IO.FileSystemObjects.FileSystem.Unblock(PW.IO.FileSystemObjects.FilePath)">
+             <summary>
+             'Unblocks' a file by deleting its associated 'Zone.Identifier' file. 
+             Returns true on success or false if there was no associated zone identifier for the file. 
+             </summary>
+             <exception cref="T:System.IO.FileNotFoundException">File specified file does not exist.</exception>
+             <exception cref="T:System.ArgumentNullException">The file path was null.</exception>
+             <exception cref="T:System.UnauthorizedAccessException">The caller does not have the required permission.</exception>
+            <exception cref="T:System.IO.IOException">The specified file is in use.</exception>
+            <exception cref="T:System.IO.PathTooLongException">The specified path, file name, or both exceed the system-defined maximum length.</exception>
+        </member>
+        <member name="M:PW.IO.FileSystemObjects.FileSystem.Rename(PW.IO.FileSystemObjects.FilePath,PW.IO.FileSystemObjects.FileName)">
+            <summary>
+            Renames the file on disk and returns a new <see cref="T:PW.IO.FileSystemObjects.FilePath"/> instance for the renamed file.
+            </summary>
+        </member>
+        <member name="M:PW.IO.FileSystemObjects.FileSystem.Move(PW.IO.FileSystemObjects.FilePath,PW.IO.FileSystemObjects.FilePath)">
+            <summary>
+            Moves the file on disk and returns the renamed file path.
+            </summary>
+        </member>
+        <member name="M:PW.IO.FileSystemObjects.FileSystem.AppDataDirectory(System.String)">
+            <summary>
+            Returns Environment.SpecialFolder.ApplicationData\appName\
+            </summary>
+        </member>
+        <member name="M:PW.IO.FileSystemObjects.FileSystem.GetFolderPath(System.Environment.SpecialFolder)">
+            <summary>
+            Wrapper: See <see cref="M:System.Environment.GetFolderPath(System.Environment.SpecialFolder)"/>
+            </summary>
+        </member>
+        <member name="M:PW.IO.FileSystemObjects.FileSystem.GetFolderPath(System.Environment.SpecialFolder,System.Environment.SpecialFolderOption)">
+            <summary>
+            Wrapper: See <see cref="M:System.Environment.GetFolderPath(System.Environment.SpecialFolder,System.Environment.SpecialFolderOption)"/>
+            </summary>
+        </member>
+        <member name="M:PW.IO.FileSystemObjects.FileSystem.Move(PW.IO.FileSystemObjects.DirectoryPath,PW.IO.FileSystemObjects.DirectoryPath)">
+            <summary>
+            Moves the directory on disk.
+            </summary>
+        </member>
+        <member name="M:PW.IO.FileSystemObjects.FileSystem.CreateIfNotExists(PW.IO.FileSystemObjects.DirectoryPath)">
+            <summary>
+            Creates all directories and subdirectories in the specified path unless they already exist.
+            </summary>
+        </member>
+        <member name="M:PW.IO.FileSystemObjects.FileSystem.Create(PW.IO.FileSystemObjects.DirectoryPath)">
+            <summary>
+            Creates all directories and subdirectories in the specified path, unless they already exist.
+            </summary>
+        </member>
+        <member name="M:PW.IO.FileSystemObjects.FileSystem.CreateSubdirectories(PW.IO.FileSystemObjects.DirectoryPath,System.Collections.Generic.IEnumerable{PW.IO.FileSystemObjects.DirectoryName})">
+            <summary>
+            Creates sub-directories within the existing directory. Skips any sub-directory that already exist.
+            </summary>
+        </member>
+        <member name="M:PW.IO.FileSystemObjects.FileSystem.EnumerateFiles(PW.IO.FileSystemObjects.DirectoryPath,System.String,System.IO.SearchOption)">
+            <summary>
+            Enumerates a directory on disk and returns a <see cref="T:PW.IO.FileSystemObjects.FilePath"/> object for each file which matches <paramref name="searchPattern"/>.
+            </summary>
+        </member>
+        <member name="M:PW.IO.FileSystemObjects.FileSystem.EnumerateDirectories(PW.IO.FileSystemObjects.DirectoryPath,System.String,System.IO.SearchOption)">
+            <summary>
+            Enumerates a directory on disk and returns a <see cref="T:PW.IO.FileSystemObjects.DirectoryPath"/> object for each sub-directory which matches <paramref name="searchPattern"/>.
+            </summary>
+        </member>
+        <member name="M:PW.IO.FileSystemObjects.FileSystem.EnumerateDirectories(PW.IO.FileSystemObjects.DirectoryPath,System.IO.SearchOption)">
+            <summary>
+            Enumerates a directory on disk and returns a <see cref="T:PW.IO.FileSystemObjects.DirectoryPath"/> object for each sub-directory./>.
+            </summary>
+        </member>
+        <member name="M:PW.IO.FileSystemObjects.FileSystem.EnumerateFiles(PW.IO.FileSystemObjects.DirectoryPath,System.IO.SearchOption)">
+            <summary>
+            Enumerates a directory on disk and returns a <see cref="T:PW.IO.FileSystemObjects.FilePath"/> object for each file.
+            </summary>
+        </member>
+        <member name="M:PW.IO.FileSystemObjects.FileSystem.EnumerateFiles(PW.IO.FileSystemObjects.DirectoryPath,System.String)">
+            <summary>
+            Enumerates all files which match <paramref name="searchPattern"/>.
+            </summary>
+        </member>
+        <member name="M:PW.IO.FileSystemObjects.FileSystem.EnumerateFiles(PW.IO.FileSystemObjects.DirectoryPath,PW.IO.FileSystemObjects.FileExtension,System.IO.SearchOption)">
+            <summary>
+            Enumerates all files with the specified extension.
+            </summary>
+        </member>
+        <member name="M:PW.IO.FileSystemObjects.FileSystem.EnumerateFiles(PW.IO.FileSystemObjects.DirectoryPath)">
+            <summary>
+            Enumerates a directory on disk and returns a <see cref="T:PW.IO.FileSystemObjects.FilePath"/> object for each file.
+            </summary>
+        </member>
+        <member name="T:PW.IO.FileSystemObjects.PathElements">
+            <summary>
+            Replacement for <see cref="T:System.IO.Path"/> which returns 'FileSystemObjects' instead of strings.
+            </summary>
+        </member>
+        <member name="M:PW.IO.FileSystemObjects.PathElements.GetFileName(System.String)">
+            <summary>
+            Gets the FileName from a file path string
+            </summary>
         </member>
         <member name="T:PW.IO.FileSystemObjects.DirectoryPath">
             <summary>
@@ -2942,6 +3082,323 @@
             <summary>
             Determines whether the path refers to an existing directory on disk.
             </summary>
+        </member>
+        <member name="T:PW.IO.FileSystemObjects.FilePath">
+            <summary>
+            Instance methods for FilePath.ChangeX
+            </summary>
+            <summary>
+            Represents a path to a file on disk.
+            </summary>
+        </member>
+        <member name="M:PW.IO.FileSystemObjects.FilePath.ChangeDirectory(PW.IO.FileSystemObjects.DirectoryPath)">
+            <summary>
+            Creates a new <see cref="T:PW.IO.FileSystemObjects.FilePath"/> using the original file name with a different path.
+            </summary>
+        </member>
+        <member name="M:PW.IO.FileSystemObjects.FilePath.ChangeExtension(PW.IO.FileSystemObjects.FileExtension)">
+            <summary>
+            Returns a new instance with the file extension changed. Does not change the file on disk.
+            </summary>
+        </member>
+        <member name="M:PW.IO.FileSystemObjects.FilePath.ChangeName(PW.IO.FileSystemObjects.FileName)">
+            <summary>
+            Returns a new instance with the file name changed. Does not change the file on disk.
+            </summary>
+        </member>
+        <member name="M:PW.IO.FileSystemObjects.FilePath.ChangeName(System.Func{System.String,System.String})">
+            <summary>
+            Creates a new <see cref="T:System.IO.FileInfo"/> with the name changed, using a delegate function.
+            </summary>
+        </member>
+        <member name="M:PW.IO.FileSystemObjects.FilePath.ChangeName(PW.IO.FileSystemObjects.FileNameWithoutExtension)">
+            <summary>
+            Returns a new instance with the file name changed but with the same extension. Does not change the file on disk.
+            </summary>
+        </member>
+        <member name="M:PW.IO.FileSystemObjects.FilePath.#ctor(System.String)">
+            <summary>
+            Creates a new instance using the specified file name or full path. 
+            </summary>
+        </member>
+        <member name="M:PW.IO.FileSystemObjects.FilePath.#ctor(System.IO.FileInfo)">
+            <summary>
+            Creates a new instance using an existing <see cref="T:System.IO.FileInfo"/> object.
+            </summary>    
+        </member>
+        <member name="M:PW.IO.FileSystemObjects.FilePath.op_Explicit(System.String)~PW.IO.FileSystemObjects.FilePath">
+            <summary>
+            Casts a <see cref="T:System.String"/> to a <see cref="T:PW.IO.FileSystemObjects.FilePath"/>.
+            </summary>    
+        </member>
+        <member name="M:PW.IO.FileSystemObjects.FilePath.op_Explicit(PW.IO.FileSystemObjects.FilePath)~System.String">
+            <summary>
+            Casts a <see cref="T:PW.IO.FileSystemObjects.FilePath"/> to a <see cref="T:System.String"/>.
+            </summary>    
+        </member>
+        <member name="M:PW.IO.FileSystemObjects.FilePath.op_Explicit(System.IO.FileInfo)~PW.IO.FileSystemObjects.FilePath">
+            <summary>
+            Casts a <see cref="T:System.IO.FileInfo"/> to a <see cref="T:PW.IO.FileSystemObjects.FilePath"/>.
+            </summary>    
+        </member>
+        <member name="M:PW.IO.FileSystemObjects.FilePath.op_Explicit(PW.IO.FileSystemObjects.FilePath)~System.IO.FileInfo">
+            <summary>
+            Casts a <see cref="T:PW.IO.FileSystemObjects.FilePath"/> to a <see cref="T:System.IO.FileInfo"/>.
+            </summary>    
+        </member>
+        <member name="M:PW.IO.FileSystemObjects.FilePath.ToFileInfo">
+            <summary>
+            Creates a new instance of <see cref="T:System.IO.FileInfo"/> for this <see cref="T:PW.IO.FileSystemObjects.FilePath"/>.
+            </summary>
+        </member>
+        <member name="P:PW.IO.FileSystemObjects.FilePath.Extension">
+            <summary>
+            Returns the file extension. Cached after first call.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:PW.IO.FileSystemObjects.FilePath.DirectoryPath">
+            <summary>
+            Returns the directory path which contains the file. Cached after first call.
+            </summary>
+        </member>
+        <member name="P:PW.IO.FileSystemObjects.FilePath.DirectoryName">
+            <summary>
+            Returns the directory name for the current instance. Cached after first call.
+            </summary>
+        </member>
+        <member name="P:PW.IO.FileSystemObjects.FilePath.Name">
+            <summary>
+            Returns the file's name including the extension. Cached after first call.
+            </summary>
+        </member>
+        <member name="P:PW.IO.FileSystemObjects.FilePath.NameWithoutExtension">
+            <summary>
+            Returns the file's name excluding the extension. Cached after first call.
+            </summary>
+        </member>
+        <member name="P:PW.IO.FileSystemObjects.FilePath.Exists">
+            <summary>
+            Determines whether the path refers to an existing file on disk. Not cached.
+            </summary>
+        </member>
+        <member name="M:PW.IO.FileSystemObjects.FilePath.From(System.IO.FileInfo)">
+            <summary>
+            Creates a new instance from the given <see cref="T:System.IO.FileInfo"/> object.
+            </summary>
+        </member>
+        <member name="M:PW.IO.FileSystemObjects.FilePath.From(System.String)">
+            <summary>
+            Internal helper method to construct new instance from known good path-string. 
+            I.e. one which has been created from combining existing FileSystemPath and FileSystemPathSection values.
+            </summary>
+        </member>
+        <member name="M:PW.IO.FileSystemObjects.FilePath.From(PW.IO.FileSystemObjects.DirectoryPath,PW.IO.FileSystemObjects.FileName)">
+            <summary>
+            Creates a new <see cref="T:PW.IO.FileSystemObjects.FilePath"/> instance.
+            </summary>
+        </member>
+        <member name="M:PW.IO.FileSystemObjects.FilePath.From(PW.IO.FileSystemObjects.DirectoryPath,PW.IO.FileSystemObjects.FileNameWithoutExtension,PW.IO.FileSystemObjects.FileExtension)">
+            <summary>
+            Creates a new <see cref="T:PW.IO.FileSystemObjects.FilePath"/> instance.
+            </summary>
+        </member>
+        <member name="T:PW.IO.FileSystemObjects.FilePathParts">
+            <summary>
+            Separates a <see cref="T:PW.IO.FileSystemObjects.FilePath"/> into its constituent parts.
+            </summary>
+        </member>
+        <member name="M:PW.IO.FileSystemObjects.FilePathParts.#ctor(PW.IO.FileSystemObjects.FilePath)">
+            <summary>
+            Creates a new instance.
+            </summary>
+            <param name="filePath"></param>
+        </member>
+        <member name="P:PW.IO.FileSystemObjects.FilePathParts.Directory">
+            <summary>
+            The directory path to the file.
+            </summary>
+        </member>
+        <member name="P:PW.IO.FileSystemObjects.FilePathParts.FileNameWithoutExtension">
+            <summary>
+            The name of the file, excluding the extension.
+            </summary>
+        </member>
+        <member name="P:PW.IO.FileSystemObjects.FilePathParts.Extension">
+            <summary>
+            The file's extension
+            </summary>
+        </member>
+        <member name="M:PW.IO.FileSystemObjects.FilePathParts.ToString">
+            <summary>
+            Reconstructs the parts back into a file path string.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:PW.IO.FileSystemObjects.FilePathParts.ToFilePath">
+            <summary>
+            Converts back to a <see cref="T:PW.IO.FileSystemObjects.FilePath"/> object.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:PW.IO.FileSystemObjects.FileSystemPath">
+            <summary>
+            Base class for objects representing a file system path. E.g. DirectoryPath or FilePath.
+            </summary>
+        </member>
+        <member name="M:PW.IO.FileSystemObjects.FileSystemPath.#ctor(System.String)">
+            <summary>
+            Creates a new instance.
+            </summary>
+        </member>
+        <member name="P:PW.IO.FileSystemObjects.FileSystemPath.Path">
+            <summary>
+            The path encapsulated by this <see cref="T:PW.IO.FileSystemObjects.FileSystemPath"/>
+            </summary>
+        </member>
+        <member name="M:PW.IO.FileSystemObjects.FileSystemPath.Equals(System.Object)">
+            <summary>
+            Performs equality comparison.
+            </summary>
+        </member>
+        <member name="M:PW.IO.FileSystemObjects.FileSystemPath.GetHashCode">
+            <summary>
+            Returns hash code. Cached after first call.
+            </summary>
+        </member>
+        <member name="M:PW.IO.FileSystemObjects.FileSystemPath.ToString">
+            <summary>
+            This instance's path as a string.
+            </summary>
+        </member>
+        <member name="M:PW.IO.FileSystemObjects.FileSystemPath.Equals(PW.IO.FileSystemObjects.IFileSystemPath)">
+            <summary>
+            Performs equality comparison.
+            </summary>
+            <param name="other"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PW.IO.FileSystemObjects.FileSystemPath.CompareTo(PW.IO.FileSystemObjects.IFileSystemPath)">
+            <summary>
+            Compares two instances for sorting.
+            </summary>
+            <param name="other"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PW.IO.FileSystemObjects.FileSystemPath.CompareTo(System.Object)">
+            <summary>
+            Compares two instances for sorting.
+            </summary>
+            <param name="other"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PW.IO.FileSystemObjects.FileSystemPath.op_Equality(PW.IO.FileSystemObjects.FileSystemPath,PW.IO.FileSystemObjects.FileSystemPath)">
+            <summary>
+            Performs equality comparison of the two instances
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:PW.IO.FileSystemObjects.FileSystemPath.op_Inequality(PW.IO.FileSystemObjects.FileSystemPath,PW.IO.FileSystemObjects.FileSystemPath)">
+            <summary>
+            Performs negative-equality comparison of the two instances
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:PW.IO.FileSystemObjects.FileSystemPath.op_LessThan(PW.IO.FileSystemObjects.FileSystemPath,PW.IO.FileSystemObjects.FileSystemPath)">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:PW.IO.FileSystemObjects.FileSystemPath.op_LessThanOrEqual(PW.IO.FileSystemObjects.FileSystemPath,PW.IO.FileSystemObjects.FileSystemPath)">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:PW.IO.FileSystemObjects.FileSystemPath.op_GreaterThan(PW.IO.FileSystemObjects.FileSystemPath,PW.IO.FileSystemObjects.FileSystemPath)">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:PW.IO.FileSystemObjects.FileSystemPath.op_GreaterThanOrEqual(PW.IO.FileSystemObjects.FileSystemPath,PW.IO.FileSystemObjects.FileSystemPath)">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:PW.IO.FileSystemObjects.IFileSystemPath">
+            <summary>
+            Enables polymorphism for classes that inherit from <see cref="T:PW.IO.FileSystemObjects.FileSystemPath"/>
+            </summary>
+        </member>
+        <member name="P:PW.IO.FileSystemObjects.IFileSystemPath.Exists">
+            <summary>
+            Determines whether the path exists.
+            </summary>
+        </member>
+        <member name="P:PW.IO.FileSystemObjects.IFileSystemPath.Path">
+            <summary>
+            A path to a file system object.
+            </summary>
+        </member>
+        <member name="T:PW.IO.FileSystemObjects.OneDriveDirectory">
+            <summary>
+            A <see cref="T:PW.IO.FileSystemObjects.DirectoryPath"/> pointing to the OneDrive folder.
+            </summary>
+        </member>
+        <member name="M:PW.IO.FileSystemObjects.OneDriveDirectory.#ctor">
+            <summary>
+            Creates a new instance.
+            </summary>
+            <exception cref="T:System.IO.DirectoryNotFoundException">OneDrive environmental variable is not set.</exception>
+        </member>
+        <member name="P:PW.IO.FileSystemObjects.OneDriveDirectory.Databases">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:PW.IO.FileSystemObjects.OneDriveDirectory.Desktop">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:PW.IO.FileSystemObjects.OneDriveDirectory.PersonalDocuments">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:PW.IO.FileSystemObjects.OneDriveDirectory.WorkDocuments">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:PW.IO.FileSystemObjects.DirectoryName">
+            <summary>
+            Represents a single directory name, without the rest of the directory path.
+            </summary>
+        </member>
+        <member name="M:PW.IO.FileSystemObjects.DirectoryName.#ctor(System.String)">
+            <summary>
+            ctor -- Throws exceptions if invalid <paramref name="value"/> is passed.
+            </summary>    
+        </member>
+        <member name="M:PW.IO.FileSystemObjects.DirectoryName.#ctor(PW.IO.FileSystemObjects.DirectoryPath)">
+            <summary>
+            Creates a new instance from an existing <see cref="T:PW.IO.FileSystemObjects.DirectoryPath"/>. Skips validation.
+            </summary>
+        </member>
+        <member name="M:PW.IO.FileSystemObjects.DirectoryName.#ctor(PW.IO.FileSystemObjects.FilePath)">
+            <summary>
+            Creates a new instance from an existing <see cref="T:PW.IO.FileSystemObjects.FilePath"/>. Skips validation.
+            </summary>
+        </member>
+        <member name="M:PW.IO.FileSystemObjects.DirectoryName.op_Explicit(System.String)~PW.IO.FileSystemObjects.DirectoryName">
+            <summary>
+            Casts a string to a <see cref="T:PW.IO.FileSystemObjects.DirectoryName"/>.
+            </summary> 
+        </member>
+        <member name="M:PW.IO.FileSystemObjects.DirectoryName.op_Explicit(PW.IO.FileSystemObjects.DirectoryName)~System.String">
+            <summary>
+            Casts a <see cref="T:PW.IO.FileSystemObjects.DirectoryName"/> to a string.
+            </summary>    
         </member>
         <member name="T:PW.IO.FileSystemObjects.FileExtension">
             <summary>
@@ -3128,374 +3585,6 @@
             Creates a mask for all files of the same name but any extension.
             </summary>    
         </member>
-        <member name="T:PW.IO.FileSystemObjects.FilePath">
-            <summary>
-            Instance methods for FilePath.ChangeX
-            </summary>
-            <summary>
-            Represents a path to a file on disk.
-            </summary>
-        </member>
-        <member name="M:PW.IO.FileSystemObjects.FilePath.ChangeDirectory(PW.IO.FileSystemObjects.DirectoryPath)">
-            <summary>
-            Creates a new <see cref="T:PW.IO.FileSystemObjects.FilePath"/> using the original file name with a different path.
-            </summary>
-        </member>
-        <member name="M:PW.IO.FileSystemObjects.FilePath.ChangeExtension(PW.IO.FileSystemObjects.FileExtension)">
-            <summary>
-            Returns a new instance with the file extension changed. Does not change the file on disk.
-            </summary>
-        </member>
-        <member name="M:PW.IO.FileSystemObjects.FilePath.ChangeName(PW.IO.FileSystemObjects.FileName)">
-            <summary>
-            Returns a new instance with the file name changed. Does not change the file on disk.
-            </summary>
-        </member>
-        <member name="M:PW.IO.FileSystemObjects.FilePath.ChangeName(System.Func{System.String,System.String})">
-            <summary>
-            Creates a new <see cref="T:System.IO.FileInfo"/> with the name changed, using a delegate function.
-            </summary>
-        </member>
-        <member name="M:PW.IO.FileSystemObjects.FilePath.ChangeName(PW.IO.FileSystemObjects.FileNameWithoutExtension)">
-            <summary>
-            Returns a new instance with the file name changed but with the same extension. Does not change the file on disk.
-            </summary>
-        </member>
-        <member name="M:PW.IO.FileSystemObjects.FilePath.#ctor(System.String)">
-            <summary>
-            Creates a new instance using the specified file name or full path. 
-            </summary>
-        </member>
-        <member name="M:PW.IO.FileSystemObjects.FilePath.#ctor(System.IO.FileInfo)">
-            <summary>
-            Creates a new instance using an existing <see cref="T:System.IO.FileInfo"/> object.
-            </summary>    
-        </member>
-        <member name="M:PW.IO.FileSystemObjects.FilePath.op_Explicit(System.String)~PW.IO.FileSystemObjects.FilePath">
-            <summary>
-            Casts a <see cref="T:System.String"/> to a <see cref="T:PW.IO.FileSystemObjects.FilePath"/>.
-            </summary>    
-        </member>
-        <member name="M:PW.IO.FileSystemObjects.FilePath.op_Explicit(PW.IO.FileSystemObjects.FilePath)~System.String">
-            <summary>
-            Casts a <see cref="T:PW.IO.FileSystemObjects.FilePath"/> to a <see cref="T:System.String"/>.
-            </summary>    
-        </member>
-        <member name="M:PW.IO.FileSystemObjects.FilePath.op_Explicit(System.IO.FileInfo)~PW.IO.FileSystemObjects.FilePath">
-            <summary>
-            Casts a <see cref="T:System.IO.FileInfo"/> to a <see cref="T:PW.IO.FileSystemObjects.FilePath"/>.
-            </summary>    
-        </member>
-        <member name="M:PW.IO.FileSystemObjects.FilePath.op_Explicit(PW.IO.FileSystemObjects.FilePath)~System.IO.FileInfo">
-            <summary>
-            Casts a <see cref="T:PW.IO.FileSystemObjects.FilePath"/> to a <see cref="T:System.IO.FileInfo"/>.
-            </summary>    
-        </member>
-        <member name="M:PW.IO.FileSystemObjects.FilePath.ToFileInfo">
-            <summary>
-            Creates a new instance of <see cref="T:System.IO.FileInfo"/> for this <see cref="T:PW.IO.FileSystemObjects.FilePath"/>.
-            </summary>
-        </member>
-        <member name="P:PW.IO.FileSystemObjects.FilePath.Extension">
-            <summary>
-            Returns the file extension. Cached after first call.
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="P:PW.IO.FileSystemObjects.FilePath.DirectoryPath">
-            <summary>
-            Returns the directory path which contains the file. Cached after first call.
-            </summary>
-        </member>
-        <member name="P:PW.IO.FileSystemObjects.FilePath.DirectoryName">
-            <summary>
-            Returns the directory name for the current instance. Cached after first call.
-            </summary>
-        </member>
-        <member name="P:PW.IO.FileSystemObjects.FilePath.Name">
-            <summary>
-            Returns the file's name including the extension. Cached after first call.
-            </summary>
-        </member>
-        <member name="P:PW.IO.FileSystemObjects.FilePath.NameWithoutExtension">
-            <summary>
-            Returns the file's name excluding the extension. Cached after first call.
-            </summary>
-        </member>
-        <member name="P:PW.IO.FileSystemObjects.FilePath.Exists">
-            <summary>
-            Determines whether the path refers to an existing file on disk. Not cached.
-            </summary>
-        </member>
-        <member name="M:PW.IO.FileSystemObjects.FilePath.From(System.IO.FileInfo)">
-            <summary>
-            Creates a new instance from the given <see cref="T:System.IO.FileInfo"/> object.
-            </summary>
-        </member>
-        <member name="M:PW.IO.FileSystemObjects.FilePath.From(System.String)">
-            <summary>
-            Internal helper method to construct new instance from known good path-string. 
-            I.e. one which has been created from combining existing FileSystemPath and FileSystemPathSection values.
-            </summary>
-        </member>
-        <member name="M:PW.IO.FileSystemObjects.FilePath.From(PW.IO.FileSystemObjects.DirectoryPath,PW.IO.FileSystemObjects.FileName)">
-            <summary>
-            Creates a new <see cref="T:PW.IO.FileSystemObjects.FilePath"/> instance.
-            </summary>
-        </member>
-        <member name="M:PW.IO.FileSystemObjects.FilePath.From(PW.IO.FileSystemObjects.DirectoryPath,PW.IO.FileSystemObjects.FileNameWithoutExtension,PW.IO.FileSystemObjects.FileExtension)">
-            <summary>
-            Creates a new <see cref="T:PW.IO.FileSystemObjects.FilePath"/> instance.
-            </summary>
-        </member>
-        <member name="T:PW.IO.FileSystemObjects.FilePathParts">
-            <summary>
-            Separates a <see cref="T:PW.IO.FileSystemObjects.FilePath"/> into its constituent parts.
-            </summary>
-        </member>
-        <member name="M:PW.IO.FileSystemObjects.FilePathParts.#ctor(PW.IO.FileSystemObjects.FilePath)">
-            <summary>
-            Creates a new instance.
-            </summary>
-            <param name="filePath"></param>
-        </member>
-        <member name="P:PW.IO.FileSystemObjects.FilePathParts.Directory">
-            <summary>
-            The directory path to the file.
-            </summary>
-        </member>
-        <member name="P:PW.IO.FileSystemObjects.FilePathParts.FileNameWithoutExtension">
-            <summary>
-            The name of the file, excluding the extension.
-            </summary>
-        </member>
-        <member name="P:PW.IO.FileSystemObjects.FilePathParts.Extension">
-            <summary>
-            The file's extension
-            </summary>
-        </member>
-        <member name="M:PW.IO.FileSystemObjects.FilePathParts.ToString">
-            <summary>
-            Reconstructs the parts back into a file path string.
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:PW.IO.FileSystemObjects.FilePathParts.ToFilePath">
-            <summary>
-            Converts back to a <see cref="T:PW.IO.FileSystemObjects.FilePath"/> object.
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="T:PW.IO.FileSystemObjects.FileSystem">
-            <summary>
-            Static method for operating with file system directories and files.
-            </summary>
-        </member>
-        <member name="M:PW.IO.FileSystemObjects.FileSystem.SendFileToRecycleBin(System.String)">
-            <summary>
-            Sends a file to the recycle bin.
-            </summary>
-        </member>
-        <member name="M:PW.IO.FileSystemObjects.FileSystem.SendDirectoryToRecycleBin(System.String)">
-            <summary>
-            Sends a directory to the recycle bin.
-            </summary>
-        </member>
-        <member name="M:PW.IO.FileSystemObjects.FileSystem.SendToRecycleBin(PW.IO.FileSystemObjects.FilePath)">
-            <summary>
-            Sends a file to the recycle bin.
-            </summary>
-        </member>
-        <member name="M:PW.IO.FileSystemObjects.FileSystem.SendToRecycleBin(PW.IO.FileSystemObjects.DirectoryPath)">
-            <summary>
-            Sends a directory to the recycle bin.
-            </summary>
-        </member>
-        <member name="M:PW.IO.FileSystemObjects.FileSystem.SelectInExplorer(PW.IO.FileSystemObjects.FilePath)">
-            <summary>
-            Opens explorer and selects the specified file.
-            </summary>
-            <param name="filePath"></param>
-        </member>
-        <member name="M:PW.IO.FileSystemObjects.FileSystem.Move(PW.IO.FileSystemObjects.FilePath,PW.IO.FileSystemObjects.DirectoryPath)">
-            <summary>
-            Moves a file on disk.
-            </summary>
-        </member>
-        <member name="M:PW.IO.FileSystemObjects.FileSystem.Unblock(PW.IO.FileSystemObjects.FilePath)">
-             <summary>
-             'Unblocks' a file by deleting its associated 'Zone.Identifier' file. 
-             Returns true on success or false if there was no associated zone identifier for the file. 
-             </summary>
-             <exception cref="T:System.IO.FileNotFoundException">File specified file does not exist.</exception>
-             <exception cref="T:System.ArgumentNullException">The file path was null.</exception>
-             <exception cref="T:System.UnauthorizedAccessException">The caller does not have the required permission.</exception>
-            <exception cref="T:System.IO.IOException">The specified file is in use.</exception>
-            <exception cref="T:System.IO.PathTooLongException">The specified path, file name, or both exceed the system-defined maximum length.</exception>
-        </member>
-        <member name="M:PW.IO.FileSystemObjects.FileSystem.Rename(PW.IO.FileSystemObjects.FilePath,PW.IO.FileSystemObjects.FileName)">
-            <summary>
-            Renames the file on disk and returns a new <see cref="T:PW.IO.FileSystemObjects.FilePath"/> instance for the renamed file.
-            </summary>
-        </member>
-        <member name="M:PW.IO.FileSystemObjects.FileSystem.Move(PW.IO.FileSystemObjects.FilePath,PW.IO.FileSystemObjects.FilePath)">
-            <summary>
-            Moves the file on disk and returns the renamed file path.
-            </summary>
-        </member>
-        <member name="M:PW.IO.FileSystemObjects.FileSystem.AppDataDirectory(System.String)">
-            <summary>
-            Returns Environment.SpecialFolder.ApplicationData\appName\
-            </summary>
-        </member>
-        <member name="M:PW.IO.FileSystemObjects.FileSystem.GetFolderPath(System.Environment.SpecialFolder)">
-            <summary>
-            Wrapper: See <see cref="M:System.Environment.GetFolderPath(System.Environment.SpecialFolder)"/>
-            </summary>
-        </member>
-        <member name="M:PW.IO.FileSystemObjects.FileSystem.GetFolderPath(System.Environment.SpecialFolder,System.Environment.SpecialFolderOption)">
-            <summary>
-            Wrapper: See <see cref="M:System.Environment.GetFolderPath(System.Environment.SpecialFolder,System.Environment.SpecialFolderOption)"/>
-            </summary>
-        </member>
-        <member name="M:PW.IO.FileSystemObjects.FileSystem.Move(PW.IO.FileSystemObjects.DirectoryPath,PW.IO.FileSystemObjects.DirectoryPath)">
-            <summary>
-            Moves the directory on disk.
-            </summary>
-        </member>
-        <member name="M:PW.IO.FileSystemObjects.FileSystem.CreateIfNotExists(PW.IO.FileSystemObjects.DirectoryPath)">
-            <summary>
-            Creates all directories and subdirectories in the specified path unless they already exist.
-            </summary>
-        </member>
-        <member name="M:PW.IO.FileSystemObjects.FileSystem.Create(PW.IO.FileSystemObjects.DirectoryPath)">
-            <summary>
-            Creates all directories and subdirectories in the specified path, unless they already exist.
-            </summary>
-        </member>
-        <member name="M:PW.IO.FileSystemObjects.FileSystem.CreateSubdirectories(PW.IO.FileSystemObjects.DirectoryPath,System.Collections.Generic.IEnumerable{PW.IO.FileSystemObjects.DirectoryName})">
-            <summary>
-            Creates sub-directories within the existing directory. Skips any sub-directory that already exist.
-            </summary>
-        </member>
-        <member name="M:PW.IO.FileSystemObjects.FileSystem.EnumerateFiles(PW.IO.FileSystemObjects.DirectoryPath,System.String,System.IO.SearchOption)">
-            <summary>
-            Enumerates a directory on disk and returns a <see cref="T:PW.IO.FileSystemObjects.FilePath"/> object for each file which matches <paramref name="searchPattern"/>.
-            </summary>
-        </member>
-        <member name="M:PW.IO.FileSystemObjects.FileSystem.EnumerateDirectories(PW.IO.FileSystemObjects.DirectoryPath,System.String,System.IO.SearchOption)">
-            <summary>
-            Enumerates a directory on disk and returns a <see cref="T:PW.IO.FileSystemObjects.DirectoryPath"/> object for each sub-directory which matches <paramref name="searchPattern"/>.
-            </summary>
-        </member>
-        <member name="M:PW.IO.FileSystemObjects.FileSystem.EnumerateDirectories(PW.IO.FileSystemObjects.DirectoryPath,System.IO.SearchOption)">
-            <summary>
-            Enumerates a directory on disk and returns a <see cref="T:PW.IO.FileSystemObjects.DirectoryPath"/> object for each sub-directory./>.
-            </summary>
-        </member>
-        <member name="M:PW.IO.FileSystemObjects.FileSystem.EnumerateFiles(PW.IO.FileSystemObjects.DirectoryPath,System.IO.SearchOption)">
-            <summary>
-            Enumerates a directory on disk and returns a <see cref="T:PW.IO.FileSystemObjects.FilePath"/> object for each file.
-            </summary>
-        </member>
-        <member name="M:PW.IO.FileSystemObjects.FileSystem.EnumerateFiles(PW.IO.FileSystemObjects.DirectoryPath,System.String)">
-            <summary>
-            Enumerates all files which match <paramref name="searchPattern"/>.
-            </summary>
-        </member>
-        <member name="M:PW.IO.FileSystemObjects.FileSystem.EnumerateFiles(PW.IO.FileSystemObjects.DirectoryPath,PW.IO.FileSystemObjects.FileExtension,System.IO.SearchOption)">
-            <summary>
-            Enumerates all files with the specified extension.
-            </summary>
-        </member>
-        <member name="M:PW.IO.FileSystemObjects.FileSystem.EnumerateFiles(PW.IO.FileSystemObjects.DirectoryPath)">
-            <summary>
-            Enumerates a directory on disk and returns a <see cref="T:PW.IO.FileSystemObjects.FilePath"/> object for each file.
-            </summary>
-        </member>
-        <member name="T:PW.IO.FileSystemObjects.FileSystemPath">
-            <summary>
-            Base class for objects representing a file system path. E.g. DirectoryPath or FilePath.
-            </summary>
-        </member>
-        <member name="M:PW.IO.FileSystemObjects.FileSystemPath.#ctor(System.String)">
-            <summary>
-            Creates a new instance.
-            </summary>
-        </member>
-        <member name="P:PW.IO.FileSystemObjects.FileSystemPath.Path">
-            <summary>
-            The path encapsulated by this <see cref="T:PW.IO.FileSystemObjects.FileSystemPath"/>
-            </summary>
-        </member>
-        <member name="M:PW.IO.FileSystemObjects.FileSystemPath.Equals(System.Object)">
-            <summary>
-            Performs equality comparison.
-            </summary>
-        </member>
-        <member name="M:PW.IO.FileSystemObjects.FileSystemPath.GetHashCode">
-            <summary>
-            Returns hash code. Cached after first call.
-            </summary>
-        </member>
-        <member name="M:PW.IO.FileSystemObjects.FileSystemPath.ToString">
-            <summary>
-            This instance's path as a string.
-            </summary>
-        </member>
-        <member name="M:PW.IO.FileSystemObjects.FileSystemPath.Equals(PW.IO.FileSystemObjects.FileSystemPath)">
-            <summary>
-            Performs equality comparison.
-            </summary>
-            <param name="other"></param>
-            <returns></returns>
-        </member>
-        <member name="M:PW.IO.FileSystemObjects.FileSystemPath.CompareTo(PW.IO.FileSystemObjects.FileSystemPath)">
-            <summary>
-            Compares two instances for sorting.
-            </summary>
-            <param name="other"></param>
-            <returns></returns>
-        </member>
-        <member name="M:PW.IO.FileSystemObjects.FileSystemPath.CompareTo(System.Object)">
-            <summary>
-            Compares two instances for sorting.
-            </summary>
-            <param name="other"></param>
-            <returns></returns>
-        </member>
-        <member name="M:PW.IO.FileSystemObjects.FileSystemPath.op_Equality(PW.IO.FileSystemObjects.FileSystemPath,PW.IO.FileSystemObjects.FileSystemPath)">
-            <summary>
-            Performs equality comparison of the two instances
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:PW.IO.FileSystemObjects.FileSystemPath.op_Inequality(PW.IO.FileSystemObjects.FileSystemPath,PW.IO.FileSystemObjects.FileSystemPath)">
-            <summary>
-            Performs negative-equality comparison of the two instances
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:PW.IO.FileSystemObjects.FileSystemPath.op_LessThan(PW.IO.FileSystemObjects.FileSystemPath,PW.IO.FileSystemObjects.FileSystemPath)">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="M:PW.IO.FileSystemObjects.FileSystemPath.op_LessThanOrEqual(PW.IO.FileSystemObjects.FileSystemPath,PW.IO.FileSystemObjects.FileSystemPath)">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="M:PW.IO.FileSystemObjects.FileSystemPath.op_GreaterThan(PW.IO.FileSystemObjects.FileSystemPath,PW.IO.FileSystemObjects.FileSystemPath)">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="M:PW.IO.FileSystemObjects.FileSystemPath.op_GreaterThanOrEqual(PW.IO.FileSystemObjects.FileSystemPath,PW.IO.FileSystemObjects.FileSystemPath)">
-            <summary>
-            
-            </summary>
-        </member>
         <member name="T:PW.IO.FileSystemObjects.FileSystemPathSection`1">
             <summary>
             Base class for objects representing a file system path. E.g. DirectoryPath or FilePath.
@@ -3585,52 +3674,6 @@
             <param name="left"></param>
             <param name="right"></param>
             <returns></returns>
-        </member>
-        <member name="T:PW.IO.FileSystemObjects.IFileSystemPath">
-            <summary>
-            Enables polymorphism for classes that inherit from <see cref="T:PW.IO.FileSystemObjects.FileSystemPath"/>
-            </summary>
-        </member>
-        <member name="T:PW.IO.FileSystemObjects.OneDriveDirectory">
-            <summary>
-            A <see cref="T:PW.IO.FileSystemObjects.DirectoryPath"/> pointing to the OneDrive folder.
-            </summary>
-        </member>
-        <member name="M:PW.IO.FileSystemObjects.OneDriveDirectory.#ctor">
-            <summary>
-            Creates a new instance.
-            </summary>
-            <exception cref="T:System.IO.DirectoryNotFoundException">OneDrive environmental variable is not set.</exception>
-        </member>
-        <member name="P:PW.IO.FileSystemObjects.OneDriveDirectory.Databases">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:PW.IO.FileSystemObjects.OneDriveDirectory.Desktop">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:PW.IO.FileSystemObjects.OneDriveDirectory.PersonalDocuments">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:PW.IO.FileSystemObjects.OneDriveDirectory.WorkDocuments">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="T:PW.IO.FileSystemObjects.PathElements">
-            <summary>
-            Replacement for <see cref="T:System.IO.Path"/> which returns 'FileSystemObjects' instead of strings.
-            </summary>
-        </member>
-        <member name="M:PW.IO.FileSystemObjects.PathElements.GetFileName(System.String)">
-            <summary>
-            Gets the FileName from a file path string
-            </summary>
         </member>
         <member name="T:PW.IO.KnownFolders">
             <summary>
@@ -3804,10 +3847,15 @@
             Compares the two file paths using <see cref="F:PW.IO.Paths.EqualityComparison"/>.
             </summary>
         </member>
-        <member name="M:PW.IO.Paths.DirectoryPathsMatch(System.String,System.String)">
+        <member name="M:PW.IO.Paths.DirectoryPathsAreEqual(System.String,System.String)">
             <summary>
             Tests if the directory paths are the same, other than in their casing. Before comparing, trailing back-slashes are normalized as required.
             Comparison is made using <see cref="F:PW.IO.Paths.EqualityComparison"/>
+            </summary>
+        </member>
+        <member name="M:PW.IO.Paths.PathExists(System.String)">
+            <summary>
+            Returns true if <paramref name="path"/> is an existing directory or file.
             </summary>
         </member>
         <member name="T:PW.IO.StreamExtensions">
@@ -4326,13 +4374,14 @@
             <summary>
             Represents a value which has a name.
             </summary>
-            <typeparam name="T">The type of the value</typeparam>
         </member>
         <member name="M:PW.ValueObjects.NamedValue`1.#ctor(System.String,`0)">
             <summary>
             Creates a new instance.
             </summary>
-            <exception cref="T:System.ArgumentNullException"></exception>
+            <param name="name">Value's name. Cannot be null.</param>
+            <param name="value">Value - May be null.</param>
+            <exception cref="T:System.ArgumentNullException">Thrown if <paramref name="name"/> is null.</exception>
         </member>
         <member name="P:PW.ValueObjects.NamedValue`1.Name">
             <summary>

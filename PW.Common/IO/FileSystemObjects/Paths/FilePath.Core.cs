@@ -5,7 +5,7 @@
 /// </summary>
 [System.Diagnostics.DebuggerDisplay("{ToString}")]
 
-public partial class FilePath : FileSystemPath
+public partial class FilePath : FileSystemPath, IFilePath
 {
 
   #region Constructors

@@ -2,7 +2,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PW.Extensions;
 using System.Linq;
 
-namespace PW.IO.FileSystemObjects.UnitTests;
+namespace PW.IO.FileSystemObjects.Tests;
 
 [TestClass]
 public class FilePathTests

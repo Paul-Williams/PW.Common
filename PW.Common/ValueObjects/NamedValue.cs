@@ -3,17 +3,19 @@
 /// <summary>
 /// Represents a value which has a name.
 /// </summary>
-/// <typeparam name="T">The type of the value</typeparam>
-public class NamedValue<T> : CSharpFunctionalExtensions.ValueObject
+public class NamedValue<T> : ValueObject
 {
+
   /// <summary>
   /// Creates a new instance.
   /// </summary>
-  /// <exception cref="ArgumentNullException"></exception>
+  /// <param name="name">Value's name. Cannot be null.</param>
+  /// <param name="value">Value - May be null.</param>
+  /// <exception cref="ArgumentNullException">Thrown if <paramref name="name"/> is null.</exception>
   public NamedValue(string name, T value)
   {
-    Name = name;
-    Value = value;  //value.OrIfNullThrow(() => new ArgumentNullException(nameof(value)));
+    Name = name ?? throw new ArgumentNullException(nameof(name));    
+    Value = value;
   }
 
   /// <summary>
@@ -24,7 +26,7 @@ public class NamedValue<T> : CSharpFunctionalExtensions.ValueObject
   /// <summary>
   /// The value.
   /// </summary>
-  public T Value { get; }
+  public T? Value { get; }
 
   /// <summary>
   /// 

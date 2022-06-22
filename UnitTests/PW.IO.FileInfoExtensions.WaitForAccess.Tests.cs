@@ -2,7 +2,7 @@
 using System;
 using System.IO;
 
-namespace PW.IO.FileInfoExtensions.WaitForAccess.UnitTests;
+namespace PW.IO.FileInfoExtensions.Tests;
 
 [TestClass]
 public class FileInfoExtensionsTests

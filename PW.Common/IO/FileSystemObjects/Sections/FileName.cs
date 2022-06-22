@@ -12,7 +12,7 @@ public class FileName : FileSystemPathSection<FileName>
   /// </summary>
   public FileName(string value)
   {
-    Validation.ValidateFileName(value);
+    Validate.FileName(value);
     Path = value;
   }
 

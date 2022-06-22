@@ -19,12 +19,9 @@ public partial class FilePath
   /// <summary>
   /// Returns a new instance with the file extension changed. Does not change the file on disk.
   /// </summary>
-  public FilePath ChangeExtension(FileExtension newExtension)
-  {
-    return newExtension is null
-        ? throw new ArgumentNullException(nameof(newExtension))
-        : new FilePathParts(this) { Extension = (string)newExtension }.ToFilePath();
-  }
+  public FilePath ChangeExtension(FileExtension newExtension) =>
+    newExtension is null ? throw new ArgumentNullException(nameof(newExtension))
+    : new FilePathParts(this) { Extension = (string)newExtension }.ToFilePath();
 
   /// <summary>
   /// Returns a new instance with the file name changed. Does not change the file on disk.
@@ -33,7 +30,7 @@ public partial class FilePath
   {
     return newName is null
         ? throw new ArgumentNullException(nameof(newName))
-        : From(System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Path)!, newName.Path));
+        : new FilePathParts(this) { Name = (string)newName }.ToFilePath();
   }
 
   /// <summary>

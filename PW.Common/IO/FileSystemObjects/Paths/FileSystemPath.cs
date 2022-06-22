@@ -3,7 +3,7 @@
 /// <summary>
 /// Base class for objects representing a file system path. E.g. DirectoryPath or FilePath.
 /// </summary>
-public class FileSystemPath : IComparable<FileSystemPath>, IEquatable<FileSystemPath>, IFileSystemPath
+public class FileSystemPath :  IFileSystemPath
 {
   /// <summary>
   /// Creates a new instance.
@@ -20,6 +20,9 @@ public class FileSystemPath : IComparable<FileSystemPath>, IEquatable<FileSystem
   public string Path { get; }
 
   public virtual bool Exists => Directory.Exists(Path) || File.Exists(Path);
+
+  string IReadOnlyValue<string>.Value => Path;
+
 
   /// <summary>
   /// Performs equality comparison.
@@ -42,21 +45,21 @@ public class FileSystemPath : IComparable<FileSystemPath>, IEquatable<FileSystem
   /// </summary>
   public override string ToString() => Path;
 
-  #region IEquatable<FileSystemPath>
+  #region IEquatable<IFileSystemPath>
 
   /// <summary>
   /// Performs equality comparison.
   /// </summary>
   /// <param name="other"></param>
   /// <returns></returns>
-  public bool Equals(FileSystemPath? other) => Paths.EqualityComparer.Equals(Path, other?.Path);
+  public bool Equals(IFileSystemPath? other) => Paths.EqualityComparer.Equals(Path, other?.Path);
 
   /// <summary>
   /// Compares two instances for sorting.
   /// </summary>
   /// <param name="other"></param>
   /// <returns></returns>
-  public int CompareTo(FileSystemPath? other) => Paths.NaturalSortComparer.Compare(Path, other?.Path);
+  public int CompareTo(IFileSystemPath? other) => Paths.NaturalSortComparer.Compare(Path, other?.Path);
 
   /// <summary>
   /// Compares two instances for sorting.

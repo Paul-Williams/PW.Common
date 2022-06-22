@@ -1,8 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using PW.ValueObjects;
 
-namespace PW.ValueObjects.UnitTests;
+namespace PW.ValueObjects.Tests;
 
 [TestClass]
 public class NamedValueTests
@@ -11,8 +10,9 @@ public class NamedValueTests
   [TestMethod]
   public void Various()
   {
-    Assert.ThrowsException<ArgumentNullException>(() => { var r = new NamedValue<string>("Name", null); }, "null value");
     Assert.ThrowsException<ArgumentNullException>(() => { var r = new NamedValue<string>(null, "value"); }, "null name");
+    Assert.ThrowsException<ArgumentNullException>(() => { var r = new NamedValue<int?>(null, 0); }, "null name");
+    Assert.ThrowsException<ArgumentNullException>(() => { var r = new NamedValue<int?>(null, null); }, "null name");
 
     Assert.IsNotNull(new NamedValue<string>("Name", "value"));
     Assert.IsNotNull(new NamedValue<int>("Name", 6));

@@ -13,7 +13,7 @@ public class FileNameWithoutExtension : FileSystemPathSection<FileNameWithoutExt
   /// </summary>
   public FileNameWithoutExtension(string value)
   {
-    Validation.ValidateFileName(value);
+    Validate.FileName(value);
     Path = value;
   }
 

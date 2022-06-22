@@ -10,23 +10,17 @@ public class InvalidFileNameException : Exception
   /// Creates a new instance.
   /// </summary>
   /// <param name="message"></param>
-  public InvalidFileNameException(string message) : base(message)
-  {
-  }
+  public InvalidFileNameException(string message) : base(message) { }
 
   /// <summary>
   /// Creates a new instance.
   /// </summary>
-  public InvalidFileNameException(string message, Exception innerException) : base(message, innerException)
-  {
-  }
+  public InvalidFileNameException(string message, Exception innerException) : base(message, innerException) { }
 
   /// <summary>
   /// Creates a new instance.
   /// </summary>
-  public InvalidFileNameException()
-  {
-  }
+  public InvalidFileNameException() { }
 
   /// <summary>
   /// Not implemented

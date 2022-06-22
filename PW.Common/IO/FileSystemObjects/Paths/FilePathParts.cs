@@ -12,15 +12,16 @@ public class FilePathParts
   public FilePathParts(FilePath filePath)
   {
 
-/* Unmerged change from project 'PW.Common (net48)'
-Before:
-    Directory = Helpers.Paths.NormalizeDirectoryPath(Path.GetDirectoryName(filePath.Value)!);
-After:
-    Directory = Paths.NormalizeDirectoryPath(Path.GetDirectoryName(filePath.Value)!);
-*/
+    /* Unmerged change from project 'PW.Common (net48)'
+    Before:
+        Directory = Helpers.Paths.NormalizeDirectoryPath(Path.GetDirectoryName(filePath.Value)!);
+    After:
+        Directory = Paths.NormalizeDirectoryPath(Path.GetDirectoryName(filePath.Value)!);
+    */
     Directory = IO.Paths.NormalizeDirectoryPath(Path.GetDirectoryName(filePath.Path)!);
     FileNameWithoutExtension = Path.GetFileNameWithoutExtension(filePath.Path);
     Extension = Path.GetExtension(filePath.Path);
+
   }
 
   /// <summary>
@@ -37,6 +38,17 @@ After:
   /// The file's extension
   /// </summary>
   public string Extension { get; set; }
+
+  public string Name
+  {
+    get => FileNameWithoutExtension + Extension;
+    set
+    {
+      FileNameWithoutExtension = Path.GetFileNameWithoutExtension(value);
+      Extension = Path.GetExtension(value);
+    }
+  }
+
 
   /// <summary>
   /// Reconstructs the parts back into a file path string.

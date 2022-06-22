@@ -55,41 +55,30 @@ public class FileExtension : FileSystemPathSection<FileExtension>
   /// <param name="value"></param>
   public static FileExtension From(string value)
   {
-    return value is null
-        ? throw new ArgumentNullException(nameof(value), "Value cannot be null.")
-        : value.Length == 0
-        ? GetInstance(string.Empty)
-        : value.Length == 1
-        ? throw new ArgumentNullException(nameof(value),
-        "File extension cannot be a single character. When not empty, it must start with a period and at least one other character.")
-        : value[0] != '.'
-        ? throw new ArgumentException("File extension must begin with a period.")
-        : value.IsAll('.')
-        ? throw new ArgumentException("Value cannot be all periods.")
-        : value.IsWhiteSpace(1)
-        ? throw new ArgumentException("Value cannot be just white-space after the period.", nameof(value))
-        : value.ContainsAny(System.IO.Path.GetInvalidFileNameChars())
-        ? throw new ArgumentException("Value contains invalid characters.", nameof(value))
-        : GetInstance(value);
+    Validate.FileExtension(value);
+    return GetInstance(value);
   }
 
   /// <summary>
   /// Creates an instance from an existing <see cref="FilePath"/> object.
   /// </summary>
   public static FileExtension From(FilePath filePath) =>
-    filePath is null ? throw new ArgumentNullException(nameof(filePath)) : GetInstance(System.IO.Path.GetExtension((string)filePath));
+    filePath is null ? throw new ArgumentNullException(nameof(filePath)) 
+    : GetInstance(System.IO.Path.GetExtension((string)filePath));
 
   /// <summary>
   /// Creates an instance from an existing <see cref="FilePath"/> object.
   /// </summary>
   public static FileExtension From(FileName fileName) =>
-    fileName is null ? throw new ArgumentNullException(nameof(fileName)) : GetInstance(System.IO.Path.GetExtension((string)fileName));
+    fileName is null ? throw new ArgumentNullException(nameof(fileName)) 
+    : GetInstance(System.IO.Path.GetExtension((string)fileName));
 
   /// <summary>
   /// Creates an instance from an existing <see cref="FileInfo"/> object.
   /// </summary>
   public static FileExtension From(FileInfo fileInfo) =>
-    fileInfo is null ? throw new ArgumentNullException(nameof(fileInfo)) : GetInstance(fileInfo.Extension);
+    fileInfo is null ? throw new ArgumentNullException(nameof(fileInfo)) 
+    : GetInstance(fileInfo.Extension);
 
   #endregion
 

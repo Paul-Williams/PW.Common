@@ -9,7 +9,7 @@ public static class Generic
   /// Alternative to checking for null on generic types, where the type may or may not be a reference type.
   /// </summary>
   public static bool IsNull<T>(T value) =>
-    !typeof(T).IsValueType && EqualityComparer<T>.Default.Equals(value, default!);
+    !typeof(T).IsValueType && value is null;//EqualityComparer<T>.Default.Equals(value, default!);
 
   /// <summary>
   /// Determines whether two generic types are equal.
