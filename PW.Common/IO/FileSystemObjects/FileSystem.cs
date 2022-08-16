@@ -250,69 +250,6 @@ public static class FileSystem
 
   }
 
-  /// <summary>
-  /// Enumerates a directory on disk and returns a <see cref="DirectoryPath"/> object for each sub-directory./>.
-  /// </summary>
-  public static IEnumerable<DirectoryPath> EnumerateDirectories(this DirectoryPath directory, System.IO.SearchOption searchOption)
-  {
-    if (!directory.Exists) throw new DirectoryNotFoundException("Directory not found: " + directory.Path);
-
-    foreach (var dir in directory.ToDirectoryInfo().EnumerateDirectories("*", searchOption))
-    {
-      yield return (DirectoryPath)dir;
-    }
-
-  }
-
-
-  /// <summary>
-  /// Enumerates a directory on disk and returns a <see cref="FilePath"/> object for each file.
-  /// </summary>
-  public static IEnumerable<FilePath> EnumerateFiles(this DirectoryPath directory, System.IO.SearchOption searchOption)
-  {
-    if (!directory.Exists) throw new DirectoryNotFoundException("Directory not found: " + directory.Path);
-
-    foreach (var file in directory.ToDirectoryInfo().EnumerateFiles("*.*", searchOption))
-    {
-      yield return (FilePath)file;
-    }
-  }
-
-  /// <summary>
-  /// Enumerates all files which match <paramref name="searchPattern"/>.
-  /// </summary>
-  public static IEnumerable<FilePath> EnumerateFiles(this DirectoryPath directory, string searchPattern) =>
-    EnumerateFiles(directory, searchPattern, System.IO.SearchOption.TopDirectoryOnly);
-
-
-
-  /// <summary>
-  /// Enumerates all files with the specified extension.
-  /// </summary>
-  public static IEnumerable<FilePath> EnumerateFiles(this DirectoryPath directory, FileExtension ofType, System.IO.SearchOption searchOption) =>
-    directory.EnumerateFiles(ofType.CreateMask(), searchOption);
-
-
-  /// <summary>
-  /// Enumerates a directory on disk and returns a <see cref="FilePath"/> object for each file.
-  /// </summary>
-  public static IEnumerable<FilePath> EnumerateFiles(this DirectoryPath directory)
-  {
-    if (!directory.Exists) throw new DirectoryNotFoundException("Directory not found: " + directory.Path);
-
-    foreach (var file in directory.ToDirectoryInfo().EnumerateFiles())
-    {
-      yield return (FilePath)file;
-    }
-  }
-
-
-
-  ///// <summary>
-  ///// Enumerates files from the directory with image file extensions.
-  ///// </summary>
-  //public static IEnumerable<FilePath> EnumerateGdiSupportedImages(this DirectoryPath directory)
-  //  => EnumerateGdiSupportedImages(directory, System.IO.SearchOption.TopDirectoryOnly);
 
 
   #endregion

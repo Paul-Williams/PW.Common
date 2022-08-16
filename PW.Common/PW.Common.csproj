@@ -5,7 +5,7 @@
     <LangVersion>latest</LangVersion>
     <UseWindowsForms>false</UseWindowsForms>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-    <Version>5.0.4</Version>
+    <Version>5.0.5</Version>
     <RootNamespace>PW</RootNamespace>
     <AssemblyName>PW.Common</AssemblyName>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -57,10 +57,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="IO\FileSystemObjects\FileSystem.Enumerate.Files.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="..\Readme.md">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>
+    <None Include="IO\FileSystemObjects\FileSystem.Enumerate.Files.cs" />
   </ItemGroup>
 
   <ItemGroup>
