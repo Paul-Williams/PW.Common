@@ -90,7 +90,7 @@ public class DirectoryPath : FileSystemPath, IDirectoryPath
   /// </summary>
   public static FilePath operator +(DirectoryPath directoryPath, FileName fileName)
   {
-    return directoryPath is null ? throw new ArgumentNullException(nameof(directoryPath)) : fileName is null ? throw new ArgumentNullException(nameof(fileName)) : (FilePath)(directoryPath.Path + fileName.Path);
+    return directoryPath is null ? throw new ArgumentNullException(nameof(directoryPath)) : fileName is null ? throw new ArgumentNullException(nameof(fileName)) : (FilePath)(directoryPath.Path + fileName.Value);
   }
 
   /// <summary>
@@ -102,7 +102,7 @@ public class DirectoryPath : FileSystemPath, IDirectoryPath
         ? throw new ArgumentNullException(nameof(directoryPath))
         : directoryName is null
           ? throw new ArgumentNullException(nameof(directoryName))
-          : (DirectoryPath)(directoryPath.Path + directoryName.Path);
+          : (DirectoryPath)(directoryPath.Path + directoryName.Value);
   }
 
 

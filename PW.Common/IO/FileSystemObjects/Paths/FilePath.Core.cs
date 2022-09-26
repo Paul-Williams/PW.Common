@@ -3,7 +3,7 @@
 /// <summary>
 /// Represents a path to a file on disk.
 /// </summary>
-[System.Diagnostics.DebuggerDisplay("{ToString}")]
+[System.Diagnostics.DebuggerDisplay("{" + nameof(ToString) + "}")]
 
 public partial class FilePath : FileSystemPath, IFilePath
 {
@@ -16,12 +16,21 @@ public partial class FilePath : FileSystemPath, IFilePath
   /// </summary>
   public FilePath(string value) : base(new FileInfo(value).FullName)
   {
+    // This cheats by using the FileInfo constructor for some validation. 
+    // Not too good for efficiency.
+    if (value.EndsWith(System.IO.Path.PathSeparator)) throw new Exception("A file path cannot end with a directory seperator.");
   }
 
   /// <summary>
   /// Creates a new instance using an existing <see cref="FileInfo"/> object.
   /// </summary>    
-  public FilePath(FileInfo file) : base(file.FullName) { }
+  public FilePath(FileInfo file) : base(file.FullName) 
+  {
+    // In order to enable implicit convertion of FileSystemObject to string we explcitly disalow a FilePath to end with a slash.
+    // Then even if a FilePath is compared to a DirectoryPath they should never match when implicitly converted to string.
+    // This assumes that, when created, a DirectoryPath always has a trailing slash appended.
+    if (file.FullName.EndsWith(System.IO.Path.PathSeparator)) throw new Exception("A file path cannot end with a directory seperator.");
+  }
 
   #endregion
 

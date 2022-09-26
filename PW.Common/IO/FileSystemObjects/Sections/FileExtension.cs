@@ -40,10 +40,7 @@ public class FileExtension : FileSystemPathSection<FileExtension>
   /// Creates a new instance. NB: value is not validated. This MUST be done with the factory methods.
   /// </summary>
   /// <param name="value"></param>
-  private FileExtension(string value)
-  {
-    Path = value;
-  }
+  private FileExtension(string value) : base(value) { }
 
 
   #region Factory Methods
@@ -63,21 +60,21 @@ public class FileExtension : FileSystemPathSection<FileExtension>
   /// Creates an instance from an existing <see cref="FilePath"/> object.
   /// </summary>
   public static FileExtension From(FilePath filePath) =>
-    filePath is null ? throw new ArgumentNullException(nameof(filePath)) 
+    filePath is null ? throw new ArgumentNullException(nameof(filePath))
     : GetInstance(System.IO.Path.GetExtension((string)filePath));
 
   /// <summary>
   /// Creates an instance from an existing <see cref="FilePath"/> object.
   /// </summary>
   public static FileExtension From(FileName fileName) =>
-    fileName is null ? throw new ArgumentNullException(nameof(fileName)) 
+    fileName is null ? throw new ArgumentNullException(nameof(fileName))
     : GetInstance(System.IO.Path.GetExtension((string)fileName));
 
   /// <summary>
   /// Creates an instance from an existing <see cref="FileInfo"/> object.
   /// </summary>
   public static FileExtension From(FileInfo fileInfo) =>
-    fileInfo is null ? throw new ArgumentNullException(nameof(fileInfo)) 
+    fileInfo is null ? throw new ArgumentNullException(nameof(fileInfo))
     : GetInstance(fileInfo.Extension);
 
   #endregion
@@ -110,7 +107,7 @@ public class FileExtension : FileSystemPathSection<FileExtension>
   /// Casts a file extension to a string.
   /// </summary>    
   public static explicit operator string(FileExtension fileExtension) =>
-    fileExtension is not null ? fileExtension.Path : throw new ArgumentNullException(nameof(fileExtension));
+    fileExtension is not null ? fileExtension.Value : throw new ArgumentNullException(nameof(fileExtension));
 
 
   #endregion
@@ -119,12 +116,12 @@ public class FileExtension : FileSystemPathSection<FileExtension>
   /// <summary>
   /// Creates a file mask for this file type. E.g. passing '*' as <paramref name="filenameMask"/> will return '*.extension'
   /// </summary>
-  public string CreateMask(string filenameMask) => filenameMask + Path;
+  public string CreateMask(string filenameMask) => filenameMask + Value;
 
   /// <summary>
   /// Creates a file mask for all files with this extension.
   /// </summary>
-  public string CreateMask() => "*" + Path;
+  public string CreateMask() => "*" + Value;
 
 
 }

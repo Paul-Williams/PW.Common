@@ -11,35 +11,25 @@ public class FileNameWithoutExtension : FileSystemPathSection<FileNameWithoutExt
   /// <summary>
   /// Creates a new instance.
   /// </summary>
-  public FileNameWithoutExtension(string value)
+  public FileNameWithoutExtension(string value) : base(value)
   {
     Validate.FileName(value);
-    Path = value;
   }
 
   /// <summary>
   /// Creates a new instance.
   /// </summary>
-  public FileNameWithoutExtension(FilePath filePath)
-  {
-    Path = System.IO.Path.GetFileNameWithoutExtension((string)filePath);
-  }
+  public FileNameWithoutExtension(FilePath filePath) : base(System.IO.Path.GetFileNameWithoutExtension((string)filePath)) { }
 
   /// <summary>
   /// Creates a new instance.
   /// </summary>
-  public FileNameWithoutExtension(FileName fileName)
-  {
-    Path = System.IO.Path.GetFileNameWithoutExtension((string)fileName);
-  }
+  public FileNameWithoutExtension(FileName fileName) : base(System.IO.Path.GetFileNameWithoutExtension((string)fileName)) { }
 
   /// <summary>
   /// Creates a new instance.
   /// </summary>
-  public FileNameWithoutExtension(FileInfo fileInfo)
-  {
-    Path = System.IO.Path.GetFileNameWithoutExtension(fileInfo.FullName);
-  }
+  public FileNameWithoutExtension(FileInfo fileInfo) : base(System.IO.Path.GetFileNameWithoutExtension(fileInfo.FullName)) { }
 
   #endregion
 
@@ -56,7 +46,7 @@ public class FileNameWithoutExtension : FileSystemPathSection<FileNameWithoutExt
   /// Casts a <see cref="FileNameWithoutExtension"/> to a <see cref="String"/>.
   /// </summary>    
   public static explicit operator string(FileNameWithoutExtension value) =>
-    value is not null ? value.Path : throw new ArgumentNullException(nameof(value));
+    value is not null ? value.Value : throw new ArgumentNullException(nameof(value));
 
   /// <summary>
   /// 
@@ -108,13 +98,13 @@ public class FileNameWithoutExtension : FileSystemPathSection<FileNameWithoutExt
     ? throw new ArgumentNullException(nameof(fileNameWithoutExtension))
     : fileExtension is null
     ? throw new ArgumentNullException(nameof(fileExtension))
-    : (FileName)(fileNameWithoutExtension.Path + fileExtension.Path);
+    : (FileName)(fileNameWithoutExtension.Value + fileExtension.Value);
 
   #endregion
 
   /// <summary>
   /// Creates a mask for all files of the same name but any extension.
   /// </summary>    
-  public string CreateMask() => Path + ".*";
+  public string CreateMask() => Value + ".*";
 
 }

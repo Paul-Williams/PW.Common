@@ -3,7 +3,7 @@
 /// <summary>
 /// Base class for objects representing a file system path. E.g. DirectoryPath or FilePath.
 /// </summary>
-public class FileSystemPath :  IFileSystemPath
+public class FileSystemPath : IFileSystemPath
 {
   /// <summary>
   /// Creates a new instance.
@@ -110,7 +110,7 @@ public class FileSystemPath :  IFileSystemPath
     left is null ? right is null : left.CompareTo(right) >= 0;
 
 
-  public static implicit operator string (FileSystemPath path) => path.Path;
+  public static implicit operator string(FileSystemPath path) => path.Path;
 
   #endregion
 

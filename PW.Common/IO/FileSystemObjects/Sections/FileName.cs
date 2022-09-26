@@ -10,26 +10,25 @@ public class FileName : FileSystemPathSection<FileName>
   /// <summary>
   /// Creates a new instance from the specified string. Basic validation performed.
   /// </summary>
-  public FileName(string value)
+  public FileName(string value) : base(value) 
   {
     Validate.FileName(value);
-    Path = value;
   }
 
   /// <summary>
   /// Creates a new instance from the existing <see cref="FilePath"/>.
   /// </summary>
-  public FileName(FilePath file)
+  public FileName(FilePath file) :base(System.IO.Path.GetFileName((string)file))
   {
-    Path = System.IO.Path.GetFileName((string)file);
+    if (file is null) throw new ArgumentNullException(nameof(file));
   }
 
   /// <summary>
   /// Creates a new instance from the existing <see cref="FilePath"/>.
   /// </summary>
-  public FileName(FileInfo file)
+  public FileName(FileInfo file) :base(file.Name)
   {
-    Path = file.Name;
+    if (file is null) throw new ArgumentNullException(nameof(file));
   }
 
   #endregion
@@ -53,7 +52,7 @@ public class FileName : FileSystemPathSection<FileName>
   /// <summary>
   /// Casts a file name to a string.
   /// </summary>    
-  public static explicit operator string(FileName fileName) => fileName is not null ? fileName.Path : throw new ArgumentNullException(nameof(fileName));
+  public static explicit operator string(FileName fileName) => fileName is not null ? fileName.Value : throw new ArgumentNullException(nameof(fileName));
 
   #endregion
 

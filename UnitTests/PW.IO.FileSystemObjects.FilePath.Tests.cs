@@ -7,6 +7,16 @@ namespace PW.IO.FileSystemObjects.Tests;
 [TestClass]
 public class FilePathTests
 {
+  //[TestMethod ]
+  //public void CompareFilePathToDirectoryPath()
+  //{
+  //  FilePath filePath = new FilePath(@"c:\somepath\");
+  //  DirectoryPath dirPath = new DirectoryPath(@"c:\somepath\");
+
+  //  Assert.AreNotEqual(filePath, dirPath);  
+
+  //}
+
 
   [TestMethod]
   public void TraverseParents1()
@@ -59,7 +69,7 @@ public class FilePathTests
   [TestMethod]
   public void TestPathEquality()
   {
-    Assert.IsTrue(new FilePath(@"C:\Temp\Test.txt").DirectoryPath == new FilePath(@"C:\temp\Test.txt").DirectoryPath);
+    Assert.IsTrue(new FilePath(@"C:\Temp\Test.txt").DirectoryPath == new FilePath(@"c:\temp\test.txt").DirectoryPath);
   }
 
   [TestMethod]

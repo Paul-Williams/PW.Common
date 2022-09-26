@@ -8,7 +8,7 @@ public class DirectoryName : FileSystemPathSection<DirectoryName>
   /// <summary>
   /// ctor -- Throws exceptions if invalid <paramref name="value"/> is passed.
   /// </summary>    
-  public DirectoryName(string value)
+  public DirectoryName(string value) : base(value)
   {
     if (value is null)
       throw new ArgumentNullException(nameof(value), "Value cannot be null.");
@@ -19,27 +19,21 @@ public class DirectoryName : FileSystemPathSection<DirectoryName>
     if (value.ContainsAny(System.IO.Path.GetInvalidFileNameChars()))
       throw new ArgumentException("Value contains invalid characters.", nameof(value));
 
-    Path = value;
   }
 
   /// <summary>
   /// Creates a new instance from an existing <see cref="DirectoryPath"/>. Skips validation.
   /// </summary>
-  public DirectoryName(DirectoryPath directoryPath)
+  public DirectoryName(DirectoryPath directoryPath) : base(System.IO.Path.GetFileName(directoryPath.ToString(false)))
   {
-
     // ASSUMES: DirectoryPath values are always normalized to be terminated with a trailing back-slash.
     // This needs to be removed before calling Path.GetFileName(), otherwise an empty string will be returned.
-    Path = System.IO.Path.GetFileName(directoryPath.ToString(false));
   }
 
   /// <summary>
   /// Creates a new instance from an existing <see cref="FilePath"/>. Skips validation.
   /// </summary>
-  public DirectoryName(FilePath filePath)
-  {
-    Path = filePath.ToFileInfo().Directory!.Name;
-  }
+  public DirectoryName(FilePath filePath) : base(filePath.ToFileInfo().Directory!.Name) { }
 
   /// <summary>
   /// Casts a string to a <see cref="DirectoryName"/>.
@@ -51,6 +45,6 @@ public class DirectoryName : FileSystemPathSection<DirectoryName>
   /// Casts a <see cref="DirectoryName"/> to a string.
   /// </summary>    
   public static explicit operator string(DirectoryName directoryName) =>
-    directoryName?.Path ?? throw new ArgumentNullException(nameof(directoryName));
+    directoryName?.Value ?? throw new ArgumentNullException(nameof(directoryName));
 
 }

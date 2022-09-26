@@ -23,7 +23,7 @@
     <Copyright>© Paul Williams 2022</Copyright>
     <NeutralLanguage>en-GB</NeutralLanguage>
 		<ImplicitUsings>enable</ImplicitUsings>
-    <AnalysisLevel>preview-recommended</AnalysisLevel>
+    <AnalysisLevel>6.0-recommended</AnalysisLevel>
     <PackageReadmeFile>Readme.md</PackageReadmeFile>
     <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
   </PropertyGroup>
@@ -69,9 +69,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="CSharpFunctionalExtensions" Version="2.29.2" />
+    <PackageReference Include="CSharpFunctionalExtensions" Version="2.34.3" />
     <PackageReference Include="Microsoft.VisualBasic" Version="10.3.0" />
-    <PackageReference Include="OneOf" Version="3.0.216" />
+    <PackageReference Include="OneOf" Version="3.0.223" />
     <PackageReference Include="System.Drawing.Common" Version="6.0.0" />
   </ItemGroup>
 

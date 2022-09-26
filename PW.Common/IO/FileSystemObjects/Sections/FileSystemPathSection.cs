@@ -3,33 +3,29 @@
 /// <summary>
 /// Base class for objects representing a file system path. E.g. DirectoryPath or FilePath.
 /// </summary>
-public abstract class FileSystemPathSection<T> : IComparable, IComparable<FileSystemPathSection<T>>, IEquatable<FileSystemPathSection<T>>, IReadOnlyValue<string>
+public class FileSystemPathSection<T> : IComparable, IComparable<FileSystemPathSection<T>>, IEquatable<FileSystemPathSection<T>>, IReadOnlyValue<string>
 {
-  private string? _value;
+  private readonly string _value;
+
+  /// <summary>
+  /// Converts back to a string.
+  /// </summary>
+  public string Value => _value;
+
+  protected FileSystemPathSection(string value) => _value = value ?? throw new ArgumentNullException(nameof(value));
 
 
   /// <summary>
-  /// Returns the value contained by this instance.
+  /// Converts back to a string.
   /// </summary>
-  public string Path
-  {
-    get => _value ?? throw new InvalidOperationException($"Implementation error: {nameof(Path)} was not set by the inherited class.");
-    protected set
-    {
-      if (_value is not null) throw new InvalidOperationException($"{nameof(Path)} cannot be changed once set.");
-      if (value is null) throw new ArgumentNullException(nameof(value), $"{nameof(Path)} cannot be null.");
-      //if (string.IsNullOrWhiteSpace(value)) throw new ArgumentException($"{nameof(Value)} cannot be empty or white-space.", nameof(value));
-      _value = value;
-    }
-  }
+  public override string ToString() => Value;
 
-  string IReadOnlyValue<string>.Value => Path;
+  string IReadOnlyValue<string>.Value => Value;
 
   /// <summary>
   /// Performs equality comparison of the two instances
   /// </summary>
-  public override bool Equals(object? obj) =>
-    Paths.EqualityComparer.Equals(Path, (obj as FileSystemPathSection<T>)?.Path);
+  public override bool Equals(object? obj) => Paths.EqualityComparer.Equals(Value, (obj as FileSystemPathSection<T>)?.Value);
 
   // See: https://stackoverflow.com/questions/11475737/gethashcode-for-ordinalignorecase-dependent-string-classes
 
@@ -37,13 +33,8 @@ public abstract class FileSystemPathSection<T> : IComparable, IComparable<FileSy
   /// Returns hash code.
   /// </summary>
   /// <returns></returns>
-  public override int GetHashCode() => Paths.EqualityComparer.GetHashCode(Path);
+  public override int GetHashCode() => Paths.EqualityComparer.GetHashCode(Value);
 
-
-  /// <summary>
-  /// This instance's path as a string.
-  /// </summary>
-  public override string ToString() => Path;
 
   #region IEquatable<FileSystemPathSection>
 
@@ -52,20 +43,20 @@ public abstract class FileSystemPathSection<T> : IComparable, IComparable<FileSy
   /// </summary>
   /// <param name="other"></param>
   /// <returns></returns>
-  public bool Equals(FileSystemPathSection<T>? other) => Paths.EqualityComparer.Equals(Path, other?.Path);
+  public bool Equals(FileSystemPathSection<T>? other) => Paths.EqualityComparer.Equals(Value, other?.Value);
 
   /// <summary>
   /// Compares two instances for sorting.
   /// </summary>
   /// <param name="other"></param>
   /// <returns></returns>
-  public int CompareTo(FileSystemPathSection<T>? other) => Paths.NaturalSortComparer.Compare(Path, other?.Path);
+  public int CompareTo(FileSystemPathSection<T>? other) => Paths.NaturalSortComparer.Compare(Value, other?.Value);
 
   /// <summary>
   /// Compares two instances for sorting.
   /// </summary>
   /// <returns></returns>
-  public int CompareTo(object? obj) => Paths.NaturalSortComparer.Compare(Path, (obj as FileSystemPathSection<T>)?.Path);
+  public int CompareTo(object? obj) => Paths.NaturalSortComparer.Compare(Value, (obj as FileSystemPathSection<T>)?.Value);
 
 
 
