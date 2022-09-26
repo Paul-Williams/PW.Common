@@ -1,5 +1,8 @@
 ﻿using Microsoft.VisualBasic.FileIO;
 using System.ComponentModel;
+using System.IO;
+using System.Runtime.CompilerServices;
+using System.Security.Cryptography.X509Certificates;
 
 // NB: SendFileToRecycleBin() will not work from non UI interactive apps like windows services.
 // See: https://stackoverflow.com/questions/2342628/deleting-file-to-recycle-bin-on-windows-x64-in-c-sharp
@@ -221,6 +224,30 @@ public static class FileSystem
 
     return newDirectoryPaths;
   }
+
+
+  public static FilePath[] GetFiles(this DirectoryPath directory) =>
+    System.IO.Directory.GetFiles(directory).Select(x => ((FilePath)(x))).ToArray();
+
+  public static FilePath[] GetFiles(this DirectoryPath directory, string searchPattern) =>
+    System.IO.Directory.GetFiles(directory, searchPattern).Select(x => ((FilePath)(x))).ToArray();
+
+#if NET6_0_OR_GREATER
+  public static FilePath[] GetFiles(this DirectoryPath directory, string searchPattern, EnumerationOptions enumerationOptions) =>
+    System.IO.Directory.GetFiles(directory, searchPattern, enumerationOptions).Select(x => ((FilePath)(x))).ToArray();
+#endif 
+
+  public static FilePath[] GetFiles(this DirectoryPath directory, string searchPattern, System.IO.SearchOption searchOption) =>
+    System.IO.Directory.GetFiles(directory, searchPattern, searchOption).Select(x => ((FilePath)(x))).ToArray();
+
+#if NET6_0_OR_GREATER
+  public static IEnumerable<FilePath> EnumerateFiles(this DirectoryPath directory, string searchPattern, EnumerationOptions enumerationOptions)
+  {
+    if (!directory.Exists) throw new DirectoryNotFoundException("Directory not found: " + directory.Path);
+    foreach (var file in directory.ToDirectoryInfo().EnumerateFiles(searchPattern, enumerationOptions)) yield return (FilePath)file;
+  }
+#endif
+
 
   /// <summary>
   /// Enumerates a directory on disk and returns a <see cref="FilePath"/> object for each file which matches <paramref name="searchPattern"/>.
