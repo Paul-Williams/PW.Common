@@ -3,7 +3,7 @@
 /// <summary>
 /// Base class for objects representing a file system path. E.g. DirectoryPath or FilePath.
 /// </summary>
-public class FileSystemPath : IFileSystemPath
+public class FileSystemPath : IReadOnlyValue<string>, IComparable<FileSystemPath>, IEquatable<FileSystemPath>
 {
   /// <summary>
   /// Creates a new instance.
@@ -17,7 +17,7 @@ public class FileSystemPath : IFileSystemPath
   /// <summary>
   /// The path encapsulated by this <see cref="FileSystemPath"/>
   /// </summary>
-  public string Path { get; }
+  protected string Path { get; }
 
   public virtual bool Exists => Directory.Exists(Path) || File.Exists(Path);
 
@@ -52,14 +52,14 @@ public class FileSystemPath : IFileSystemPath
   /// </summary>
   /// <param name="other"></param>
   /// <returns></returns>
-  public bool Equals(IFileSystemPath? other) => Paths.EqualityComparer.Equals(Path, other?.Path);
+  public bool Equals(FileSystemPath? other) => Paths.EqualityComparer.Equals(Path, other!);
 
   /// <summary>
   /// Compares two instances for sorting.
   /// </summary>
   /// <param name="other"></param>
   /// <returns></returns>
-  public int CompareTo(IFileSystemPath? other) => Paths.NaturalSortComparer.Compare(Path, other?.Path);
+  public int CompareTo(FileSystemPath? other) => Paths.NaturalSortComparer.Compare(Path, other!);
 
   /// <summary>
   /// Compares two instances for sorting.

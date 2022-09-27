@@ -14,3 +14,7 @@ using System.Diagnostics.CodeAnalysis;
 [assembly: SuppressMessage("Naming", "CA1711:Identifiers should not have incorrect suffix", Justification = "<Pending>", Scope = "type", Target = "~T:PW.Net.PeriodicPing.PingExceptionEventHandler")]
 [assembly: SuppressMessage("Performance", "CA1838:Avoid 'StringBuilder' parameters for P/Invokes", Justification = "<Pending>", Scope = "member", Target = "~M:PW.Win32.SafeNativeMethods.StrFormatByteSizeW(System.UInt64,System.Text.StringBuilder,System.UInt32)~System.IntPtr")]
 [assembly: SuppressMessage("Design", "CA1069:Enums values should not be duplicated", Justification = "<Pending>", Scope = "type", Target = "~T:PW.Win32.FileAccess")]
+[assembly: SuppressMessage("Naming", "CA1711:Identifiers should not have incorrect suffix", Justification = "<Pending>", Scope = "type", Target = "~T:PW.Functional.Options.ValueOrException`1")]
+[assembly: SuppressMessage("Naming", "CA1711:Identifiers should not have incorrect suffix", Justification = "<Pending>", Scope = "type", Target = "~T:PW.Events.TypedSenderEventHandler`2")]
+[assembly: SuppressMessage("Naming", "CA1711:Identifiers should not have incorrect suffix", Justification = "<Pending>", Scope = "type", Target = "~T:PW.Functional.Options.ValueOrNoneOrException`1")]
+[assembly: SuppressMessage("Naming", "CA1711:Identifiers should not have incorrect suffix", Justification = "<Pending>", Scope = "type", Target = "~T:PW.Events.PayloadEventHandler`1")]

@@ -18,9 +18,9 @@ public class FilePathParts
     After:
         Directory = Paths.NormalizeDirectoryPath(Path.GetDirectoryName(filePath.Value)!);
     */
-    Directory = IO.Paths.NormalizeDirectoryPath(Path.GetDirectoryName(filePath.Path)!);
-    FileNameWithoutExtension = Path.GetFileNameWithoutExtension(filePath.Path);
-    Extension = Path.GetExtension(filePath.Path);
+    Directory = IO.Paths.NormalizeDirectoryPath(Path.GetDirectoryName(filePath)!);
+    FileNameWithoutExtension = Path.GetFileNameWithoutExtension(filePath);
+    Extension = Path.GetExtension(filePath);
 
   }
 

@@ -139,7 +139,7 @@ public static partial class Guard
   /// </summary>
   public static void MustExist(DirectoryPath directory, string argumentName)
   {
-    if (!directory.Exists) throw new DirectoryNotFoundException($"The directory '{directory.Path}' supplied as argument '{argumentName}' does not exist.");
+    if (!directory.Exists) throw new DirectoryNotFoundException($"The directory '{directory}' supplied as argument '{argumentName}' does not exist.");
   }
 
   /// <summary>
@@ -155,24 +155,24 @@ public static partial class Guard
   /// </summary>
   public static void MustExist(FilePath file, string argumentName)
   {
-    if (!file.Exists) throw new FileNotFoundException($"The directory '{file.Path}' supplied as argument '{argumentName}' does not exist.");
+    if (!file.Exists) throw new FileNotFoundException($"The directory '{file}' supplied as argument '{argumentName}' does not exist.");
   }
 
 
   /// <summary>
-  /// Ensures that <paramref name="o"/> is not null and that it exists.
+  /// Ensures that <paramref name="path"/> is not null and that it exists.
   /// </summary>
-  public static void MustExist(FileSystemInfo o, string argumentName)
+  public static void MustExist(FileSystemInfo path, string argumentName)
   {
-    if (!o.Exists) throw new FileNotFoundException($"The file system object '{o.FullName}' supplied as argument '{argumentName}' does not exist.");
+    if (!path.Exists) throw new FileNotFoundException($"The file system object '{path.FullName}' supplied as argument '{argumentName}' does not exist.");
   }
 
   /// <summary>
-  /// Ensures that <paramref name="o"/> is not null and that it exists.
+  /// Ensures that <paramref name="path"/> is not null and that it exists.
   /// </summary>
-  public static void MustExist(IFileSystemPath o, string argumentName)
+  public static void MustExist(FileSystemPath path, string argumentName)
   {
-    if (!o.Exists) throw new FileNotFoundException($"The file system object '{o.Path}' supplied as argument '{argumentName}' does not exist.");
+    if (!path.Exists) throw new FileNotFoundException($"The file system object '{path}' supplied as argument '{argumentName}' does not exist.");
   }
 
 }

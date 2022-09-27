@@ -31,7 +31,7 @@ public class DirectoryPath : FileSystemPath, IDirectoryPath
   /// Creates a new instance
   /// </summary>
   /// <param name="filePath"></param>
-  public DirectoryPath(FilePath filePath) : base(Paths.NormalizeDirectoryPath(System.IO.Path.GetDirectoryName(filePath.Path)!))
+  public DirectoryPath(FilePath filePath) : base(Paths.NormalizeDirectoryPath(System.IO.Path.GetDirectoryName(filePath)!))
   {
   }
 

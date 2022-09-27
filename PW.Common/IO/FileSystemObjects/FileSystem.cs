@@ -19,27 +19,39 @@ public static class FileSystem
   /// <summary>
   /// Sends a file to the recycle bin.
   /// </summary>
-  public static void SendFileToRecycleBin(string file) => Microsoft.VisualBasic.FileIO.FileSystem.DeleteFile(file, UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin);
-
-  /// <summary>
-  /// Sends a directory to the recycle bin.
-  /// </summary>
-  public static void SendDirectoryToRecycleBin(string directory) => Microsoft.VisualBasic.FileIO.FileSystem.DeleteDirectory(directory, UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin);
-
-  /// <summary>
-  /// Sends a file to the recycle bin.
-  /// </summary>
-  public static void SendToRecycleBin(this FilePath file)
+  [Obsolete("Use Recycle()")]
+  public static void SendFileToRecycleBin(string file)
   {
-    Microsoft.VisualBasic.FileIO.FileSystem.DeleteFile(file.Path, UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin);
+    if (file is null) throw new ArgumentNullException(nameof(file));
+    Microsoft.VisualBasic.FileIO.FileSystem.DeleteFile(file, UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin);
   }
 
   /// <summary>
   /// Sends a directory to the recycle bin.
   /// </summary>
-  public static void SendToRecycleBin(this DirectoryPath directory)
+  [Obsolete("Use Recycle()")]
+  public static void SendDirectoryToRecycleBin(string directory)
   {
-    Microsoft.VisualBasic.FileIO.FileSystem.DeleteDirectory(directory.Path, UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin);
+    if (directory is null) throw new ArgumentNullException(nameof(directory));
+    Microsoft.VisualBasic.FileIO.FileSystem.DeleteDirectory(directory, UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin);
+  }
+
+  /// <summary>
+  /// Sends a file to the recycle bin.
+  /// </summary>
+  public static void Recycle(this FilePath file)
+  {
+    if (file is null) throw new ArgumentNullException(nameof(file));
+    Microsoft.VisualBasic.FileIO.FileSystem.DeleteFile(file, UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin);
+  }
+
+  /// <summary>
+  /// Sends a directory to the recycle bin.
+  /// </summary>
+  public static void Recycle(this DirectoryPath directory)
+  {
+    if (directory is null) throw new ArgumentNullException(nameof(directory));
+    Microsoft.VisualBasic.FileIO.FileSystem.DeleteDirectory(directory, UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin);
   }
 
   #endregion
@@ -53,9 +65,8 @@ public static class FileSystem
   /// <param name="filePath"></param>
   public static void SelectInExplorer(this FilePath filePath)
   {
-    if (!filePath.Exists) throw new FileNotFoundException("File not found:" + (string)filePath);
-
-    System.Diagnostics.Process.Start("explorer.exe", "/select, \"" + (string)filePath + "\"");
+    if (!filePath.Exists) throw new FileNotFoundException("File not found:" + filePath);
+    System.Diagnostics.Process.Start("explorer.exe", "/select, \"" + filePath + "\"");
   }
 
   /// <summary>
@@ -63,9 +74,9 @@ public static class FileSystem
   /// </summary>
   public static FilePath Move(this FilePath file, DirectoryPath directory)
   {
-    var r = file.ChangeDirectory(directory);
-    File.Move(file.Path, r.Path);
-    return r;
+    var newPath = file.ChangeDirectory(directory);
+    File.Move(file, newPath);
+    return newPath;
   }
 
   /// <summary>
@@ -81,7 +92,7 @@ public static class FileSystem
   {
     if (!file.Exists) throw Exceptions.Exceptions.FileNotFoundException(file);
 
-    var ziFile = file.Path + ":Zone.Identifier";
+    var ziFile = file + ":Zone.Identifier";
     if (!File.Exists(ziFile)) return false;
     File.Delete(ziFile);
     return true;
@@ -127,14 +138,14 @@ public static class FileSystem
   /// </summary>
   public static FilePath Rename(this FilePath file, FileName newName)
   {
-    if (!file.Exists) throw new FileNotFoundException("File not found: " + file.Path, file.Path);
+    if (!file.Exists) throw new FileNotFoundException("File not found: " + file, file);
 
     var newFilePath = file.ChangeName(newName);
 
     // This prevents changing the casing of a file name, as Exists() will return true.
     // if (Exists(newFilePath)) throw new Exception("File already exists: " + newFilePath.Value);
 
-    File.Move(file.Path, newFilePath.Path);
+    File.Move(file, newFilePath);
     return newFilePath;
   }
 
@@ -147,7 +158,7 @@ public static class FileSystem
     // This prevents changing the casing of a file name, as Exists() will return true.
     // if (Exists(newFile)) throw new Exception("File already exists: " + newFile.Value);
 
-    File.Move(file.Path, newFile.Path);
+    File.Move(file, newFile);
     return newFile;
   }
 
@@ -186,7 +197,7 @@ public static class FileSystem
   /// </summary>
   public static DirectoryPath Move(this DirectoryPath path, DirectoryPath newPath)
   {
-    var r = Win32.SafeNativeMethods.MoveFile(path.Path, newPath.Path);
+    var r = Win32.SafeNativeMethods.MoveFile(path, newPath);
 
     return r == false ? throw new Win32Exception() : newPath;
   }
@@ -202,7 +213,7 @@ public static class FileSystem
   /// </summary>
   public static DirectoryPath Create(this DirectoryPath directory)
   {
-    _ = Directory.CreateDirectory(directory.Path);
+    _ = Directory.CreateDirectory(directory);
     return directory;
   }
 
@@ -243,7 +254,7 @@ public static class FileSystem
 #if NET6_0_OR_GREATER
   public static IEnumerable<FilePath> EnumerateFiles(this DirectoryPath directory, string searchPattern, EnumerationOptions enumerationOptions)
   {
-    if (!directory.Exists) throw new DirectoryNotFoundException("Directory not found: " + directory.Path);
+    if (!directory.Exists) throw new DirectoryNotFoundException("Directory not found: " + directory);
     foreach (var file in directory.ToDirectoryInfo().EnumerateFiles(searchPattern, enumerationOptions)) yield return (FilePath)file;
   }
 #endif
@@ -254,7 +265,7 @@ public static class FileSystem
   /// </summary>
   public static IEnumerable<FilePath> EnumerateFiles(this DirectoryPath directory, string searchPattern, System.IO.SearchOption searchOption)
   {
-    if (!directory.Exists) throw new DirectoryNotFoundException("Directory not found: " + directory.Path);
+    if (!directory.Exists) throw new DirectoryNotFoundException("Directory not found: " + directory);
 
     foreach (var file in directory.ToDirectoryInfo().EnumerateFiles(searchPattern, searchOption))
     {
@@ -268,7 +279,7 @@ public static class FileSystem
   public static IEnumerable<DirectoryPath> EnumerateDirectories(this DirectoryPath directory, string searchPattern, System.IO.SearchOption searchOption)
   {
     if (string.IsNullOrEmpty(searchPattern)) throw new ArgumentException("message", nameof(searchPattern));
-    if (!directory.Exists) throw new DirectoryNotFoundException("Directory not found: " + directory.Path);
+    if (!directory.Exists) throw new DirectoryNotFoundException("Directory not found: " + directory);
 
     foreach (var dir in directory.ToDirectoryInfo().EnumerateDirectories(searchPattern, searchOption))
     {

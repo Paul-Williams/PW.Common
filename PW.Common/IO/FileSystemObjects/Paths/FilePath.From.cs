@@ -24,12 +24,12 @@ public partial class FilePath
   /// Creates a new <see cref="FilePath"/> instance.
   /// </summary>
   public static FilePath From(DirectoryPath directoryPath, FileName fileName) =>
-    From(directoryPath.Path + fileName.Value);
+    From(directoryPath + fileName.Value);
 
   /// <summary>
   /// Creates a new <see cref="FilePath"/> instance.
   /// </summary>
   public static FilePath From(DirectoryPath directoryPath, FileNameWithoutExtension fileNameWithoutExtension, FileExtension fileExtension) =>
-    From(directoryPath.Path + fileNameWithoutExtension.Value + fileExtension.Value);
+    From(directoryPath + fileNameWithoutExtension.Value + fileExtension.Value);
 
 }

@@ -108,7 +108,7 @@ public class StringNaturalComparer :
   public bool Equals(IReadOnlyValue<string?>? x, IReadOnlyValue<string?>? y) => Equals(x?.Value, y?.Value);
 
   /// <summary>
-  /// Returns a hashcode for the instance.
+  /// Returns a hash code for the instance.
   /// </summary>
   public int GetHashCode(IReadOnlyValue<string?>? obj) => GetHashCode(obj?.Value);
 

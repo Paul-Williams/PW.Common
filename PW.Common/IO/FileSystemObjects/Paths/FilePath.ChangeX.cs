@@ -13,7 +13,7 @@ public partial class FilePath
   {
     return directory is null
         ? throw new ArgumentNullException(nameof(directory))
-        : new FilePath(System.IO.Path.Combine(directory.Path, Name.Value));
+        : new FilePath(System.IO.Path.Combine(directory, Name.Value));
   }
 
   /// <summary>

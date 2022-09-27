@@ -16,7 +16,7 @@ public static class Exceptions
   /// <summary>
   /// Creates a new <see cref="System.IO.FileNotFoundException"/>
   /// </summary>
-  public static FileNotFoundException FileNotFoundException(FilePath file) => FileNotFoundException(file?.Path);
+  public static FileNotFoundException FileNotFoundException(FilePath file) => FileNotFoundException(file);
 
   /// <summary>
   /// Creates a new <see cref="System.IO.FileNotFoundException"/>
