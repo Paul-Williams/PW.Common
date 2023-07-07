@@ -88,10 +88,10 @@ public class StringNaturalComparer :
   /// <summary>
   /// Gets the hash code for the specified string
   /// </summary>
-  public int GetHashCode(string? str) =>
-    str is null
-    ? throw new ArgumentNullException(nameof(str))
-    : StringComparer.OrdinalIgnoreCase.GetHashCode(str);
+  public int GetHashCode(string? obj) =>
+    obj is null
+    ? throw new ArgumentNullException(nameof(obj))
+    : StringComparer.OrdinalIgnoreCase.GetHashCode(obj);
 
   #endregion
 
