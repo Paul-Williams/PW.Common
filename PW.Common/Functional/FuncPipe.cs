@@ -12,7 +12,7 @@ public static class FuncPipe
 /// <summary>
 /// Creates a function which pipes the output of a function into the input of the next function, in a fluent manor.
 /// </summary>
-public struct FuncPipe<T>
+public readonly struct FuncPipe<T>
 {
   public FuncPipe(Func<T> func) => Func = func;
 
@@ -30,7 +30,7 @@ public struct FuncPipe<T>
 /// <summary>
 /// Creates a function which pipes the output of a function into the input of the next function, in a fluent manor.
 /// </summary>
-public struct FuncPipe<T, TR>
+public readonly struct FuncPipe<T, TR>
 {
   public FuncPipe(Func<T, TR> func) => Func = func;
 
@@ -48,7 +48,7 @@ public struct FuncPipe<T, TR>
 /// Creates a function which pipes the output of a function into the input of the next function, in a fluent manor.
 /// The 'S' suffix is simply to prevent a name clash with class <see cref="FuncPipe{T}"/>.
 /// </summary>
-public struct FuncPipeS<T>
+public readonly struct FuncPipeS<T>
 {
   public FuncPipeS(Func<T, T> func) => Func = func;
 
@@ -57,19 +57,15 @@ public struct FuncPipeS<T>
   /// <summary>
   /// Connects the next function to the pipeline.
   /// </summary>
-  public FuncPipe<T, T> To(Func<T, T> func) => new(Func.Pipe(func));
+  public readonly FuncPipe<T, T> To(Func<T, T> func) => new(Func.Pipe(func));
 
   public T Invoke(T x) => Func.Invoke(x);
 
   public FuncPipeS(IEnumerable<Func<T, T>> seq)
   {
-    var f = seq.FirstOrDefault();
-    if (f == null) throw new ArgumentException("Enumeration contains no elements.");
+    var f = seq.FirstOrDefault() ?? throw new ArgumentException("Enumeration contains no elements.");
 
-    foreach (var f2 in seq)
-    {
-      f = x => f2(f(x));
-    }
+    foreach (var f2 in seq) f = x => f2(f(x));
     Func = f;
   }
 }
@@ -142,7 +138,7 @@ public class FunctionPipeline<T> //: List<Func<T, T>>
   /// </summary>
   public T Execute(T input)
   {
-    if (Composed is null) Composed = Compose(Funcs);
+    Composed ??= Compose(Funcs);
     return Composed(input);
   }
 
